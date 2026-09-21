@@ -12,7 +12,7 @@
 
 | Insumo | Fuente | Función | Estado |
 |---|---|---|---|
-| Demanda horaria | Stromnetz Berlin | Objetivo horario candidato | Por verificar |
+| Demanda horaria | Stromnetz Berlin HV 2019–2023 | Objetivo horario de red y proxy territorial | GO condicionado; semántica general confirmada, alcance HV/timestamps pendientes |
 | Balance anual | Statistik Berlin-Brandenburg | Referencia total/sectorial | Por verificar |
 | Distribución espacial | Umweltatlas Berlin | Validación distrital | Por verificar |
 | Temperatura | DWD o ERA5-Land | Variable explicativa | Por verificar |
@@ -26,5 +26,6 @@
 - El consumo espacial puede excluir autoconsumo, pérdidas o registros suprimidos.
 - Los sectores alemanes no necesariamente replican los cinco sectores chilenos.
 - El horario alemán contiene intervalos locales ausentes o repetidos.
+- Los CSV HV 2020–2022 contienen saltos o etiquetas de fecha que requieren normalización y confirmación del operador.
 
 No se declara cumplimiento hasta completar la auditoría, ejecutar el modelo y generar los artefactos definidos en [`kpi_plan.md`](kpi_plan.md).

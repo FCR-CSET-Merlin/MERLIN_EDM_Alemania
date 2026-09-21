@@ -12,10 +12,10 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 |---|---|
 | Caso piloto | Berlín, Alemania |
 | Objetivo | Reconstrucción histórica de demanda eléctrica horaria |
-| Fuentes alemanas | Candidatas; BKG `11000` aceptado para el perímetro piloto; cobertura, unidades, licencia y semántica HV siguen en revisión |
+| Fuentes alemanas | Candidatas; BKG `11000` aceptado para el perímetro piloto; cobertura, unidades y licencia en revisión; semántica general HV confirmada y alcance/timestamps pendientes |
 | Modelo alemán | No ejecutado en esta etapa |
 | KPI alemán | No evaluado; no se declara cumplimiento |
-| Próximo producto | Auditoría HV 2019–2023, balance anual y dictamen de factibilidad |
+| Próximo producto | Normalización temporal 2023, solicitud al operador y balance anual |
 
 ## Resultados previstos
 

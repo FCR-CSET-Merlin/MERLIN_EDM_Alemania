@@ -61,7 +61,7 @@ Con esta decisión se puede avanzar en el piloto sin ocultar la incertidumbre: e
 
 ## Caveat que permanece abierto
 
-No se encontró un polígono público de Stromnetz Berlin que permita probar si los 1.046,64 km² corresponden a una frontera distinta, a una definición regulatoria más amplia o a una actualización metodológica. Antes de escalar a distritos, Länder o Alemania completa se debe solicitar al operador la definición cartográfica de `geografische Fläche des Netzgebietes` y confirmar qué perímetro cubren los archivos HV 2019–2023.
+No se encontró un polígono público de Stromnetz Berlin que permita probar si los 1.046,64 km² corresponden a una frontera distinta, a una definición regulatoria más amplia o a una actualización metodológica. Antes de escalar a distritos, Länder o Alemania completa se debe solicitar al operador la definición cartográfica de `geografische Fläche des Netzgebietes` y confirmar qué perímetro cubren los archivos HV 2019–2023. La solicitud preparada se encuentra en [solicitud a Stromnetz Berlin](solicitud_stromnetz_berlin_perimetro_y_semantica.md).
 
 La ausencia de esa confirmación no bloquea el piloto de Berlín, pero impide llamar a la serie HV una medición exacta del área de red sin el calificativo `proxy`.
 
