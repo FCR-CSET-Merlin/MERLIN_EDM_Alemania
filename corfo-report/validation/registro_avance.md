@@ -12,7 +12,7 @@ Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_
 
 | Fase | Estado | Avance verificable | Evidencia | Criterio de cierre |
 |---|---|---|---|---|
-| Fase 0 — Factibilidad y contrato de datos | **En curso** | Restlast SLP 2023 auditada: 35.040 intervalos de 15 min, pero no representa demanda total; perímetro y categorías restantes pendientes | [Auditoría SLP 2023](sources/stromnetz_berlin_restlast_2023.md), [inventario](sources/inventario_fuentes.csv) | Fuentes fichadas, hashes registrados, perímetro y cobertura verificados, dictamen GO/GO condicionado/NO-GO |
+| Fase 0 — Factibilidad y contrato de datos | **En curso** | Categorías 2023 auditadas; perfil HV anual es candidato principal, pero existe discrepancia de perímetro 891,12/1.046,64 km² | [Auditoría de categorías y perímetro](sources/stromnetz_berlin_categorias_perimetro_2023.md), [inventario](sources/inventario_fuentes.csv) | Semántica, perímetro y cobertura histórica verificados; dictamen GO/GO condicionado/NO-GO |
 | Fase 1 — Homologación territorial, sectorial y temporal | Pendiente | Sin contrato alemán validado | — | Correspondencias de red, Berlín, distritos y sectores; unidades y DST verificadas |
 | Fase 2 — Línea base y adaptación | Pendiente | No hay ejecución del modelo alemán | — | Modelo, columnas, scaler, entorno y diferencias Chile–Alemania identificados |
 | Fase 3 — Reconstrucción histórica de Berlín | Pendiente | No hay series ni tablas alemanas generadas | [Series](../results/timeseries/README.md) | Corrida reproducible con cobertura, perímetro y hashes |
@@ -23,7 +23,7 @@ Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_
 
 | Grupo | Estado | Decisión actual |
 |---|---|---|
-| Stromnetz Berlin Restlast SLP 2023 | **En revisión / GO condicionado** | Serie completa de 35.040 intervalos; es carga residual SLP calculada, no demanda total; falta perímetro y DST |
+| Stromnetz Berlin — categorías 2023 | **En revisión / GO condicionado** | Perfiles anuales completos por niveles; HV es candidato principal, pero no deben sumarse niveles y el perímetro sigue en revisión |
 | Statistik Berlin-Brandenburg | Candidata anual | Revisar balance, sectores, unidades y revisiones |
 | Umweltatlas Berlin | Candidata espacial | Revisar cobertura distrital, privacidad y año de referencia |
 | DWD/ERA5-Land | Candidata climática | Seleccionar fuente, versión y tratamiento horario |
@@ -44,9 +44,10 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 
 ## Próximas acciones
 
-1. Auditar otras categorías publicadas por Stromnetz Berlin y determinar si existe una serie anual de demanda total.
-2. Resolver el perímetro y la desambiguación DST del archivo Restlast SLP 2023.
-3. Obtener y fichar el balance eléctrico de Berlín y su clasificación sectorial.
+1. Obtener geometrías o documentación cartográfica del área de red y compararlas con VG250/Berlín administrativo.
+2. Confirmar con la documentación del operador la semántica del perfil HV como carga agregada.
+3. Descargar categorías HV 2019–2023 y repetir controles de cobertura, energía y DST.
+4. Obtener y fichar el balance eléctrico de Berlín y su clasificación sectorial.
 3. Fijar el período común y la definición formal del objetivo (`Berlin-administrative` o `Stromnetz-Berlin-area`).
 4. Completar las correspondencias territoriales y el contrato de sectores alemanes.
 5. Emitir el dictamen de Fase 0 antes de descargar o transformar grandes volúmenes de datos.
@@ -58,6 +59,7 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 | 2026-09-21 | Preparación | Se creó la reportabilidad alemana, se separó la referencia chilena y se publicó el plan de adaptación | Commit `c951f09`; estructura lista | [Reportabilidad](../README.md), [plan](../../PLAN_TRABAJO_ADAPTACION_ALEMANIA.md) |
 | 2026-09-21 | Fase 0 | Se inicializó este registro de avance | Fase 0 marcada como `En curso`; no se declara KPI | Este archivo |
 | 2026-09-21 | Fase 0 | Se descargó y auditó Restlast SLP 2023 | 35.040 intervalos completos; GO condicionado para SLP, no demanda total | [Auditoría SLP](sources/stromnetz_berlin_restlast_2023.md) |
+| 2026-09-21 | Fase 0 | Se auditaron perfiles HV, HV/MV, MV, MV/LV, LV, pérdidas y pronóstico SLP 2023 | HV es candidato anual principal; perfiles jerárquicos no sumables; perímetro en revisión por discrepancia 891,12/1.046,64 km² | [Categorías y perímetro](sources/stromnetz_berlin_categorias_perimetro_2023.md) |
 
 ## Regla de actualización
 

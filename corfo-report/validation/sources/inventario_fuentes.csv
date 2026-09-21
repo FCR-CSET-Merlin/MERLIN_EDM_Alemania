@@ -10,3 +10,7 @@ Agencia Federal de Empleo,covariable economica,empleo,territorial; mensual/anual
 BDEW,prior de perfiles,perfiles estandar de carga,tipos de consumidor; horario,contexto,no,no usar como validacion independiente
 BKG VG250,homologacion espacial,limites y codigos,administrativo; anual,candidata,no,anio de limites; CRS; correspondencia con red
 DemandRegio,comparador modelado,regionalizacion de demanda,Alemania; temporal/espacial variable,contexto,no,marcar como modelada; no reemplazar referencia independiente
+Stromnetz Berlin Netzlast Hochspannung 2023,objetivo horario principal,perfil anual de carga en alta tension,area de red; 15 min,en_revision,condicionado,semantica de carga total; perimetro; DST; repetir 2019-2023
+Stromnetz Berlin niveles de tension 2023,control jerarquico,perfiles HV/MV/MV-LV/LV,area de red; 15 min,en_revision,no,no sumar niveles; confirmar semantica y nivel
+Stromnetz Berlin Netzverluste 2023,componente de balance,perdidas de red,area de red; 15 min,en_revision,no,definicion y uso separado de demanda
+Stromnetz Berlin Fahrplanprognosen SLP 2023,control/prior,pronostico de clientes SLP,area de red; 15 min,contexto,no,no usar como medicion independiente
