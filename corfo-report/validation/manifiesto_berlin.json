@@ -1,0 +1,25 @@
+{
+  "id_evidencia": "CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO",
+  "estado": "planificado",
+  "pais": "Alemania",
+  "territorio": "Berlin",
+  "objetivo": "Reconstruccion historica de demanda electrica horaria",
+  "fecha_corte": null,
+  "repositorio": {
+    "commit": null,
+    "rama": null
+  },
+  "entorno": {
+    "python": null,
+    "dependencias": null
+  },
+  "fuentes": [],
+  "entradas": [],
+  "salidas": [],
+  "kpis": [],
+  "limitaciones": [
+    "La demanda de red y el consumo final deben reconciliarse explicitamente.",
+    "El perimetro del area de red debe compararse con el limite administrativo de Berlin.",
+    "La evidencia KPI no existe hasta ejecutar y auditar la reconstruccion alemana."
+  ]
+}

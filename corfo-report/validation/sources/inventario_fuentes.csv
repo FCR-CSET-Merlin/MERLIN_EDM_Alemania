@@ -1,0 +1,12 @@
+fuente,rol,variable,escala_resolucion,estado,comparador_kpi,verificaciones_pendientes
+Stromnetz Berlin,objetivo horario,demanda de red y carga residual,area de red; 15 min o serie publicada,candidata,no,anio completo; unidades; zona horaria; perimetro; faltantes
+Statistik Berlin-Brandenburg,referencia anual,consumo final y balance sectorial,Berlin; anual,candidata,no,definiciones; revisiones; sectores; unidades
+Umweltatlas Berlin,desagregacion espacial,consumo electrico territorial,distritos y bloques; anual,candidata,no,privacidad; cobertura; codigos; perimetro
+SMARD,contexto nacional,consumo efectivo desde red,Alemania; 15 min,contexto,no,desagregacion territorial y correspondencia con Berlin
+DWD o ERA5-Land,variable exogena,temperatura,estacion o grilla; horaria/subhoraria,candidata,no,version; cobertura; zona horaria; descarga
+Zensus 2022,covariable estructural,poblacion y vivienda,grilla/territorio; censal,candidata,no,nivel geografico; licencia; compatibilidad temporal
+Destatis GENESIS,covariable economica,poblacion; actividad; energia,territorial; periodicidad variable,candidata,no,tabla; unidad; version; nivel geografico
+Agencia Federal de Empleo,covariable economica,empleo,territorial; mensual/anual,candidata,no,sector WZ; cobertura distrital
+BDEW,prior de perfiles,perfiles estandar de carga,tipos de consumidor; horario,contexto,no,no usar como validacion independiente
+BKG VG250,homologacion espacial,limites y codigos,administrativo; anual,candidata,no,anio de limites; CRS; correspondencia con red
+DemandRegio,comparador modelado,regionalizacion de demanda,Alemania; temporal/espacial variable,contexto,no,marcar como modelada; no reemplazar referencia independiente

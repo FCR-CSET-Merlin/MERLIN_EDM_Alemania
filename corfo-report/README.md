@@ -1,61 +1,50 @@
-# CORFO Report Results
+# Reportabilidad CORFO — Alemania
 
-## Main results
+Esta es la carpeta activa de reportabilidad del fork alemán de MERLIN EDM. Contendrá exclusivamente evidencia generada para Alemania, comenzando por el piloto de reconstrucción histórica de Berlín.
 
-MERLIN EDM aporta evidencia de demanda **eléctrica de Chile, año 2024, 16 regiones y cinco sectores**. El MAPE del total es 1,11 %. Cuatro de cinco sectores quedan bajo 35 % (80 %); Transporte registra 35,03 %. Este resultado cumple la condición numérica local de mayoría del indicador HC2-2, pero **no acredita el cumplimiento global de HC2**. La métrica es espacial sobre energía anual y el BRE interviene en el escalamiento; su aceptación como evidencia de precisión está pendiente de revisión.
+Los resultados heredados de Chile se conservan en [`corfo-report-chile-referencia/`](../corfo-report-chile-referencia/). No deben citarse como evidencia de un KPI alemán.
 
-| Resultado | Archivo | Script/proceso | Fuente | Descripción |
-|---|---|---|---|---|
-| Resumen numérico HC2 Chile 2024 | [kpi_summary.csv](results/tables/kpi_summary.csv) | [reportar_kpi.py](../analisis/ape_bre/reportar_kpi.py) | MAPE de las 16 regiones y meta HC2 | Conteo de sectores bajo 35 %, excluyendo Total |
-| Reporte interpretativo 2024 | [Reporte BRE](validation/ape_bre/resultados_modelo_bre_2024.md) | Redacción revisada a partir de calcular.py | GeoPackage regional y BRE 2024 | APE, MAPE y limitaciones |
+La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FCR-CSET-Merlin/merlin-index/blob/main/08-reportaje-corfo/estandar-estructura-corfo-report.md), separando resultados, validación, reproducibilidad y evidencia KPI.
 
-## Validation
+## Estado actual
 
-| Validación | Archivo | Referencia | Descripción |
-|---|---|---|---|
-| Umbral comprometido y estado | [Cumplimiento KPI](validation/cumplimiento_kpi.md), [CSV](validation/kpi_validation.csv) | [HC2-2](https://github.com/FCR-CSET-Merlin/merlin-index/blob/a9b855f60c4ad207d7c2544a07e4f43d25356209/05-roadmap/01-antecedentes/Resultados_Excel_CORFO.md) | Resultado por sector, sin redondear para la decisión |
-| APE regional y sectorial 2024 | [CSV APE](validation/ape_bre/ape_region_sector_bre_2024.csv) | BRE disponible 2024 | 96 pares: 16 regiones × cinco sectores y Total |
-| MAPE espacial 2024 | [CSV MAPE](validation/ape_bre/mape_regional_bre_2024.csv) | Media de los 16 APE por categoría | Sin ponderación por energía |
-| Comparaciones 2024–2025 | [Resumen](validation/ape_bre/resultados.md), [APE](validation/ape_bre/ape_region_sector.csv), [MAPE](validation/ape_bre/mape_16_regiones.csv) | BRE 2024; extrapolación para 2025 | 2025 no se usa para acreditar el KPI |
-| Trazabilidad y alcance | [Ficha](validation/ficha_evidencia_edm_2024.md), [manifiesto](validation/manifiesto_edm_2024.json) | Entradas identificadas por SHA-256 | Distingue generación de métricas de inferencia original |
-| Cumplimiento del estándar | [Auditoría](validation/auditoria_estandar.md) | [Estándar CORFO](https://github.com/FCR-CSET-Merlin/merlin-index/blob/a9b855f60c4ad207d7c2544a07e4f43d25356209/08-reportaje-corfo/estandar-estructura-corfo-report.md) | Requisitos satisfechos, excepciones y brechas |
+| Elemento | Estado |
+|---|---|
+| Caso piloto | Berlín, Alemania |
+| Objetivo | Reconstrucción histórica de demanda eléctrica horaria |
+| Fuentes alemanas | Candidatas; pendientes de cobertura, perímetro, unidad y licencia |
+| Modelo alemán | No ejecutado en esta etapa |
+| KPI alemán | No evaluado; no se declara cumplimiento |
+| Próximo producto | Inventario de fuentes y dictamen de factibilidad |
 
-## Extensión histórica planificada
+## Resultados previstos
 
-Se inspeccionaron los insumos y las particiones para reconstruir años anteriores a 2024. El [diagnóstico y guía paso a paso](validation/guia_validacion_historica.md) recomienda un piloto regional 2023 y documenta los faltantes BRE 2018–2022. El [inventario](validation/inventario_historico.json) respalda la cobertura encontrada. Esta revisión no ejecuta inferencia ni añade métricas históricas al KPI.
+| Resultado | Ubicación | Regla |
+|---|---|---|
+| Tablas reconstruidas | [`results/tables/`](results/tables/) | Solo Alemania, con año, territorio, sector y unidad |
+| Figuras | [`results/figures/`](results/figures/) | Fuente, cobertura y fecha de generación |
+| Series horarias | [`results/timeseries/`](results/timeseries/) | Pesadas fuera de Git; índice y hash obligatorios |
+| Auditoría de fuentes | [`validation/sources/`](validation/sources/) | Cobertura, perímetro, licencia y transformaciones |
+| Validación Berlín | [`validation/berlin/`](validation/berlin/) | Comparaciones por año, territorio y sector |
+| KPI | [`validation/kpi_plan.md`](validation/kpi_plan.md) | Fórmula, umbral, denominador e independencia |
+| Ficha | [`validation/ficha_evidencia_berlin.md`](validation/ficha_evidencia_berlin.md) | `cumple`, `no cumple` o `no evaluable` |
+| Manifiesto | [`validation/manifiesto_berlin.json`](validation/manifiesto_berlin.json) | Commits, entradas, salidas y hashes |
 
-El piloto regional 2023 ya fue ejecutado en la rama `feature/validacion-bre-2023`. Sus tablas, figuras y manifiesto están en [validation/bre_2023](validation/bre_2023/). El caso usa el modelo global congelado y el BRE 2023 para construir shares y parámetros de escalamiento; por ello reporta consistencia anual con la referencia de entrada y no una validación independiente. El MAPE total es 0,96284 % y los cinco sectores quedan bajo 35 %; esta cifra no acredita por sí sola el HC2 global.
+## Fuentes candidatas
 
-## Reproducibility
+- [Stromnetz Berlin](https://www.stromnetz.berlin/uber-uns/veroffentlichungspflichten/energiewirtschaftsgesetz-enwg/)
+- [Statistik Berlin-Brandenburg](https://www.statistik-berlin-brandenburg.de/e-iv-4-j/)
+- [Umweltatlas Berlin](https://daten.berlin.de/datensaetze/energieverbrauch-strom-umweltatlas-wfs-238921d9)
+- [SMARD](https://www.smard.de/page/en/wiki-article/6078/6036/electricity-consumption)
+- [DWD](https://www.dwd.de/EN/ourservices/cdc/cdc.html?lsbId=646268) y [ERA5-Land](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=documentation)
+- [Destatis/GENESIS](https://www.destatis.de/EN/Service/OpenData/api-webservice.html), [Zensus 2022](https://www.destatis.de/zensus2022?nn=1344278) y [BKG VG250](https://gdz.bkg.bund.de/index.php/default/wfs-verwaltungsgebiete-1-250-000-stand-01-01-wfs-vg250.html)
 
-Desde la raíz, con Python 3 y bibliotecas estándar:
+La matriz y el dictamen se documentan en [`PLAN_TRABAJO_ADAPTACION_ALEMANIA.md`](../PLAN_TRABAJO_ADAPTACION_ALEMANIA.md).
 
-```bash
-python analisis/ape_bre/reportar_kpi.py
-```
+## KPI y reproducibilidad
 
-Este comando ejecuta `calcular.py`, regenera los CSV de ambos años, los extractos 2024, el resumen de errores y la evidencia KPI (CSV, Markdown y manifiesto). Verifica fórmulas, cobertura y el umbral estricto. No ejecuta entrenamiento ni inferencia. El informe interpretativo y la ficha son documentación revisada manualmente; deben revisarse si cambian las cifras.
+La meta operativa es MAPE ≤35 %. Cada resultado debe indicar si mide demanda de red, consumo final o consistencia condicionada. No se publica `cumple` sin una fila en `kpi_validation.csv`, una explicación en `cumplimiento_kpi.md` y un manifiesto reproducible.
 
-Los archivos de entrada se leen de `/srv/compartido/inbox/datos_modelos_MERLIN_EDM_prot_3/data/`:
+Cada corrida registra commit, entorno, modelo, scaler, columnas, URL/fecha/licencia/hash de fuentes, período, zona horaria, cobertura, faltantes, transformaciones, perímetro y hashes de salida.
 
-- `rec_2024_2025/results/capas_regionales/wp2_output_demanda_electrica_regional.gpkg`: totales anuales modelados en GWh, procedentes de [capa_regional.ipynb](../prototipo_3/rec_2024_2025/capa_regional.ipynb).
-- `raw/wp2_elec_input_sector_shares_raw.csv`: valores sectoriales BRE; se filtra 2024 para el KPI.
-- `raw/reg_alias.json`: homologación de regiones.
-
-Las rutas están definidas en `calcular.py`. La reproducción requiere acceso a esos insumos externos; el manifiesto permite comprobar su identidad. No se distribuyen datasets pesados en Git. Los Parquet horarios y GeoPackage comunales/regionales permanecen en ese directorio externo. El procedimiento original de inferencia está descrito en [Reconstrucción 2024–2025](../prototipo_3/rec_2024_2025/README.md); su entorno ML y sus artefactos son necesarios para repetir la inferencia, no para recalcular estas métricas.
-
-## Estructura y alcance documental
-
-```text
-corfo-report/
-├── results/
-│   ├── figures/
-│   └── tables/
-└── validation/
-    ├── ape_bre/
-    └── figures/
-```
-
-Las carpetas de figuras están reservadas para futuras exportaciones; no hay figuras independientes trasladadas. Las imágenes incrustadas en notebooks permanecen allí. El código se mantiene en sus directorios originales. Los resultados comparativos se consolidaron por petición expresa del usuario; `reportes/README.md` conserva una referencia a su nueva ubicación. No se incorporaron comparadores nuevos ni escenarios adicionales.
-
-La fuente del compromiso se consultó en merlin-index, commit `a9b855f60c4ad207d7c2544a07e4f43d25356209`. La meta documental no prueba por sí misma el logro. Revisar [ficha de evidencia](validation/ficha_evidencia_edm_2024.md) antes de declarar cumplimiento contractual.
+Todavía no existen resultados alemanes ni una evaluación KPI; esta carpeta contiene el plan y las plantillas de evidencia.

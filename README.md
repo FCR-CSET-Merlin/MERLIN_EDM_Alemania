@@ -1,6 +1,6 @@
 # MERLIN EDM: Modelo de estimación y desagregación de demanda eléctrica con Machine Learning
 
-Este repositorio contiene el pipeline completo de ingeniería de datos y machine learning diseñado para la predicción y desagregación espacial y sectorial de la demanda eléctrica en Chile. El enfoque permite estimar el consumo a escala regional y comunal, dividiéndolo en cinco sectores estratégicos: **Residencial (R), Comercial (C), Público (P), Industrial (I) y Transporte (T)**.
+Este repositorio es el fork específico para adaptar y replicar en Alemania el pipeline de ingeniería de datos y machine learning desarrollado originalmente para Chile. El piloto inicial es Berlín y sus sectores, fronteras, fuentes y resolución se definirán mediante el [plan de trabajo alemán](PLAN_TRABAJO_ADAPTACION_ALEMANIA.md).
 
 La metodología base de este proyecto está basada en las técnicas de desagregación (downscaling) espacial propuestas por *Kusumoto et al. (2024)*, adaptada a la disponibilidad de datos y metadatos territoriales del sector eléctrico chileno.
 
@@ -28,9 +28,11 @@ MERLIN_EDM/
 │       ├── forecast_edm/        # Motores modulares de inferencia (Shares, Scaling, Inference, Time Features).
 │       └── train_mlp_v2.py      # Script principal para entrenamiento del modelo global.
 │
-├── corfo-report/               # Reportes, tablas y figuras consolidados.
+├── corfo-report/               # Reportabilidad activa: resultados exclusivamente alemanes.
 │   ├── results/                # Figuras y tablas de simulaciones.
 │   └── validation/             # Comparaciones APE/MAPE y evidencia de validación.
+├── corfo-report-chile-referencia/ # Evidencia heredada de Chile; no es KPI alemán.
+├── PLAN_TRABAJO_ADAPTACION_ALEMANIA.md
 ├── analisis/ape_bre/           # Script reproducible de APE/MAPE.
 │
 ├── .gitignore
@@ -41,7 +43,7 @@ MERLIN_EDM/
 
 ## Reportes y validación
 
-Los reportes y resultados de comparación se encuentran en [corfo-report](corfo-report/README.md). Consulta el [reporte BRE 2024](corfo-report/validation/ape_bre/resultados_modelo_bre_2024.md) para los APE regionales y sectoriales y el MAPE entre las 16 regiones.
+La reportabilidad activa y el plan de adaptación se encuentran en [corfo-report](corfo-report/README.md) y [PLAN_TRABAJO_ADAPTACION_ALEMANIA.md](PLAN_TRABAJO_ADAPTACION_ALEMANIA.md). Los resultados chilenos heredados están separados en [corfo-report-chile-referencia](corfo-report-chile-referencia/README.md) y no deben usarse para acreditar KPIs de Alemania.
 
 ## Arquitectura del Modelo (Modelo Global)
 

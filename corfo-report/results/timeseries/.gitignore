@@ -1,0 +1,2 @@
+# Series horarias pesadas; el índice registra rutas, cobertura y hashes.
+*.parquet

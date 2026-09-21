@@ -8,7 +8,7 @@ La estructura mínima estaba presente. Faltaban el índice tabular obligatorio, 
 
 | Requisito | Evidencia / resultado |
 |---|---|
-| Rutas obligatorias | corfo-report/results/figures, results/tables, validation y README.md presentes |
+| Rutas obligatorias | corfo-report-chile-referencia/results/figures, results/tables, validation y README.md presentes |
 | README con Main results, Validation, Reproducibility | Índice actualizado con archivo, proceso, fuente y descripción |
 | Resultados finales pequeños | CSV KPI en results/tables; APE/MAPE en validation; sin datasets pesados |
 | Figuras finales | Carpetas reservadas, sin figuras independientes existentes; no se fabrican evidencias |

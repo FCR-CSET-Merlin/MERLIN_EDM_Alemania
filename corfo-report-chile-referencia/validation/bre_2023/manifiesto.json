@@ -122,42 +122,42 @@
   ],
   "outputs": [
     {
-      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report/validation/bre_2023/ape_region_sector.csv",
+      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report-chile-referencia/validation/bre_2023/ape_region_sector.csv",
       "sha256": "5cdd144dec9cea6a0a08913611da55a4efe11bed00b7dbb1c7caa613c38fde17",
       "bytes": 8656
     },
     {
-      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report/validation/bre_2023/mape_sectorial.csv",
+      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report-chile-referencia/validation/bre_2023/mape_sectorial.csv",
       "sha256": "cbad09bc8635ea822043bc644ae305d93a75b8859c8f9ebe0ce407808e936805",
       "bytes": 248
     },
     {
-      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report/validation/bre_2023/kpi_validation.csv",
+      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report-chile-referencia/validation/bre_2023/kpi_validation.csv",
       "sha256": "d882b8fb54f0aab03c05a7630afb16fd63aa3f24ba437fa57860ecba7dc1ea34",
       "bytes": 1419
     },
     {
-      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report/validation/bre_2023/mape_sectorial.png",
+      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report-chile-referencia/validation/bre_2023/mape_sectorial.png",
       "sha256": "24d10e4b64cee9c5d1559d3da44cff7b201b181c250f58d00c83af6fa1f1d83a",
       "bytes": 54259
     },
     {
-      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report/validation/bre_2023/ape_region_sector.png",
+      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report-chile-referencia/validation/bre_2023/ape_region_sector.png",
       "sha256": "7d7dc76d81d20bfcfa597d85100764b23c8b7db5631d7bf8275b8eac49cc4508",
       "bytes": 190955
     },
     {
-      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report/validation/bre_2023/README.md",
+      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report-chile-referencia/validation/bre_2023/README.md",
       "sha256": "fbaa782abeff69d3a146f13cf16ffe7c4c840a3708e4dfd28ce496a15e970f72",
       "bytes": 4707
     },
     {
-      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report/results/tables/demanda_regional_sectorial_2023.csv",
+      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report-chile-referencia/results/tables/demanda_regional_sectorial_2023.csv",
       "sha256": "3238ed3dc3f27326c886460ca4aaa2b61caf38d0b8157b2b4094fe38aa4c21a5",
       "bytes": 2285
     },
     {
-      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report/results/figures/demanda_regional_2023.png",
+      "path": "/srv/compartido/inbox/MERLIN_EDM/corfo-report-chile-referencia/results/figures/demanda_regional_2023.png",
       "sha256": "35760a668e315317e3ff02e5c8ba0a92f8d6c50733f2d755437479db6ccdb773",
       "bytes": 87580
     },

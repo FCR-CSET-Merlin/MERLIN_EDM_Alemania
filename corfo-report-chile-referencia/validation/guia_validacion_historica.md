@@ -133,7 +133,7 @@ APE regional = `100 * abs(pred - BRE) / abs(BRE)`. MAPE sectorial anual = media 
 
 ### 8. Incorporar la evidencia CORFO y ampliar años
 
-Guardar comparaciones, gráficos de error y manifiesto bajo `corfo-report/validation/`, separados por año o con columna explícita. Guardar tablas de simulación sin comparación en `results/tables` y figuras de simulación en `results/figures`; las series pesadas quedan fuera de Git. Actualizar índice y ficha.
+Guardar comparaciones, gráficos de error y manifiesto bajo `corfo-report-chile-referencia/validation/`, separados por año o con columna explícita. Guardar tablas de simulación sin comparación en `results/tables` y figuras de simulación en `results/figures`; las series pesadas quedan fuera de Git. Actualizar índice y ficha.
 
 Para cada año, evaluar el KPI de cinco sectores con umbral **estricto MAPE < 35 %**, sin contar Total como sexto sector. Reportar denominador y referencias disponibles, sectores que no cumplen y estado de aceptación del comparador. No anunciar cumplimiento histórico hasta ejecutar la inferencia y calcular las métricas. No seleccionar solamente años/sectores favorables.
 

@@ -34,27 +34,27 @@
   ],
   "outputs": [
     {
-      "path": "corfo-report/validation/ape_bre/ape_region_sector.csv",
+      "path": "corfo-report-chile-referencia/validation/ape_bre/ape_region_sector.csv",
       "sha256": "a07f05fc85bd6938cb6add7c1ed5413f950a1ba289ab00b116d703cf76e76ec6"
     },
     {
-      "path": "corfo-report/validation/ape_bre/mape_16_regiones.csv",
+      "path": "corfo-report-chile-referencia/validation/ape_bre/mape_16_regiones.csv",
       "sha256": "ffdec940d1a681a188ad898d344a76bb8e99f890e6ac4d229ede315601153168"
     },
     {
-      "path": "corfo-report/validation/ape_bre/mape_regional_bre_2024.csv",
+      "path": "corfo-report-chile-referencia/validation/ape_bre/mape_regional_bre_2024.csv",
       "sha256": "d9d4a9fb8b8b76060be62c5c35fbe075b409ec051c54034e2ee159654f0bbbe1"
     },
     {
-      "path": "corfo-report/validation/ape_bre/ape_region_sector_bre_2024.csv",
+      "path": "corfo-report-chile-referencia/validation/ape_bre/ape_region_sector_bre_2024.csv",
       "sha256": "eb65699b499c3e338fb391fb739b3bc6b1848b6292f90db60aefed68bf91de68"
     },
     {
-      "path": "corfo-report/validation/kpi_validation.csv",
+      "path": "corfo-report-chile-referencia/validation/kpi_validation.csv",
       "sha256": "49286f651e9fd46d7ed5f3f38cac46dbfbb31d45051ff9aebdefca072c22a075"
     },
     {
-      "path": "corfo-report/results/tables/kpi_summary.csv",
+      "path": "corfo-report-chile-referencia/results/tables/kpi_summary.csv",
       "sha256": "c7b663af3dfa96b440997e0952e6d97470853d0ec0c825a023b903e4c365e0f6"
     }
   ],
