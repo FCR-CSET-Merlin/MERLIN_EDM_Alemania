@@ -1,5 +1,5 @@
 fuente,rol,variable,escala_resolucion,estado,comparador_kpi,verificaciones_pendientes
-Stromnetz Berlin,objetivo horario,demanda de red y carga residual,area de red; 15 min o serie publicada,candidata,no,anio completo; unidades; zona horaria; perimetro; faltantes
+Stromnetz Berlin Restlast SLP 2023,objetivo horario parcial,carga residual de clientes SLP,area de red; 15 min,en_revision,condicionado,perimetro; zona horaria DST; no equivale a demanda total; auditar otras categorias
 Statistik Berlin-Brandenburg,referencia anual,consumo final y balance sectorial,Berlin; anual,candidata,no,definiciones; revisiones; sectores; unidades
 Umweltatlas Berlin,desagregacion espacial,consumo electrico territorial,distritos y bloques; anual,candidata,no,privacidad; cobertura; codigos; perimetro
 SMARD,contexto nacional,consumo efectivo desde red,Alemania; 15 min,contexto,no,desagregacion territorial y correspondencia con Berlin

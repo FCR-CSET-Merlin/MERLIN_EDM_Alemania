@@ -12,7 +12,7 @@ Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_
 
 | Fase | Estado | Avance verificable | Evidencia | Criterio de cierre |
 |---|---|---|---|---|
-| Fase 0 — Factibilidad y contrato de datos | **En curso** | Plan, estructura CORFO e inventario inicial de fuentes documentados; archivos y cobertura aún no auditados | [Plan](../../PLAN_TRABAJO_ADAPTACION_ALEMANIA.md), [inventario](sources/inventario_fuentes.csv) | Fuentes fichadas, hashes registrados, perímetro y cobertura verificados, dictamen GO/GO condicionado/NO-GO |
+| Fase 0 — Factibilidad y contrato de datos | **En curso** | Restlast SLP 2023 auditada: 35.040 intervalos de 15 min, pero no representa demanda total; perímetro y categorías restantes pendientes | [Auditoría SLP 2023](sources/stromnetz_berlin_restlast_2023.md), [inventario](sources/inventario_fuentes.csv) | Fuentes fichadas, hashes registrados, perímetro y cobertura verificados, dictamen GO/GO condicionado/NO-GO |
 | Fase 1 — Homologación territorial, sectorial y temporal | Pendiente | Sin contrato alemán validado | — | Correspondencias de red, Berlín, distritos y sectores; unidades y DST verificadas |
 | Fase 2 — Línea base y adaptación | Pendiente | No hay ejecución del modelo alemán | — | Modelo, columnas, scaler, entorno y diferencias Chile–Alemania identificados |
 | Fase 3 — Reconstrucción histórica de Berlín | Pendiente | No hay series ni tablas alemanas generadas | [Series](../results/timeseries/README.md) | Corrida reproducible con cobertura, perímetro y hashes |
@@ -23,7 +23,7 @@ Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_
 
 | Grupo | Estado | Decisión actual |
 |---|---|---|
-| Stromnetz Berlin | Candidata principal | Auditar si los archivos contienen series anuales completas y qué perímetro representan |
+| Stromnetz Berlin Restlast SLP 2023 | **En revisión / GO condicionado** | Serie completa de 35.040 intervalos; es carga residual SLP calculada, no demanda total; falta perímetro y DST |
 | Statistik Berlin-Brandenburg | Candidata anual | Revisar balance, sectores, unidades y revisiones |
 | Umweltatlas Berlin | Candidata espacial | Revisar cobertura distrital, privacidad y año de referencia |
 | DWD/ERA5-Land | Candidata climática | Seleccionar fuente, versión y tratamiento horario |
@@ -44,8 +44,9 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 
 ## Próximas acciones
 
-1. Auditar los archivos publicados por Stromnetz Berlin: años, intervalos, unidades, zona horaria, faltantes y perímetro.
-2. Obtener y fichar el balance eléctrico de Berlín y su clasificación sectorial.
+1. Auditar otras categorías publicadas por Stromnetz Berlin y determinar si existe una serie anual de demanda total.
+2. Resolver el perímetro y la desambiguación DST del archivo Restlast SLP 2023.
+3. Obtener y fichar el balance eléctrico de Berlín y su clasificación sectorial.
 3. Fijar el período común y la definición formal del objetivo (`Berlin-administrative` o `Stromnetz-Berlin-area`).
 4. Completar las correspondencias territoriales y el contrato de sectores alemanes.
 5. Emitir el dictamen de Fase 0 antes de descargar o transformar grandes volúmenes de datos.
@@ -56,6 +57,7 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 |---|---|---|---|---|
 | 2026-09-21 | Preparación | Se creó la reportabilidad alemana, se separó la referencia chilena y se publicó el plan de adaptación | Commit `c951f09`; estructura lista | [Reportabilidad](../README.md), [plan](../../PLAN_TRABAJO_ADAPTACION_ALEMANIA.md) |
 | 2026-09-21 | Fase 0 | Se inicializó este registro de avance | Fase 0 marcada como `En curso`; no se declara KPI | Este archivo |
+| 2026-09-21 | Fase 0 | Se descargó y auditó Restlast SLP 2023 | 35.040 intervalos completos; GO condicionado para SLP, no demanda total | [Auditoría SLP](sources/stromnetz_berlin_restlast_2023.md) |
 
 ## Regla de actualización
 
