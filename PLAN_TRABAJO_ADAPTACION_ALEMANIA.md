@@ -47,12 +47,12 @@ Antes de aceptar una fuente se debe registrar URL, responsable, fecha de acceso,
 1. Confirmar repositorio, commit y entorno Python/ML.
 2. Levantar fichas de cada fuente y conservar sus hashes.
 3. Inspeccionar los archivos de Stromnetz Berlin y comprobar si contienen años completos.
-4. Determinar si el área de red coincide con Berlín o declarar el objetivo como `Stromnetz-Berlin-area`.
+4. Fijar el perímetro operativo como `Berlin-administrative` (`11000`) y etiquetar la serie HV como `Stromnetz-Berlin-HV-area-proxy`; mantener la métrica 1.046,64 km² como indicador regulatorio separado.
 5. Comparar demanda de red, consumo final, pérdidas y autoconsumo.
 6. Fijar `Europe/Berlin` para fuentes y UTC para uniones internas, conservando las horas DST repetidas/ausentes.
 7. Elegir el período común; `2019–2023` es candidato hasta verificar cobertura.
 
-**Producto:** inventario de fuentes, hashes y dictamen `GO`, `GO condicionado` o `NO-GO` en `corfo-report/validation/sources/`.
+**Producto:** inventario de fuentes, hashes, decisión territorial y dictamen `GO`, `GO condicionado` o `NO-GO` en `corfo-report/validation/sources/`.
 
 ### Fase 1 — Homologación territorial, sectorial y temporal
 

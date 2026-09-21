@@ -8,9 +8,9 @@ Zensus 2022,covariable estructural,poblacion y vivienda,grilla/territorio; censa
 Destatis GENESIS,covariable economica,poblacion; actividad; energia,territorial; periodicidad variable,candidata,no,tabla; unidad; version; nivel geografico
 Agencia Federal de Empleo,covariable economica,empleo,territorial; mensual/anual,candidata,no,sector WZ; cobertura distrital
 BDEW,prior de perfiles,perfiles estandar de carga,tipos de consumidor; horario,contexto,no,no usar como validacion independiente
-BKG VG250,homologacion espacial,limites y codigos,administrativo; anual,candidata,no,anio de limites; CRS; correspondencia con red
+BKG VG250,homologacion espacial,limites y codigos,administrativo; anual,aceptada para perimetro piloto,no,codigo 11000; CRS EPSG:25832; vigencia del limite; correspondencia exacta con red pendiente; atribucion DL-DE/by-2-0
 DemandRegio,comparador modelado,regionalizacion de demanda,Alemania; temporal/espacial variable,contexto,no,marcar como modelada; no reemplazar referencia independiente
-Stromnetz Berlin Netzlast Hochspannung 2023,objetivo horario principal,perfil anual de carga en alta tension,area de red; 15 min,en_revision,condicionado,semantica de carga total; perimetro; DST; repetir 2019-2023
+Stromnetz Berlin Netzlast Hochspannung 2023,objetivo horario principal,perfil anual de carga en alta tension,area de red; 15 min,en_revision,condicionado,semantica de carga total; proxy territorial; DST; repetir 2019-2023; solicitar geometria al operador
 Stromnetz Berlin niveles de tension 2023,control jerarquico,perfiles HV/MV/MV-LV/LV,area de red; 15 min,en_revision,no,no sumar niveles; confirmar semantica y nivel
 Stromnetz Berlin Netzverluste 2023,componente de balance,perdidas de red,area de red; 15 min,en_revision,no,definicion y uso separado de demanda
 Stromnetz Berlin Fahrplanprognosen SLP 2023,control/prior,pronostico de clientes SLP,area de red; 15 min,contexto,no,no usar como medicion independiente

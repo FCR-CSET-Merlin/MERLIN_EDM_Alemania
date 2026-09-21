@@ -1,6 +1,6 @@
 # Auditoría de categorías y perímetro — Stromnetz Berlin 2023
 
-**Estado:** perfiles anuales confirmados; objetivo horario principal y perímetro administrativo todavía `en revisión`.
+**Estado:** perfiles anuales confirmados; perímetro operativo del piloto fijado como Berlín administrativo/HV-MV proxy; semántica exacta del área de red aún pendiente.
 **Fecha de acceso:** 21 de septiembre de 2026.
 **Fuente principal:** <https://www.stromnetz.berlin/uber-uns/veroffentlichungspflichten/energiewirtschaftsgesetz-enwg/>
 
@@ -49,19 +49,18 @@ El histórico oficial de área de red (`historie-netzgebietsdaten-berlin.xlsx`) 
 - área servida en baja tensión: **503,5 km²**;
 - población del área de red: **3.782.202** habitantes.
 
-La página vigente de Stromnetz Berlin informa, para sus datos actuales, un área geográfica del área de red de **1.046,64 km²**, un área servida en alta/media tensión de **891,12 km²** y un área servida en baja tensión de **525,27 km²**. Esta diferencia entre el histórico XLSX y la página vigente impide declarar el perímetro completamente resuelto.
+La página vigente de publicación EnWG de Stromnetz Berlin informa, para sus datos actuales, un área geográfica del área de red de **1.046,64 km²**, un área servida en alta/media tensión de **891,12 km²** y un área servida en baja tensión de **525,27 km²**. La ficha general de [cifras y datos](https://www.stromnetz.berlin/uber-uns/zahlen-daten-fakten/) presenta, en cambio, **891,12 km²** como superficie geográfica del área de red. Por tanto, el operador está publicando dos magnitudes que no deben mezclarse sin una aclaración metodológica.
 
 Como referencia, Destatis registra para Berlín (código 11000) una superficie administrativa de **891,12 km²**: <https://genesis.destatis.de/datenbank/online/statistic/11111/table/11111-0002/search/s/MTExMTE%3D>. El Amt für Statistik Berlin-Brandenburg informa 89.112 hectáreas para Berlín en 2023: <https://www.statistik-berlin-brandenburg.de/157-2024/>.
 
-**Dictamen provisional:** el área servida en alta/media tensión coincide exactamente con Berlín administrativo en superficie, pero el área geográfica de red publicada actualmente no coincide. El objetivo debe etiquetarse temporalmente como `Stromnetz-Berlin-HV/MV-area` hasta comparar geometrías o recibir una aclaración formal del operador.
+**Dictamen operativo:** el piloto se fija en Berlín administrativo, código `11000`, con geometría oficial BKG VG250 y superficie nominal de 891,12 km². La serie HV se etiqueta `Stromnetz-Berlin-HV-area-proxy`: su área servida HV/MV coincide en superficie con Berlín, pero no se declara identidad geométrica. Los 1.046,64 km² se conservan como métrica regulatoria separada y no se usan para ampliar el polígono, agregar covariables o calcular KPI. La decisión y la evidencia reproducible están en [decisión territorial del piloto](decision_perimetro_berlin.md).
 
-## Acciones para cerrar el perímetro
+## Acciones pendientes de confirmación semántica
 
-1. Obtener geometría oficial del área de red o una descripción cartográfica del operador.
-2. Compararla con VG250 y el límite administrativo de Berlín usando un CRS documentado.
-3. Determinar si los 1.046,64 km² incluyen áreas geográficas sin consumidores servidos o una actualización metodológica.
-4. Fijar el nombre del objetivo: `Berlin-administrative`, `Stromnetz-Berlin-HV/MV-area` o `Stromnetz-Berlin-network-area`.
-5. Repetir los controles para 2019–2023 y registrar cualquier cambio de perímetro antes de seleccionar el período de entrenamiento.
+1. Solicitar a Stromnetz Berlin la definición cartográfica de `geografische Fläche des Netzgebietes` y la cobertura exacta de los archivos HV 2019–2023.
+2. Conservar y versionar la geometría BKG `ars=11000` en cada corrida, con CRS y fecha de vigencia documentados.
+3. Repetir los controles de energía, cobertura y DST para HV 2019–2023 y registrar cualquier cambio de perímetro.
+4. Revisar si los balances anuales y los datos espaciales de Berlín utilizan el mismo territorio administrativo antes de usarlos para escalar o validar.
 
 ## Hashes de los archivos descargados
 

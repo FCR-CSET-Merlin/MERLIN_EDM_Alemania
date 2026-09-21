@@ -12,10 +12,10 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 |---|---|
 | Caso piloto | Berlín, Alemania |
 | Objetivo | Reconstrucción histórica de demanda eléctrica horaria |
-| Fuentes alemanas | Candidatas; pendientes de cobertura, perímetro, unidad y licencia |
+| Fuentes alemanas | Candidatas; BKG `11000` aceptado para el perímetro piloto; cobertura, unidades, licencia y semántica HV siguen en revisión |
 | Modelo alemán | No ejecutado en esta etapa |
 | KPI alemán | No evaluado; no se declara cumplimiento |
-| Próximo producto | Inventario de fuentes y dictamen de factibilidad |
+| Próximo producto | Auditoría HV 2019–2023, balance anual y dictamen de factibilidad |
 
 ## Resultados previstos
 
@@ -39,6 +39,7 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 - [SMARD](https://www.smard.de/page/en/wiki-article/6078/6036/electricity-consumption)
 - [DWD](https://www.dwd.de/EN/ourservices/cdc/cdc.html?lsbId=646268) y [ERA5-Land](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=documentation)
 - [Destatis/GENESIS](https://www.destatis.de/EN/Service/OpenData/api-webservice.html), [Zensus 2022](https://www.destatis.de/zensus2022?nn=1344278) y [BKG VG250](https://gdz.bkg.bund.de/index.php/default/wfs-verwaltungsgebiete-1-250-000-stand-01-01-wfs-vg250.html)
+- [Decisión territorial del piloto](validation/sources/decision_perimetro_berlin.md)
 
 La matriz y el dictamen se documentan en [`PLAN_TRABAJO_ADAPTACION_ALEMANIA.md`](../PLAN_TRABAJO_ADAPTACION_ALEMANIA.md).
 
