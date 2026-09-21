@@ -15,7 +15,7 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 | Fuentes alemanas | Candidatas; BKG `11000` aceptado para el perímetro piloto; cobertura, unidades y licencia en revisión; semántica general HV confirmada y alcance/timestamps pendientes |
 | Modelo alemán | No ejecutado en esta etapa |
 | KPI alemán | No evaluado; no se declara cumplimiento |
-| Próximo producto | Normalización temporal 2023, solicitud al operador y balance anual |
+| Próximo producto | Primera serie HV 2023 normalizada y ficha de escala anual |
 
 ## Resultados previstos
 
@@ -40,6 +40,8 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 - [DWD](https://www.dwd.de/EN/ourservices/cdc/cdc.html?lsbId=646268) y [ERA5-Land](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=documentation)
 - [Destatis/GENESIS](https://www.destatis.de/EN/Service/OpenData/api-webservice.html), [Zensus 2022](https://www.destatis.de/zensus2022?nn=1344278) y [BKG VG250](https://gdz.bkg.bund.de/index.php/default/wfs-verwaltungsgebiete-1-250-000-stand-01-01-wfs-vg250.html)
 - [Decisión territorial del piloto](validation/sources/decision_perimetro_berlin.md)
+- [Auditoría de Strombilanz 2023](validation/sources/statistik_berlin_strombilanz_2023_auditoria.md)
+- [Normalización temporal HV 2023](validation/sources/normalizacion_temporal_hv_2023.md)
 
 La matriz y el dictamen se documentan en [`PLAN_TRABAJO_ADAPTACION_ALEMANIA.md`](../PLAN_TRABAJO_ADAPTACION_ALEMANIA.md).
 

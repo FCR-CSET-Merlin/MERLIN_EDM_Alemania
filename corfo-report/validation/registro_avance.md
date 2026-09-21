@@ -12,7 +12,7 @@ Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_
 
 | Fase | Estado | Avance verificable | Evidencia | Criterio de cierre |
 |---|---|---|---|---|
-| Fase 0 — Factibilidad y contrato de datos | **En curso** | Categorías 2019–2023 auditadas; perímetro operativo fijado como Berlín administrativo `11000`; semántica general de Lastgang confirmada, pero alcance HV, timestamps y cartografía siguen pendientes | [Auditoría de categorías y perímetro](sources/stromnetz_berlin_categorias_perimetro_2023.md), [auditoría HV 2019–2023](sources/stromnetz_berlin_hv_2019_2023_auditoria.md), [decisión territorial](sources/decision_perimetro_berlin.md), [solicitud preparada](sources/solicitud_stromnetz_berlin_perimetro_y_semantica.md), [inventario](sources/inventario_fuentes.csv) | Semántica general de Lastgang verificada; alcance HV, timestamps, cartografía y cobertura histórica requieren respuesta/normalización; dictamen GO/GO condicionado/NO-GO |
+| Fase 0 — Factibilidad y contrato de datos | **En curso** | Categorías 2019–2023 y Strombilanz 2023 auditadas; perímetro operativo fijado como Berlín administrativo `11000`; semántica general de Lastgang confirmada; alcance HV, timestamps y cartografía siguen pendientes | [Auditoría de categorías y perímetro](sources/stromnetz_berlin_categorias_perimetro_2023.md), [auditoría HV 2019–2023](sources/stromnetz_berlin_hv_2019_2023_auditoria.md), [decisión territorial](sources/decision_perimetro_berlin.md), [solicitud enviada](sources/solicitud_stromnetz_berlin_perimetro_y_semantica.md), [inventario](sources/inventario_fuentes.csv) | Semántica general de Lastgang y referencia anual verificadas; alcance HV, timestamps y cartografía requieren respuesta/normalización; dictamen GO/GO condicionado/NO-GO |
 | Fase 1 — Homologación territorial, sectorial y temporal | Pendiente | Sin contrato alemán validado | — | Correspondencias de red, Berlín, distritos y sectores; unidades y DST verificadas |
 | Fase 2 — Línea base y adaptación | Pendiente | No hay ejecución del modelo alemán | — | Modelo, columnas, scaler, entorno y diferencias Chile–Alemania identificados |
 | Fase 3 — Reconstrucción histórica de Berlín | Pendiente | No hay series ni tablas alemanas generadas | [Series](../results/timeseries/README.md) | Corrida reproducible con cobertura, perímetro y hashes |
@@ -24,7 +24,7 @@ Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_
 | Grupo | Estado | Decisión actual |
 |---|---|---|
 | Stromnetz Berlin — categorías y HV 2019–2023 | **GO condicionado para el piloto** | Perfiles HV 2019–2023 completos en valores; HV es candidato principal, niveles no sumables; semántica de Lastgang confirmada y alcance HV/timestamps en revisión; se usa `11000` como referencia y HV como proxy |
-| Statistik Berlin-Brandenburg | Candidata anual | Revisar balance, sectores, unidades y revisiones |
+| Statistik Berlin-Brandenburg | **Aceptada como referencia anual** | Edición corregida 2023 auditada; consumo final total/sectorial independiente de HV; usar para consistencia anual condicionada |
 | Umweltatlas Berlin | Candidata espacial | Revisar cobertura distrital, privacidad y año de referencia |
 | DWD/ERA5-Land | Candidata climática | Seleccionar fuente, versión y tratamiento horario |
 | VG250/Zensus/Destatis/BA | Covariables y límites | VG250 `11000` aceptado para el perímetro piloto; las demás covariables se incorporan tras completar el contrato territorial |
@@ -44,9 +44,9 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 
 ## Próximas acciones
 
-1. Enviar —cuando el equipo lo autorice— la solicitud preparada a Stromnetz Berlin sobre semántica HV, timestamps y cartografía.
-2. Definir y probar la normalización `Europe/Berlin` → UTC para 2023, conservando intervalos DST repetidos.
-3. Obtener y fichar el balance eléctrico de Berlín y su clasificación sectorial.
+1. Registrar la respuesta de Stromnetz Berlin cuando llegue y actualizar el dictamen semántico, temporal y cartográfico.
+2. Ejecutar la normalización `Europe/Berlin` → UTC para 2023 y generar la primera serie horaria de entrada.
+3. Incorporar la Strombilanz corregida como referencia anual y documentar el escalamiento.
 4. Comparar los perfiles HV 2019–2023 una vez resuelto el contrato temporal y registrar cambios de metodología.
 5. Conservar la geometría BKG `11000` y documentar CRS, fecha de vigencia y hash en cada corrida.
 6. Completar las correspondencias territoriales y el contrato de sectores alemanes.
@@ -60,7 +60,9 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 | 2026-09-21 | Fase 0 | Se inicializó este registro de avance | Fase 0 marcada como `En curso`; no se declara KPI | Este archivo |
 | 2026-09-21 | Fase 0 | Se descargó y auditó Restlast SLP 2023 | 35.040 intervalos completos; GO condicionado para SLP, no demanda total | [Auditoría SLP](sources/stromnetz_berlin_restlast_2023.md) |
 | 2026-09-21 | Fase 0 | Se auditaron perfiles HV, HV/MV, MV, MV/LV, LV, pérdidas y pronóstico SLP 2023 | HV es candidato anual principal; perfiles jerárquicos no sumables; se fijó Berlín administrativo `11000` como perímetro operativo y HV como proxy; 1.046,64 km² queda como métrica regulatoria separada | [Categorías y perímetro](sources/stromnetz_berlin_categorias_perimetro_2023.md), [decisión territorial](sources/decision_perimetro_berlin.md) |
-| 2026-09-21 | Fase 0 | Se auditaron los perfiles HV 2019–2023 y la documentación semántica oficial | Valores, máximos y energía anual consistentes; se detectaron anomalías de timestamps 2020–2022 y queda pendiente confirmar alcance HV y cartografía; solicitud preparada sin envío | [Auditoría HV 2019–2023](sources/stromnetz_berlin_hv_2019_2023_auditoria.md), [solicitud preparada](sources/solicitud_stromnetz_berlin_perimetro_y_semantica.md) |
+| 2026-09-21 | Fase 0 | Se auditó la Strombilanz oficial corregida de Berlín 2023 y se comparó con HV 2020–2023 | Consumo final 2023: 11.780 GWh; diferencia HV–EEV 2023: +0,273 %; referencia aceptada para consistencia anual condicionada | [Auditoría Strombilanz](sources/statistik_berlin_strombilanz_2023_auditoria.md) |
+| 2026-09-21 | Fase 0 | Se probó la normalización temporal de HV 2023 | 35.040 instantes UTC únicos con paso de 15 minutos; 2 diferencias de etiqueta local en las transiciones DST; especificación aceptada para el piloto | [Normalización temporal HV 2023](sources/normalizacion_temporal_hv_2023.md) |
+| 2026-09-21 | Fase 0 | Se auditaron los perfiles HV 2019–2023 y la documentación semántica oficial | Valores, máximos y energía anual consistentes; se detectaron anomalías de timestamps 2020–2022 y queda pendiente confirmar alcance HV y cartografía; solicitud enviada; se espera respuesta | [Auditoría HV 2019–2023](sources/stromnetz_berlin_hv_2019_2023_auditoria.md), [solicitud enviada](sources/solicitud_stromnetz_berlin_perimetro_y_semantica.md) |
 
 ## Regla de actualización
 

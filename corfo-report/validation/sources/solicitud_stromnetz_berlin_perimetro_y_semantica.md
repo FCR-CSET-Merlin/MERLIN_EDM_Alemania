@@ -1,6 +1,6 @@
-# Solicitud preparada a Stromnetz Berlin — perímetro y semántica HV
+# Solicitud enviada a Stromnetz Berlin — perímetro y semántica HV
 
-**Estado:** preparada para envío; no enviada desde este repositorio.  
+**Estado:** enviada por el equipo del proyecto; se espera respuesta del operador.
 **Canal sugerido:** formulario o contacto de [Stromnetz Berlin](https://www.stromnetz.berlin/kontakt/).  
 **Objetivo:** obtener una respuesta citable para cerrar la Fase 0 y validar el contrato de datos.
 

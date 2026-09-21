@@ -13,7 +13,7 @@
 | Insumo | Fuente | Función | Estado |
 |---|---|---|---|
 | Demanda horaria | Stromnetz Berlin HV 2019–2023 | Objetivo horario de red y proxy territorial | GO condicionado; semántica general confirmada, alcance HV/timestamps pendientes |
-| Balance anual | Statistik Berlin-Brandenburg | Referencia total/sectorial | Por verificar |
+| Balance anual | Statistik Berlin-Brandenburg, edición corregida 2023 | Referencia total/sectorial | Aceptada para consistencia anual condicionada |
 | Distribución espacial | Umweltatlas Berlin | Validación distrital | Por verificar |
 | Temperatura | DWD o ERA5-Land | Variable explicativa | Por verificar |
 | Límites | BKG VG250 | Perímetro administrativo reproducible de Berlín (`11000`) | Aceptado para el piloto; correspondencia exacta con red pendiente |
@@ -27,5 +27,6 @@
 - Los sectores alemanes no necesariamente replican los cinco sectores chilenos.
 - El horario alemán contiene intervalos locales ausentes o repetidos.
 - Los CSV HV 2020–2022 contienen saltos o etiquetas de fecha que requieren normalización y confirmación del operador.
+- La Strombilanz es consumo final anual y no reemplaza la referencia horaria de red.
 
 No se declara cumplimiento hasta completar la auditoría, ejecutar el modelo y generar los artefactos definidos en [`kpi_plan.md`](kpi_plan.md).
