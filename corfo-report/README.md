@@ -29,6 +29,7 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 | KPI | [`validation/kpi_plan.md`](validation/kpi_plan.md) | Fórmula, umbral, denominador e independencia |
 | Ficha | [`validation/ficha_evidencia_berlin.md`](validation/ficha_evidencia_berlin.md) | `cumple`, `no cumple` o `no evaluable` |
 | Manifiesto | [`validation/manifiesto_berlin.json`](validation/manifiesto_berlin.json) | Commits, entradas, salidas y hashes |
+| Registro de avance | [`validation/registro_avance.md`](validation/registro_avance.md) | Estado por fase, decisiones y siguiente acción |
 
 ## Fuentes candidatas
 
