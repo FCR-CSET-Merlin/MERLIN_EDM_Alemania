@@ -44,6 +44,7 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 - [Normalización temporal HV 2023](validation/sources/normalizacion_temporal_hv_2023.md)
 - [Auditoría DWD Berlin-Tempelhof 2023](validation/sources/dwd_berlin_tempelhof_2023_auditoria.md)
 - [Tabla integrada HV–temperatura](validation/sources/berlin_hv_temperature_features_2023.md)
+- [Diagnóstico FNN de temperatura](validation/sources/fnn_berlin_temperature_2023.md)
 
 La matriz y el dictamen se documentan en [`PLAN_TRABAJO_ADAPTACION_ALEMANIA.md`](../PLAN_TRABAJO_ADAPTACION_ALEMANIA.md).
 

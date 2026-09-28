@@ -1,0 +1,49 @@
+{
+  "dataset": "berlin_temperature_2023_fnn",
+  "source": {
+    "path": "/srv/compartido/inbox/MERLIN_EDM_Alemania/prototipo_3/data/de_alemania/berlin_temperature_2023/berlin_tempelhof_2023_hourly.csv",
+    "sha256": "fee8ce844791e12a78d9da25c4c99934a82a327bb77b3ece890eb954f61ee4b4",
+    "column": "temperature_C"
+  },
+  "series": {
+    "rows_in_source": 8760,
+    "observations_used": 8754,
+    "missing_rows": 5,
+    "all_contiguous_segment_lengths": [
+      2214,
+      1,
+      6540
+    ],
+    "usable_segment_lengths": [
+      2214,
+      6540
+    ]
+  },
+  "environment": {
+    "python": "3.13.13",
+    "nolitsa": "0.1",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "numba": "0.67.0"
+  },
+  "parameters": {
+    "tau_hours": 1,
+    "max_dimension": 15,
+    "R_test_I": 30.0,
+    "A_test_II": 2.0,
+    "theiler_window": 10,
+    "maxnum": 100,
+    "threshold": 0.01,
+    "library": "nolitsa.dimension.fnn"
+  },
+  "selection_diagnostics": {
+    "first_dimension_test_I_below_threshold": 3,
+    "first_dimension_test_II_below_threshold": 1,
+    "first_dimension_either_test_below_threshold": 3
+  },
+  "interpretation": "Diagnostic only; final lag count requires temporal predictive ablation. Missing values split the series; no interpolation is used.",
+  "output": {
+    "path": "corfo-report/validation/berlin/fnn_temperature_2023_R30.csv",
+    "sha256": "03ee1aab252a62a09f8f1672a5f2626fb24f06949f3b0bf900f0a00a98aa7fb1"
+  }
+}

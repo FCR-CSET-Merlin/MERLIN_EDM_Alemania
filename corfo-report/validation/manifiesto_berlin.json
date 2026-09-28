@@ -56,6 +56,20 @@
       "complete_8lag_rows": 8740,
       "path": "prototipo_3/data/de_alemania/berlin_features_2023/berlin_hv_temperature_features_2023.csv",
       "sha256": "109ff4f4d6484adba73a5712a792c9e3713053559d6f2dff79c562c815e1c36a"
+    },
+    {
+      "dataset": "berlin_temperature_2023_fnn_R10",
+      "rows": 15,
+      "path": "corfo-report/validation/berlin/fnn_temperature_2023.csv",
+      "sha256": "743cd7dd9bd4dce680b2b0ef3161ac24b56fda24597cc25cefa70252756faa53",
+      "diagnostic": "first Test I dimension <=1%: d=5"
+    },
+    {
+      "dataset": "berlin_temperature_2023_fnn_R30",
+      "rows": 15,
+      "path": "corfo-report/validation/berlin/fnn_temperature_2023_R30.csv",
+      "sha256": "03ee1aab252a62a09f8f1672a5f2626fb24f06949f3b0bf900f0a00a98aa7fb1",
+      "diagnostic": "first Test I dimension <=1%: d=3"
     }
   ],
   "kpis": [],
@@ -67,6 +81,7 @@
     "La solicitud de semántica y cartografía fue enviada al operador; se espera respuesta.",
     "La Strombilanz corregida 2023 se usa como referencia anual independiente de la serie HV.",
     "DWD Berlin-Tempelhof presenta cinco observaciones faltantes en 2023; no se imputaron.",
-    "La evidencia KPI no existe hasta ejecutar y auditar la reconstruccion alemana."
+    "La evidencia KPI no existe hasta ejecutar y auditar la reconstruccion alemana.",
+    "El FNN climatico es sensible a R; d=3 y d=5 son diagnosticos, no seleccion predictiva final de la red."
   ]
 }

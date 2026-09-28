@@ -13,7 +13,7 @@ Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_
 | Fase | Estado | Avance verificable | Evidencia | Criterio de cierre |
 |---|---|---|---|---|
 | Fase 0 — Factibilidad y contrato de datos | **En curso** | HV 2019–2023 y Strombilanz 2023 auditadas; perímetro `11000`; HV 2023 normalizada a 15 min y hora; DWD Tempelhof y tabla integrada con ocho rezagos preparados; alcance HV, timestamps y cartografía siguen pendientes | [Auditoría HV 2019–2023](sources/stromnetz_berlin_hv_2019_2023_auditoria.md), [normalización HV](sources/normalizacion_temporal_hv_2023.md), [auditoría DWD](sources/dwd_berlin_tempelhof_2023_auditoria.md), [tabla integrada](sources/berlin_hv_temperature_features_2023.md), [solicitud enviada](sources/solicitud_stromnetz_berlin_perimetro_y_semantica.md) | Semántica general y referencias anuales verificadas; contrato HV, sectores y variables alemanas requiere cierre; dictamen GO/GO condicionado/NO-GO |
-| Fase 1 — Homologación territorial, sectorial y temporal | Pendiente | Sin contrato alemán validado | — | Correspondencias de red, Berlín, distritos y sectores; unidades y DST verificadas |
+| Fase 1 — Homologación territorial, sectorial y temporal | **En curso** | FNN climático provisional ejecutado con `tau=1`; contrato sectorial y territorial aún no cerrado | [Diagnóstico FNN](sources/fnn_berlin_temperature_2023.md) | Correspondencias de red, Berlín, distritos y sectores; unidades, DST y selección predictiva de rezagos verificadas |
 | Fase 2 — Línea base y adaptación | Pendiente | No hay ejecución del modelo alemán | — | Modelo, columnas, scaler, entorno y diferencias Chile–Alemania identificados |
 | Fase 3 — Reconstrucción histórica de Berlín | Pendiente | Insumos HV, temperatura y tabla integrada generados; no hay inferencia ni tablas de resultados | [Series](../results/timeseries/README.md) | Corrida reproducible con cobertura, perímetro y hashes |
 | Fase 4 — Validación y KPI | Pendiente | KPI alemán no evaluado | [Plan KPI](kpi_plan.md), [cumplimiento](cumplimiento_kpi.md) | CSV KPI, resumen, ficha y manifiesto revisados |
@@ -47,9 +47,10 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 1. Registrar la respuesta de Stromnetz Berlin cuando llegue y actualizar el dictamen semántico, temporal y cartográfico.
 2. Resolver el tratamiento de las 20 filas sin ocho temperaturas válidas y documentar la política de casos completos.
 3. Definir calendario de feriados alemán y completar shares sectoriales compatibles con la red.
-4. Instalar y fijar el entorno de entrenamiento; adaptar las 24 entradas del MLP al contrato alemán.
-5. Ejecutar una línea base de reconstrucción sobre 2023, sin declarar todavía cumplimiento del KPI.
-6. Comparar los perfiles HV 2019–2023 una vez resuelto el contrato temporal y registrar cambios de metodología.
+4. Ejecutar la ablación predictiva de `d=3`, `d=5` y `d=8` con la misma división temporal.
+5. Instalar y fijar el entorno de entrenamiento; adaptar las 24 entradas del MLP al contrato alemán.
+6. Ejecutar una línea base de reconstrucción sobre 2023, sin declarar todavía cumplimiento del KPI.
+7. Comparar los perfiles HV 2019–2023 una vez resuelto el contrato temporal y registrar cambios de metodología.
 
 ## Bitácora
 
@@ -65,6 +66,8 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 | 2026-09-28 | Fase 0 | Se generaron las series HV 2023 normalizada y horaria con preprocesador estándar | 35.040 intervalos; 8.760 horas; 11.812.177,946 MWh; 2 etiquetas DST discrepantes marcadas; artefactos pesados ignorados por Git | [Índice de series](../results/timeseries/berlin_inputs_2023_index.csv), [preprocesador HV](../../prototipo_3/preprocessing/berlin_hv_2023.py) |
 
 | 2026-09-28 | Fase 0 | Se extrajo DWD Berlin-Tempelhof y se integró con HV mediante ocho rezagos UTC | 8.760 horas climáticas; 5 faltantes DWD; 8.740 filas completas para la tabla integrada; no se imputaron valores | [Auditoría DWD](sources/dwd_berlin_tempelhof_2023_auditoria.md), [tabla integrada](sources/berlin_hv_temperature_features_2023.md) |
+
+| 2026-09-28 | Fase 1 | Se ejecutó FNN provisional sobre DWD Berlin-Tempelhof con `tau=1` hora | Con `R=10`, primera dimensión bajo 1 %: `d=5` (4 rezagos); con `R=30`: `d=3` (2 rezagos); se usaron dos segmentos continuos sin imputación y se mantiene `d=8` provisional hasta la ablación predictiva | [Diagnóstico FNN](sources/fnn_berlin_temperature_2023.md) |
 
 ## Regla de actualización
 
