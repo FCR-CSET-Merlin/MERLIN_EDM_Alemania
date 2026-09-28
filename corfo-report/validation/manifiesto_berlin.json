@@ -41,6 +41,13 @@
       "rows": 8760,
       "path": "prototipo_3/data/de_alemania/berlin_temperature_2023/berlin_tempelhof_2023_hourly.csv",
       "sha256": "fee8ce844791e12a78d9da25c4c99934a82a327bb77b3ece890eb954f61ee4b"
+    },
+    {
+      "dataset": "berlin_sector_shares_2023_provisional",
+      "rows": 1,
+      "path": "corfo-report/validation/berlin/berlin_sector_shares_2023.csv",
+      "sha256": "aac9843be2e3b9965744a57fb9d109c6de4cb1a2c3e59435f924157529c5d1c9",
+      "diagnostic": "I=industria; R=hogares; C=GHD_y_otros; P=0 provisional; T=transporte; suma=1"
     }
   ],
   "salidas": [
@@ -77,6 +84,13 @@
       "path": "corfo-report/validation/berlin/lag_ablation_2023_index.csv",
       "sha256": "d8c7082a78f45aed1ed6cece337cd8e2102db83edd7d061c522a4710a0158f01",
       "diagnostic": "d3=8750,d5=8746,d8=8740; common=8740"
+    },
+    {
+      "dataset": "berlin_training_contract_2023_index",
+      "rows": 9,
+      "path": "corfo-report/validation/berlin/berlin_training_contract_2023_index.csv",
+      "sha256": "842d821cdf0c3f63e97f3b090b5376ed439289d789f58c3064107b07f5048980",
+      "diagnostic": "d3=19,d5=21,d8=24 entradas; 70/15/15 cronológico; hashes de nueve Parquet"
     }
   ],
   "kpis": [],
@@ -90,5 +104,23 @@
     "DWD Berlin-Tempelhof presenta cinco observaciones faltantes en 2023; no se imputaron.",
     "La evidencia KPI no existe hasta ejecutar y auditar la reconstruccion alemana.",
     "El FNN climatico es sensible a R; d=3 y d=5 son diagnosticos, no seleccion predictiva final de la red."
-  ]
+  ],
+  "contrato_entrenamiento": {
+    "baseline_dimension": 8,
+    "ablation_dimensions": [
+      3,
+      5,
+      8
+    ],
+    "features_by_dimension": {
+      "d3": 19,
+      "d5": 21,
+      "d8": 24
+    },
+    "split": "70% train, 15% validation, 15% test chronological",
+    "status": "dry_run_validated; TensorFlow_training_pending",
+    "weights_reused_from_chile": false,
+    "script": "prototipo_3/preprocessing/berlin_training_contract_2023.py",
+    "trainer": "prototipo_3/src/train_mlp_berlin.py"
+  }
 }

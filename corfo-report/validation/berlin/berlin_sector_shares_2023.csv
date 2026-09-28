@@ -1,0 +1,2 @@
+territory,year,region_comuna_share,share_I,share_R,share_C,share_P,share_T,source,sector_mapping_policy
+Berlin-administrative,2023,1.000000000000,0.109837874544,0.336643748408,0.476105593753,0.000000000000,0.077412783295,Strombilanz Berlin 2023 corregida; consumo final sectorial,industria->I; hogares->R; GHD_y_otros->C; publico no separable->P=0; transporte->T
