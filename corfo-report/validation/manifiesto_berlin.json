@@ -91,6 +91,13 @@
       "path": "corfo-report/validation/berlin/berlin_training_contract_2023_index.csv",
       "sha256": "842d821cdf0c3f63e97f3b090b5376ed439289d789f58c3064107b07f5048980",
       "diagnostic": "d3=19,d5=21,d8=24 entradas; 70/15/15 cronológico; hashes de nueve Parquet"
+    },
+    {
+      "dataset": "berlin_lag_ablation_predictiva_2023",
+      "rows": 3,
+      "path": "corfo-report/validation/berlin/lag_ablation_predictiva_2023.csv",
+      "sha256": "b4affa55ceb71b835967d3375b665914637fb73a31a8b032ed3128ddb70053cc",
+      "diagnostic": "test MAPE d3=5.089%, d5=5.294%, d8=5.811%; corrida interna; KPI formal pendiente"
     }
   ],
   "kpis": [],
@@ -118,9 +125,15 @@
       "d8": 24
     },
     "split": "70% train, 15% validation, 15% test chronological",
-    "status": "dry_run_validated; TensorFlow_training_pending",
+    "status": "predictive_ablation_executed; formal_KPI_pending",
     "weights_reused_from_chile": false,
     "script": "prototipo_3/preprocessing/berlin_training_contract_2023.py",
-    "trainer": "prototipo_3/src/train_mlp_berlin.py"
+    "trainer": "prototipo_3/src/train_mlp_berlin.py",
+    "environment": {
+      "python": "3.13.13",
+      "tensorflow": "2.21.0",
+      "seed": 2023,
+      "cpu_threads": 2
+    }
   }
 }

@@ -47,6 +47,7 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 - [Diagnóstico FNN de temperatura](validation/sources/fnn_berlin_temperature_2023.md)
 - [Preparación de ablación de rezagos d=3/d=5/d=8](validation/sources/lag_ablation_berlin_2023.md)
 - [Contrato de entrenamiento alemán](validation/sources/contrato_entrenamiento_berlin_2023.md)
+- [Ablación predictiva de rezagos](validation/sources/lag_ablation_predictiva_berlin_2023.md)
 
 La matriz y el dictamen se documentan en [`PLAN_TRABAJO_ADAPTACION_ALEMANIA.md`](../PLAN_TRABAJO_ADAPTACION_ALEMANIA.md).
 

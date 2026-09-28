@@ -6,4 +6,4 @@ No hay una corrida de reconstrucción alemana ni un KPI calculado. Ya existe un 
 
 También están preparadas las tablas comparables para la ablación predictiva de `d=3`, `d=5` y `d=8` en [lag_ablation_berlin_2023.md](../sources/lag_ablation_berlin_2023.md); estos artefactos aún no constituyen resultados del modelo ni evidencia de KPI.
 
-El [contrato de entrenamiento alemán](../sources/contrato_entrenamiento_berlin_2023.md) ya genera Parquet compatibles con el entrenador para las tres dimensiones. El entrenamiento TensorFlow aún no se ha ejecutado.
+El [contrato de entrenamiento alemán](../sources/contrato_entrenamiento_berlin_2023.md) ya genera Parquet compatibles con el entrenador para las tres dimensiones. La [ablación predictiva](../sources/lag_ablation_predictiva_berlin_2023.md) fue ejecutada como validación temporal interna; todavía no constituye evidencia KPI contractual independiente.
