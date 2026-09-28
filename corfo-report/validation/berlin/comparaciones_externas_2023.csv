@@ -1,0 +1,5 @@
+comparison_id,source_id,reference_period,territory_code,territory_name,level,model_metric,reference_metric,model_value,reference_value,absolute_error,relative_error_pct,bias_pct,correlation,mae,rmse,coverage_pct,independence,dependency_input,status,notes
+EXT-ANN-2023,EXT-ANN-2023,2023,11000,Berlin,annual,,,,,,,,,,,,si,pendiente,pendiente,No ejecutar hasta descargar y homologar la Strombilanz
+EXT-SPAT-2022,EXT-SPAT-2022,2022,11000,Berlin,district,,,,,,,,,,,,si,no,pendiente,Requiere agregacion del modelo y WFS del Umweltatlas
+EXT-HOURLY-CONTEXT,EXT-HOURLY-CONTEXT,periodo comun,,Alemania/zona de mercado,hourly_normalized,,,,,,,,,,,,no,no,pendiente,Control de forma; no es KPI Berlin
+EXT-HOURLY-BERLIN,EXT-HOURLY-BERLIN,pendiente,11000,Berlin,hourly,,,,,,,,,,,,pendiente,pendiente,no_evaluable,Comparador horario externo aun no disponible

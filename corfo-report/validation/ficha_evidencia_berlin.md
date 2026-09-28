@@ -1,7 +1,7 @@
 # Ficha de evidencia — reconstrucción histórica de Berlín
 
 - **ID:** `CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO`.
-- **Estado:** insumos preparados; sin KPI alemán calculado.
+- **Estado:** contrato de validación preparado; insumos externos aún no descargados; sin KPI alemán calculado.
 - **País:** Alemania.
 - **Territorio:** `Berlin-administrative` (`ars/ags=11000`, geometría BKG VG250); la serie Stromnetz Berlin se reportará como `Stromnetz-Berlin-HV-area-proxy` hasta confirmar equivalencia geométrica.
 - **Objetivo:** reconstrucción horaria y validación anual/sectorial.
@@ -18,6 +18,20 @@
 | Distribución espacial | Umweltatlas Berlin | Validación distrital | Por verificar |
 | Temperatura | DWD Berlin-Tempelhof 00433 | Variable explicativa horaria | Seleccionada condicionada; 5 faltantes 2023 y representatividad espacial pendientes |
 | Límites | BKG VG250 | Perímetro administrativo reproducible de Berlín (`11000`) | Aceptado para el piloto; correspondencia exacta con red pendiente |
+
+## Capas de validación
+
+La validación se ejecutará según el [contrato de validación](sources/contrato_validacion_berlin.md):
+
+- capa A: MAPE horario interno sobre el tramo HV reservado;
+- capa B: consistencia anual condicionada con la Strombilanz;
+- capa C: consistencia espacial con Umweltatlas;
+- capa D: control de forma agregado con SMARD, sin validez de KPI Berlín;
+- capa E: comparador horario independiente de Berlín, todavía no disponible.
+
+La matriz de fuentes y la plantilla de resultados están en
+[`sources/comparaciones_externas_berlin.csv`](sources/comparaciones_externas_berlin.csv)
+y [`berlin/comparaciones_externas_2023.csv`](berlin/comparaciones_externas_2023.csv).
 
 ## Limitaciones
 

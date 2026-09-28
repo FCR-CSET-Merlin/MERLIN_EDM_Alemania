@@ -16,7 +16,7 @@ Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_
 | Fase 1 — Homologación territorial, sectorial y temporal | **En curso** | FNN climático provisional ejecutado con `tau=1`; tablas comparables para `d=3`, `d=5` y `d=8` preparadas; contrato sectorial y territorial aún no cerrado | [Diagnóstico FNN](sources/fnn_berlin_temperature_2023.md), [ablación de rezagos](sources/lag_ablation_berlin_2023.md), [contrato de entrenamiento](sources/contrato_entrenamiento_berlin_2023.md) | Correspondencias de red, Berlín, distritos y sectores; unidades, DST y selección predictiva de rezagos verificadas |
 | Fase 2 — Línea base y adaptación | **En curso** | Contrato alemán parametrizado y ablación TensorFlow ejecutada para `d=3`, `d=5` y `d=8`; `d=3` obtiene el menor MAPE de prueba (5,089 %); shares C/P y `region_comuna_share` siguen provisionales | [Contrato de entrenamiento](sources/contrato_entrenamiento_berlin_2023.md), [ablación predictiva](sources/lag_ablation_predictiva_berlin_2023.md), [entrenador alemán](../../prototipo_3/src/train_mlp_berlin.py) | Modelo, columnas, scaler, entorno y diferencias Chile–Alemania identificados; selección de rezagos estable en validaciones adicionales |
 | Fase 3 — Reconstrucción histórica de Berlín | Pendiente | Insumos HV, temperatura y tabla integrada generados; no hay inferencia ni tablas de resultados | [Series](../results/timeseries/README.md) | Corrida reproducible con cobertura, perímetro y hashes |
-| Fase 4 — Validación y KPI | Pendiente | KPI alemán no evaluado | [Plan KPI](kpi_plan.md), [cumplimiento](cumplimiento_kpi.md) | CSV KPI, resumen, ficha y manifiesto revisados |
+| Fase 4 — Validación y KPI | **Contrato preparado** | Capas A–E definidas; matriz de fuentes y plantilla externa creadas; KPI alemán no evaluado | [Contrato de validación](sources/contrato_validacion_berlin.md), [matriz externa](sources/comparaciones_externas_berlin.csv), [plantilla externa](berlin/comparaciones_externas_2023.csv) | Fuentes B/C descargadas y homologadas; reconstrucción ejecutada; comparador horario independiente resuelto o limitación formalizada |
 | Fase 5 — Escalamiento territorial | Pendiente | No iniciada | — | Piloto Berlín cerrado y reproducible |
 
 ## Estado de fuentes
@@ -51,6 +51,8 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 5. Fijar el entorno TensorFlow 2.21.0 usado en la corrida y conservar los pesos/resultados por dimensión con sus hashes.
 6. Ejecutar una línea base de reconstrucción sobre 2023, sin declarar todavía cumplimiento del KPI.
 7. Comparar los perfiles HV 2019–2023 una vez resuelto el contrato temporal y registrar cambios de metodología.
+8. Descargar y auditar las fuentes B y C de la matriz externa; completar sus unidades, cobertura, versión y hashes.
+9. Mantener la plantilla externa en estado pendiente hasta disponer de resultados calculados; no declarar KPI por la existencia del contrato.
 
 ## Bitácora
 
@@ -71,6 +73,8 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 | 2026-09-28 | Fase 1 | Se prepararon las tablas comparables para la ablación predictiva de rezagos | `d=3`: 8.750 filas propias; `d=5`: 8.746; `d=8`: 8.740; conjunto común: 8.740 horas; no se imputaron temperaturas | [Ablación de rezagos](sources/lag_ablation_berlin_2023.md), [índice](berlin/lag_ablation_2023_index.csv) |
 | 2026-09-28 | Fase 2 | Se adaptó el contrato de entrenamiento chileno al piloto alemán | Generadores `d=3/d=5/d=8` con 19/21/24 entradas; cada contrato usa 6.118 horas de entrenamiento, 1.311 de validación y 1.311 de prueba; modo seco validado; shares C/P provisionales | [Contrato alemán](sources/contrato_entrenamiento_berlin_2023.md), [índice Parquet](berlin/berlin_training_contract_2023_index.csv), [entrenador](../../prototipo_3/src/train_mlp_berlin.py) |
 | 2026-09-28 | Fase 2 | Se ejecutó la ablación predictiva sobre el conjunto común | MAPE de prueba: `d=3` 5,089 %; `d=5` 5,294 %; `d=8` 5,811 %; `d=3` es la mejor configuración preliminar; no se declara KPI contractual | [Ablación predictiva](sources/lag_ablation_predictiva_berlin_2023.md), [índice de métricas](berlin/lag_ablation_predictiva_2023.csv) |
+
+| 2026-09-28 | Fase 4 | Se formalizó el contrato de validación y se prepararon las comparaciones externas | Se definieron cinco capas: KPI interno HV, consistencia anual, consistencia espacial, contexto horario y comparador externo horario pendiente; se crearon matriz de fuentes y plantilla de resultados; no se calcularon indicadores | [Contrato](sources/contrato_validacion_berlin.md), [matriz](sources/comparaciones_externas_berlin.csv), [plantilla](berlin/comparaciones_externas_2023.csv) |
 
 ## Regla de actualización
 

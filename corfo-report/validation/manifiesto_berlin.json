@@ -100,6 +100,24 @@
       "diagnostic": "test MAPE d3=5.089%, d5=5.294%, d8=5.811%; corrida interna; KPI formal pendiente"
     }
   ],
+  "documentos_validacion": [
+    {
+      "dataset": "contrato_validacion_berlin",
+      "path": "corfo-report/validation/sources/contrato_validacion_berlin.md",
+      "sha256": "1c3a1e9f8a6c279944a9034af71950e6e6d747336444f8f141226b3c14b0d157"
+    },
+    {
+      "dataset": "comparaciones_externas_berlin",
+      "path": "corfo-report/validation/sources/comparaciones_externas_berlin.csv",
+      "sha256": "a43e3dc3b374d415e7bfc741a0cf3353e9ff5ec98295bf55b75f042f86a8bfc3"
+    },
+    {
+      "dataset": "comparaciones_externas_2023_template",
+      "path": "corfo-report/validation/berlin/comparaciones_externas_2023.csv",
+      "sha256": "52bb0d430568dd942e43c3aad8d6019739b10192b9c746e0c3546ada34a76727",
+      "diagnostic": "plantilla sin indicadores calculados"
+    }
+  ],
   "kpis": [],
   "limitaciones": [
     "La demanda de red y el consumo final deben reconciliarse explicitamente.",

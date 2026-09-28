@@ -27,6 +27,9 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 | Auditoría de fuentes | [`validation/sources/`](validation/sources/) | Cobertura, perímetro, licencia y transformaciones |
 | Validación Berlín | [`validation/berlin/`](validation/berlin/) | Comparaciones por año, territorio y sector |
 | KPI | [`validation/kpi_plan.md`](validation/kpi_plan.md) | Fórmula, umbral, denominador e independencia |
+| Contrato de validación | [`validation/sources/contrato_validacion_berlin.md`](validation/sources/contrato_validacion_berlin.md) | Capas interna, anual, espacial y horaria |
+| Matriz comparadores | [`validation/sources/comparaciones_externas_berlin.csv`](validation/sources/comparaciones_externas_berlin.csv) | Fuentes, perímetro, dependencia y estado |
+| Plantilla resultados externos | [`validation/berlin/comparaciones_externas_2023.csv`](validation/berlin/comparaciones_externas_2023.csv) | Métricas sin resultados inventados |
 | Ficha | [`validation/ficha_evidencia_berlin.md`](validation/ficha_evidencia_berlin.md) | `cumple`, `no cumple` o `no evaluable` |
 | Manifiesto | [`validation/manifiesto_berlin.json`](validation/manifiesto_berlin.json) | Commits, entradas, salidas y hashes |
 | Registro de avance | [`validation/registro_avance.md`](validation/registro_avance.md) | Estado por fase, decisiones y siguiente acción |
@@ -41,6 +44,9 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 - [Destatis/GENESIS](https://www.destatis.de/EN/Service/OpenData/api-webservice.html), [Zensus 2022](https://www.destatis.de/zensus2022?nn=1344278) y [BKG VG250](https://gdz.bkg.bund.de/index.php/default/wfs-verwaltungsgebiete-1-250-000-stand-01-01-wfs-vg250.html)
 - [Decisión territorial del piloto](validation/sources/decision_perimetro_berlin.md)
 - [Auditoría de Strombilanz 2023](validation/sources/statistik_berlin_strombilanz_2023_auditoria.md)
+- [Contrato de validación de Berlín](validation/sources/contrato_validacion_berlin.md)
+- [Matriz de comparaciones externas](validation/sources/comparaciones_externas_berlin.csv)
+- [Plantilla de resultados externos 2023](validation/berlin/comparaciones_externas_2023.csv)
 - [Normalización temporal HV 2023](validation/sources/normalizacion_temporal_hv_2023.md)
 - [Auditoría DWD Berlin-Tempelhof 2023](validation/sources/dwd_berlin_tempelhof_2023_auditoria.md)
 - [Tabla integrada HV–temperatura](validation/sources/berlin_hv_temperature_features_2023.md)
