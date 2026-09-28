@@ -1,11 +1,12 @@
 # Ficha de evidencia — reconstrucción histórica de Berlín
 
 - **ID:** `CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO`.
-- **Estado:** planificado; sin KPI alemán calculado.
+- **Estado:** insumos preparados; sin KPI alemán calculado.
 - **País:** Alemania.
 - **Territorio:** `Berlin-administrative` (`ars/ags=11000`, geometría BKG VG250); la serie Stromnetz Berlin se reportará como `Stromnetz-Berlin-HV-area-proxy` hasta confirmar equivalencia geométrica.
 - **Objetivo:** reconstrucción horaria y validación anual/sectorial.
-- **Fecha de corte, commit y entorno:** pendientes.
+- **Fecha de corte:** 28 de septiembre de 2026.
+- **Commit y entorno de entrenamiento:** pendientes; los preprocesadores de insumos se ejecutaron con Python 3.13.13 y biblioteca estándar.
 - **Responsable y revisor:** pendientes.
 
 ## Fuentes previstas
@@ -15,7 +16,7 @@
 | Demanda horaria | Stromnetz Berlin HV 2019–2023 | Objetivo horario de red y proxy territorial | GO condicionado; semántica general confirmada, alcance HV/timestamps pendientes |
 | Balance anual | Statistik Berlin-Brandenburg, edición corregida 2023 | Referencia total/sectorial | Aceptada para consistencia anual condicionada |
 | Distribución espacial | Umweltatlas Berlin | Validación distrital | Por verificar |
-| Temperatura | DWD o ERA5-Land | Variable explicativa | Por verificar |
+| Temperatura | DWD Berlin-Tempelhof 00433 | Variable explicativa horaria | Seleccionada condicionada; 5 faltantes 2023 y representatividad espacial pendientes |
 | Límites | BKG VG250 | Perímetro administrativo reproducible de Berlín (`11000`) | Aceptado para el piloto; correspondencia exacta con red pendiente |
 
 ## Limitaciones
@@ -28,5 +29,6 @@
 - El horario alemán contiene intervalos locales ausentes o repetidos.
 - Los CSV HV 2020–2022 contienen saltos o etiquetas de fecha que requieren normalización y confirmación del operador.
 - La Strombilanz es consumo final anual y no reemplaza la referencia horaria de red.
+- La tabla HV–temperatura contiene 20 filas sin ocho valores climáticos válidos; no se imputaron.
 
 No se declara cumplimiento hasta completar la auditoría, ejecutar el modelo y generar los artefactos definidos en [`kpi_plan.md`](kpi_plan.md).

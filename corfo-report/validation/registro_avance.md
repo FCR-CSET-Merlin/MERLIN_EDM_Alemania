@@ -12,10 +12,10 @@ Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_
 
 | Fase | Estado | Avance verificable | Evidencia | Criterio de cierre |
 |---|---|---|---|---|
-| Fase 0 — Factibilidad y contrato de datos | **En curso** | Categorías 2019–2023 y Strombilanz 2023 auditadas; perímetro operativo fijado como Berlín administrativo `11000`; semántica general de Lastgang confirmada; alcance HV, timestamps y cartografía siguen pendientes | [Auditoría de categorías y perímetro](sources/stromnetz_berlin_categorias_perimetro_2023.md), [auditoría HV 2019–2023](sources/stromnetz_berlin_hv_2019_2023_auditoria.md), [decisión territorial](sources/decision_perimetro_berlin.md), [solicitud enviada](sources/solicitud_stromnetz_berlin_perimetro_y_semantica.md), [inventario](sources/inventario_fuentes.csv) | Semántica general de Lastgang y referencia anual verificadas; alcance HV, timestamps y cartografía requieren respuesta/normalización; dictamen GO/GO condicionado/NO-GO |
+| Fase 0 — Factibilidad y contrato de datos | **En curso** | HV 2019–2023 y Strombilanz 2023 auditadas; perímetro `11000`; HV 2023 normalizada a 15 min y hora; DWD Tempelhof y tabla integrada con ocho rezagos preparados; alcance HV, timestamps y cartografía siguen pendientes | [Auditoría HV 2019–2023](sources/stromnetz_berlin_hv_2019_2023_auditoria.md), [normalización HV](sources/normalizacion_temporal_hv_2023.md), [auditoría DWD](sources/dwd_berlin_tempelhof_2023_auditoria.md), [tabla integrada](sources/berlin_hv_temperature_features_2023.md), [solicitud enviada](sources/solicitud_stromnetz_berlin_perimetro_y_semantica.md) | Semántica general y referencias anuales verificadas; contrato HV, sectores y variables alemanas requiere cierre; dictamen GO/GO condicionado/NO-GO |
 | Fase 1 — Homologación territorial, sectorial y temporal | Pendiente | Sin contrato alemán validado | — | Correspondencias de red, Berlín, distritos y sectores; unidades y DST verificadas |
 | Fase 2 — Línea base y adaptación | Pendiente | No hay ejecución del modelo alemán | — | Modelo, columnas, scaler, entorno y diferencias Chile–Alemania identificados |
-| Fase 3 — Reconstrucción histórica de Berlín | Pendiente | No hay series ni tablas alemanas generadas | [Series](../results/timeseries/README.md) | Corrida reproducible con cobertura, perímetro y hashes |
+| Fase 3 — Reconstrucción histórica de Berlín | Pendiente | Insumos HV, temperatura y tabla integrada generados; no hay inferencia ni tablas de resultados | [Series](../results/timeseries/README.md) | Corrida reproducible con cobertura, perímetro y hashes |
 | Fase 4 — Validación y KPI | Pendiente | KPI alemán no evaluado | [Plan KPI](kpi_plan.md), [cumplimiento](cumplimiento_kpi.md) | CSV KPI, resumen, ficha y manifiesto revisados |
 | Fase 5 — Escalamiento territorial | Pendiente | No iniciada | — | Piloto Berlín cerrado y reproducible |
 
@@ -26,7 +26,7 @@ Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_
 | Stromnetz Berlin — categorías y HV 2019–2023 | **GO condicionado para el piloto** | Perfiles HV 2019–2023 completos en valores; HV es candidato principal, niveles no sumables; semántica de Lastgang confirmada y alcance HV/timestamps en revisión; se usa `11000` como referencia y HV como proxy |
 | Statistik Berlin-Brandenburg | **Aceptada como referencia anual** | Edición corregida 2023 auditada; consumo final total/sectorial independiente de HV; usar para consistencia anual condicionada |
 | Umweltatlas Berlin | Candidata espacial | Revisar cobertura distrital, privacidad y año de referencia |
-| DWD/ERA5-Land | Candidata climática | Seleccionar fuente, versión y tratamiento horario |
+| DWD Berlin-Tempelhof 00433 | **Seleccionada condicionada para primera corrida** | 8.760 horas 2023; cinco faltantes explícitos; usar casos completos y revisar representatividad espacial |
 | VG250/Zensus/Destatis/BA | Covariables y límites | VG250 `11000` aceptado para el perímetro piloto; las demás covariables se incorporan tras completar el contrato territorial |
 | SMARD/BDEW/DemandRegio | Contexto o prior | No usar como comparador independiente sin auditoría específica |
 
@@ -37,7 +37,7 @@ Los estados anteriores indican factibilidad potencial, no aceptación de datos. 
 - **Meta operativa:** MAPE ≤35 %.
 - **Estado:** no evaluado.
 - **Comparador horario:** pendiente de confirmar una serie de red independiente.
-- **Comparador anual/sectorial:** pendiente de auditar el balance oficial.
+- **Comparador anual/sectorial:** Strombilanz 2023 auditada; uso condicionado como control de escala.
 - **Regla:** si el balance se usa para shares o escalamiento, la comparación contra él se etiqueta como consistencia condicionada.
 
 No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una explicación en `cumplimiento_kpi.md`, una ficha firmada/revisada y un manifiesto reproducible.
@@ -45,12 +45,11 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 ## Próximas acciones
 
 1. Registrar la respuesta de Stromnetz Berlin cuando llegue y actualizar el dictamen semántico, temporal y cartográfico.
-2. Ejecutar la normalización `Europe/Berlin` → UTC para 2023 y generar la primera serie horaria de entrada.
-3. Incorporar la Strombilanz corregida como referencia anual y documentar el escalamiento.
-4. Comparar los perfiles HV 2019–2023 una vez resuelto el contrato temporal y registrar cambios de metodología.
-5. Conservar la geometría BKG `11000` y documentar CRS, fecha de vigencia y hash en cada corrida.
-6. Completar las correspondencias territoriales y el contrato de sectores alemanes.
-7. Emitir el dictamen de Fase 0 antes de descargar o transformar grandes volúmenes de datos.
+2. Resolver el tratamiento de las 20 filas sin ocho temperaturas válidas y documentar la política de casos completos.
+3. Definir calendario de feriados alemán y completar shares sectoriales compatibles con la red.
+4. Instalar y fijar el entorno de entrenamiento; adaptar las 24 entradas del MLP al contrato alemán.
+5. Ejecutar una línea base de reconstrucción sobre 2023, sin declarar todavía cumplimiento del KPI.
+6. Comparar los perfiles HV 2019–2023 una vez resuelto el contrato temporal y registrar cambios de metodología.
 
 ## Bitácora
 
@@ -63,6 +62,9 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 | 2026-09-21 | Fase 0 | Se auditó la Strombilanz oficial corregida de Berlín 2023 y se comparó con HV 2020–2023 | Consumo final 2023: 11.780 GWh; diferencia HV–EEV 2023: +0,273 %; referencia aceptada para consistencia anual condicionada | [Auditoría Strombilanz](sources/statistik_berlin_strombilanz_2023_auditoria.md) |
 | 2026-09-21 | Fase 0 | Se probó la normalización temporal de HV 2023 | 35.040 instantes UTC únicos con paso de 15 minutos; 2 diferencias de etiqueta local en las transiciones DST; especificación aceptada para el piloto | [Normalización temporal HV 2023](sources/normalizacion_temporal_hv_2023.md) |
 | 2026-09-21 | Fase 0 | Se auditaron los perfiles HV 2019–2023 y la documentación semántica oficial | Valores, máximos y energía anual consistentes; se detectaron anomalías de timestamps 2020–2022 y queda pendiente confirmar alcance HV y cartografía; solicitud enviada; se espera respuesta | [Auditoría HV 2019–2023](sources/stromnetz_berlin_hv_2019_2023_auditoria.md), [solicitud enviada](sources/solicitud_stromnetz_berlin_perimetro_y_semantica.md) |
+| 2026-09-28 | Fase 0 | Se generaron las series HV 2023 normalizada y horaria con preprocesador estándar | 35.040 intervalos; 8.760 horas; 11.812.177,946 MWh; 2 etiquetas DST discrepantes marcadas; artefactos pesados ignorados por Git | [Índice de series](../results/timeseries/berlin_inputs_2023_index.csv), [preprocesador HV](../../prototipo_3/preprocessing/berlin_hv_2023.py) |
+
+| 2026-09-28 | Fase 0 | Se extrajo DWD Berlin-Tempelhof y se integró con HV mediante ocho rezagos UTC | 8.760 horas climáticas; 5 faltantes DWD; 8.740 filas completas para la tabla integrada; no se imputaron valores | [Auditoría DWD](sources/dwd_berlin_tempelhof_2023_auditoria.md), [tabla integrada](sources/berlin_hv_temperature_features_2023.md) |
 
 ## Regla de actualización
 

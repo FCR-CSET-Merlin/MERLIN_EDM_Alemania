@@ -15,7 +15,7 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 | Fuentes alemanas | Candidatas; BKG `11000` aceptado para el perímetro piloto; cobertura, unidades y licencia en revisión; semántica general HV confirmada y alcance/timestamps pendientes |
 | Modelo alemán | No ejecutado en esta etapa |
 | KPI alemán | No evaluado; no se declara cumplimiento |
-| Próximo producto | Primera serie HV 2023 normalizada y ficha de escala anual |
+| Próximo producto | Contrato de variables alemán, entorno reproducible y primera línea base 2023 |
 
 ## Resultados previstos
 
@@ -42,6 +42,8 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 - [Decisión territorial del piloto](validation/sources/decision_perimetro_berlin.md)
 - [Auditoría de Strombilanz 2023](validation/sources/statistik_berlin_strombilanz_2023_auditoria.md)
 - [Normalización temporal HV 2023](validation/sources/normalizacion_temporal_hv_2023.md)
+- [Auditoría DWD Berlin-Tempelhof 2023](validation/sources/dwd_berlin_tempelhof_2023_auditoria.md)
+- [Tabla integrada HV–temperatura](validation/sources/berlin_hv_temperature_features_2023.md)
 
 La matriz y el dictamen se documentan en [`PLAN_TRABAJO_ADAPTACION_ALEMANIA.md`](../PLAN_TRABAJO_ADAPTACION_ALEMANIA.md).
 
@@ -51,4 +53,4 @@ La meta operativa es MAPE ≤35 %. Cada resultado debe indicar si mide demanda d
 
 Cada corrida registra commit, entorno, modelo, scaler, columnas, URL/fecha/licencia/hash de fuentes, período, zona horaria, cobertura, faltantes, transformaciones, perímetro y hashes de salida.
 
-Todavía no existen resultados alemanes ni una evaluación KPI; esta carpeta contiene el plan y las plantillas de evidencia.
+Todavía no existen resultados de reconstrucción ni una evaluación KPI; ya están disponibles las primeras series alemanas de entrada y sus índices reproducibles.

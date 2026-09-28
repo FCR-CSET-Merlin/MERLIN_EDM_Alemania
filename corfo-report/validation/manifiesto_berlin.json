@@ -1,23 +1,63 @@
 {
   "id_evidencia": "CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO",
-  "estado": "planificado",
+  "estado": "insumos_preparados; modelo no ejecutado",
   "pais": "Alemania",
   "territorio": "Berlin-administrative",
   "codigo_territorial": "11000",
   "serie_red": "Stromnetz-Berlin-HV-area-proxy",
   "objetivo": "Reconstruccion historica de demanda electrica horaria",
-  "fecha_corte": null,
+  "fecha_corte": "2026-09-28",
   "repositorio": {
     "commit": null,
-    "rama": null
+    "rama": "germany/main"
   },
   "entorno": {
-    "python": null,
-    "dependencias": null
+    "preprocesamiento": "Python 3.13.13; biblioteca estandar",
+    "entrenamiento": "pendiente de instalar y fijar dependencias de requirements.txt"
   },
-  "fuentes": [],
-  "entradas": [],
-  "salidas": [],
+  "fuentes": [
+    {
+      "nombre": "Stromnetz Berlin HV 2023",
+      "rol": "objetivo horario proxy",
+      "url": "https://www.stromnetz.berlin/files/globalassets/dokumente/veroffentlichungspflichten/2023/Jahreshoechstlast-2023-Hochspannung.csv",
+      "sha256": "8ce40b404dfaafbe55051db1926e204712205d64cbeac0a5bef95c5faa76a6c3"
+    },
+    {
+      "nombre": "DWD Berlin-Tempelhof 00433",
+      "rol": "temperatura horaria",
+      "url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/",
+      "sha256": "ee67c7cf45b820ff3c28ac579fc3d3ce790ca41468709a45bd30ad8717de1267"
+    }
+  ],
+  "entradas": [
+    {
+      "dataset": "berlin_hv_2023_hourly",
+      "rows": 8760,
+      "path": "prototipo_3/data/de_alemania/berlin_hv_2023/berlin_hv_2023_hourly.csv",
+      "sha256": "ecf47a49ebd665af7ab15717584e893453f01921f5c4aebdfc43141113d1567d"
+    },
+    {
+      "dataset": "berlin_tempelhof_temperature_2023",
+      "rows": 8760,
+      "path": "prototipo_3/data/de_alemania/berlin_temperature_2023/berlin_tempelhof_2023_hourly.csv",
+      "sha256": "fee8ce844791e12a78d9da25c4c99934a82a327bb77b3ece890eb954f61ee4b"
+    }
+  ],
+  "salidas": [
+    {
+      "dataset": "berlin_hv_2023_15min_normalized",
+      "rows": 35040,
+      "path": "prototipo_3/data/de_alemania/berlin_hv_2023/berlin_hv_2023_15min_normalized.csv",
+      "sha256": "3b5059da751112af7ab174dc4dae5d24f20d615a83aac20fadbb18b61fa411a"
+    },
+    {
+      "dataset": "berlin_hv_temperature_features_2023",
+      "rows": 8760,
+      "complete_8lag_rows": 8740,
+      "path": "prototipo_3/data/de_alemania/berlin_features_2023/berlin_hv_temperature_features_2023.csv",
+      "sha256": "109ff4f4d6484adba73a5712a792c9e3713053559d6f2dff79c562c815e1c36a"
+    }
+  ],
   "kpis": [],
   "limitaciones": [
     "La demanda de red y el consumo final deben reconciliarse explicitamente.",
@@ -26,6 +66,7 @@
     "Los valores HV 2019–2023 son consistentes, pero los timestamps 2020–2022 requieren normalización y confirmación del operador.",
     "La solicitud de semántica y cartografía fue enviada al operador; se espera respuesta.",
     "La Strombilanz corregida 2023 se usa como referencia anual independiente de la serie HV.",
+    "DWD Berlin-Tempelhof presenta cinco observaciones faltantes en 2023; no se imputaron.",
     "La evidencia KPI no existe hasta ejecutar y auditar la reconstruccion alemana."
   ]
 }
