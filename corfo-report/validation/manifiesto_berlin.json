@@ -70,6 +70,13 @@
       "path": "corfo-report/validation/berlin/fnn_temperature_2023_R30.csv",
       "sha256": "03ee1aab252a62a09f8f1672a5f2626fb24f06949f3b0bf900f0a00a98aa7fb1",
       "diagnostic": "first Test I dimension <=1%: d=3"
+    },
+    {
+      "dataset": "berlin_lag_ablation_2023",
+      "rows": 8740,
+      "path": "corfo-report/validation/berlin/lag_ablation_2023_index.csv",
+      "sha256": "d8c7082a78f45aed1ed6cece337cd8e2102db83edd7d061c522a4710a0158f01",
+      "diagnostic": "d3=8750,d5=8746,d8=8740; common=8740"
     }
   ],
   "kpis": [],
