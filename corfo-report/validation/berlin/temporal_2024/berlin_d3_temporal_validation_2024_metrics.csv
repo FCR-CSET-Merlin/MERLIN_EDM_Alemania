@@ -1,0 +1,2 @@
+scope,year,n,coverage_pct,mape_pct,mae_MW,rmse_MW,bias_MW,actual_mean_MW,predicted_mean_MW,observed_complete_GWh,predicted_complete_GWh,peak_error_pct,duplicate_local_hour_labels
+temporal_holdout_2024_same_operator,2024,8776,99.908925319,3.095865639,41.850056096,57.472507184,-4.673725123,1347.183300849,1342.509575726,11822.880648250,11781.864036570,-2.494640190,1

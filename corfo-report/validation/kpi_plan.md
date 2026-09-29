@@ -1,6 +1,6 @@
 # Plan de evidencia KPI — Berlín, Alemania
 
-**Estado:** `preparado`; no se ha ejecutado la reconstrucción ni calculado el KPI alemán.
+**Estado:** `ejecutado; Fase 4 cerrada con limitación documentada`. Se completó el KPI interno 2023, el holdout temporal 2024 y los controles anual/espacial con su clasificación de dependencia.
 
 El contrato operativo completo está en
 [`contrato_validacion_berlin.md`](sources/contrato_validacion_berlin.md). Este
@@ -14,11 +14,11 @@ Meta operativa: **MAPE menor o igual a 35 %**. El criterio contractual se copiar
 
 | Capa | Indicador | Referencia | Uso en KPI | Estado |
 |---|---|---|---|---|
-| A | MAPE, MAE, RMSE, sesgo y error de punta horarios | Perfil HV reservado temporalmente | KPI operativo interno | Pendiente de reconstrucción |
-| B | Energía anual, sesgo energético y shares sectoriales | Strombilanz Berlin | Consistencia externa condicionada | Fuente auditada; extracción y control HV completados |
-| C | Correlación, MAE/RMSE de shares y cobertura distrital | Umweltatlas Berlin | Consistencia espacial externa | Fuente auditada; `j2023g` extraído; salida distrital del modelo pendiente |
+| A | MAPE, MAE, RMSE, sesgo y error de punta horarios | Perfil HV reservado temporalmente | KPI operativo interno | Ejecutado: 2023 cumple; 2024 cumple como holdout temporal |
+| B | Energía anual, sesgo energético y shares sectoriales | Strombilanz Berlin | Consistencia externa condicionada | Ejecutado: modelo 2023 vs balance −0,357941 % |
+| C | Correlación, MAE/RMSE de shares y cobertura distrital | Umweltatlas Berlin | Consistencia espacial externa | Ejecutado como asignación condicionada; KPI espacial independiente no evaluable |
 | D | Correlación y error de perfil normalizado | SMARD/ENTSO-E | Contexto horario | No válido para MAPE Berlín |
-| E | MAPE, MAE, RMSE, sesgo y punta horarios | Serie independiente de Berlín | Validación horaria externa | No evaluable hasta obtener la fuente |
+| E | MAPE, MAE, RMSE, sesgo y punta horarios | Serie independiente de Berlín | Validación horaria externa | No evaluable; no se identificó una fuente pública compatible |
 
 La capa A no debe presentarse como validación independiente. Las capas B y C no deben convertirse artificialmente en MAPE horario porque miden consumo final anual y distribución espacial. La capa D solo controla forma agregada, dado que su perímetro no coincide con Berlín.
 

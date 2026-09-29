@@ -1,0 +1,5 @@
+kpi_id,territory,year,level,metric,value,threshold,status,independence,coverage_pct,evidence
+CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO-MAPE-2023,Berlin-administrative,2023,hourly,MAPE test d=3,5.089161454 %,<=35 %,cumple_interno,no,100.000000,validation/berlin/kpi_validation.csv
+CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO-MAPE-2024,Berlin-administrative,2024,hourly,MAPE temporal holdout d=3,3.095865639 %,<=35 %,cumple_temporal_mismo_operador,no,99.908925,validation/berlin/temporal_2024/berlin_d3_temporal_validation_2024_summary.md
+CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO-ANNUAL-2023,Berlin-administrative,2023,annual,relative energy difference,-0.357941 %,not applicable,consistencia_condicionada,no,99.771689,validation/berlin/annual_2023_model_control.md
+CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO-SPATIAL-2023,12 Bezirke,2023,district,independent spatial KPI,not evaluable,not applicable,no_evaluable_independiente,no,99.771689,validation/berlin/inference_2023/spatial_validation_berlin_d3_2023.md

@@ -1,7 +1,7 @@
 # Ficha de evidencia — reconstrucción histórica de Berlín
 
 - **ID:** `CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO`.
-- **Estado:** inferencia d=3 exportada; KPI horario interno cumplido (MAPE test 5,089161 % <=35 %); capa espacial distrital implementada como asignación condicionada, sin KPI independiente.
+- **Estado:** Fase 4 cerrada con limitación documentada; KPI interno 2023 y holdout temporal 2024 cumplen MAPE <=35 %; KPI horario independiente y espacial independiente no evaluables.
 - **País:** Alemania.
 - **Territorio:** `Berlin-administrative` (`ars/ags=11000`, geometría BKG VG250); la serie Stromnetz Berlin se reportará como `Stromnetz-Berlin-HV-area-proxy` hasta confirmar equivalencia geométrica.
 - **Objetivo:** reconstrucción horaria y validación anual/sectorial.
@@ -44,6 +44,13 @@ Con la serie HV observada se obtuvo:
 - Umweltatlas, suma de 12 distritos `j2023g`: `11.899,370 GWh`; diferencia HV–WFS `-0,732745 %`.
 
 Estos valores son controles de consistencia. La inferencia d=3 exportada suma 11.738,063 GWh en las 8.740 filas completas (brecha -1,355596 % frente a la suma distrital `j2023g`). La salida distrital usa los shares `j2023g` como pesos fijos; por eso la coincidencia de shares es una consistencia condicionada y no una validación espacial independiente.
+
+## Cierre de validación
+
+- Test interno 2023: MAPE 5,089161454 % sobre 1.311 horas.
+- Holdout temporal 2024: MAPE 3,095865639 % sobre 8.776 horas válidas de 8.784.
+- Control anual 2023 modelo–Strombilanz: −0,357941 %, condicionado por shares de entrada y cobertura parcial.
+- No se identificó una referencia horaria pública independiente compatible con el perímetro 11000.
 
 ## Limitaciones
 

@@ -1,8 +1,8 @@
 # Contrato de validación — reconstrucción horaria de Berlín
 
-**Estado:** `preparado; sin ejecución externa`  
-**Identificador:** `CORFO-MERLIN-EDM-DE-BERLIN-VALIDACION-01`  
-**Fecha de corte:** 28 de septiembre de 2026  
+**Estado:** `ejecutado; Fase 4 cerrada con limitación documentada`
+**Identificador:** `CORFO-MERLIN-EDM-DE-BERLIN-VALIDACION-01`
+**Fecha de corte:** 29 de septiembre de 2026
 **Caso:** Berlín, Alemania; reconstrucción histórica 2023
 
 Este contrato define qué se valida, contra qué fuente, con qué unidad y qué
@@ -185,3 +185,15 @@ La adaptación puede avanzar a la línea base si la capa A es reproducible y las
 capas B y C tienen fuentes descargadas, transformaciones auditadas y cobertura
 documentada. El cierre del KPI externo horario requiere además la capa E o una
 justificación formal de por qué no fue posible obtenerla.
+
+
+## Cierre de ejecución — 29 de septiembre de 2026
+
+- **Capa A:** ejecutada. MAPE test 2023 d=3 = 5,089161454 %; el KPI interno cumple el umbral de 35 %.
+- **Holdout temporal 2024:** ejecutado con modelo, scaler, variables y shares 2023 congelados. MAPE = 3,095865639 % sobre 8.776/8.784 horas; se clasifica como generalización temporal del mismo operador.
+- **Capa B:** ejecutada como consistencia condicionada. La energía modelada 2023 en filas completas es 11.738,062673 GWh frente a 11.780,229000 GWh de Strombilanz (−0,357941 %).
+- **Capa C:** ejecutada como escenario distrital por shares `j2023g`; no se declara KPI espacial independiente porque los pesos proceden de la misma referencia.
+- **Capa D:** queda como contexto regional y no se usa para el MAPE de Berlín.
+- **Capa E:** `no_evaluable`. La búsqueda documentada no identificó una serie pública horaria independiente con perímetro compatible con Berlin-administrative (11000).
+
+La Fase 4 se cierra con estas limitaciones explícitas; cualquier validación posterior con datos independientes debe abrir una nueva versión del contrato.

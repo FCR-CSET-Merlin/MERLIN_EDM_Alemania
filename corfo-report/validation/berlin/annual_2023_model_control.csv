@@ -1,0 +1,2 @@
+scope,year,territory,model_energy_GWh_complete_rows,reference_energy_GWh,absolute_error_GWh,relative_error_pct,coverage_pct,dependency_input,independence,status,notes
+model_vs_strombilanz_annual_conditioned,2023,Berlin-administrative (11000),11738.062673,11780.229000,-42.166327,-0.357941,99.771689,si,no,consistencia_condicionada,La Strombilanz aporto shares sectoriales al contrato; la salida cubre 8740/8760 horas y no se imputaron 20 horas.

@@ -14,8 +14,8 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 | Objetivo | Reconstrucción histórica de demanda eléctrica horaria |
 | Fuentes alemanas | Strombilanz 2023 y Umweltatlas WFS descargados/auditados; BKG `11000` aceptado; alcance exacto HV y timestamps del operador siguen pendientes |
 | Modelo alemán | Inferencia d=3 exportada; 8.740/8.760 horas; salida distrital condicionada |
-| KPI alemán | MAPE interno d=3 = 5,089161454 % (cumple ≤35 %); validación externa pendiente |
-| Próximo producto | Resolver comparador horario externo y obtener insumos para un KPI espacial independiente |
+| KPI alemán | Test interno 2023 = 5,089161454 %; holdout temporal 2024 = 3,095865639 %; ambos <=35 % |
+| Próximo producto | Preparar Fase 5: escalamiento territorial con limitaciones de validación explicitadas |
 
 ## Resultados previstos
 
@@ -26,7 +26,7 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 | Series horarias | [`results/timeseries/`](results/timeseries/) | Pesadas fuera de Git; índice y hash obligatorios |
 | Auditoría de fuentes | [`validation/sources/`](validation/sources/) | Cobertura, perímetro, licencia y transformaciones |
 | Validación Berlín | [`validation/berlin/`](validation/berlin/) | Comparaciones por año, territorio y sector |
-| KPI | [`validation/kpi_plan.md`](validation/kpi_plan.md), [`validation/berlin/kpi_validation.csv`](validation/berlin/kpi_validation.csv) | Fórmula, umbral, denominador e independencia |
+| KPI | [`validation/kpi_plan.md`](validation/kpi_plan.md), [`validation/berlin/kpi_validation.csv`](validation/berlin/kpi_validation.csv), [`results/tables/kpi_summary.csv`](results/tables/kpi_summary.csv) | Fórmula, umbral, denominador e independencia |
 | Contrato de validación | [`validation/sources/contrato_validacion_berlin.md`](validation/sources/contrato_validacion_berlin.md) | Capas interna, anual, espacial y horaria |
 | Matriz comparadores | [`validation/sources/comparaciones_externas_berlin.csv`](validation/sources/comparaciones_externas_berlin.csv) | Fuentes, perímetro, dependencia y estado |
 | Plantilla resultados externos | [`validation/berlin/comparaciones_externas_2023.csv`](validation/berlin/comparaciones_externas_2023.csv) | Métricas sin resultados inventados |
@@ -45,6 +45,7 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 - [Decisión territorial del piloto](validation/sources/decision_perimetro_berlin.md)
 - [Auditoría de Strombilanz 2023](validation/sources/statistik_berlin_strombilanz_2023_auditoria.md)
 - [Contrato de validación de Berlín](validation/sources/contrato_validacion_berlin.md)
+- [Investigación de fuentes para validación externa](validation/sources/validacion_externa_demanda_electrica_berlin_contexto.md)
 - [Matriz de comparaciones externas](validation/sources/comparaciones_externas_berlin.csv)
 - [Plantilla/resultados externos 2023](validation/berlin/comparaciones_externas_2023.csv)
 - [Auditoría y homologación externa 2023](validation/berlin/external_2023/auditoria_homologacion_externa_berlin_2023.md)
