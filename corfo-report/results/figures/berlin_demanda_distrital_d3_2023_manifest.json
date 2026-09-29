@@ -1,0 +1,48 @@
+{
+  "dataset": "berlin_demanda_distrital_d3_2023",
+  "status": "generated",
+  "territory": "Berlin, 12 Bezirke",
+  "year": 2023,
+  "model": "d=3",
+  "value_column": "predicted_district_GWh_complete_rows",
+  "units": "GWh",
+  "allocation_rule": "annual_umweltatlas_share_2023",
+  "spatial_interpretation": "conditional_allocation_not_independent_spatial_kpi",
+  "geometry": {
+    "path": "prototipo_3/data/de_alemania/external_validation/berlin_2023/berlin_strom_districts.geojson",
+    "sha256": "9ae3d44df152a3a58e511c75dde266e692325fd00ec8f4d6f00853aeabc018e2",
+    "crs": "EPSG:25833",
+    "features": 12
+  },
+  "annual_input": {
+    "path": "corfo-report/validation/berlin/inference_2023/berlin_district_allocation_2023.csv",
+    "sha256": "c4621ec81dc91eb743c6e1fe10f223a123b43b5f8e8fb598737e3368bca393d5",
+    "rows": 12,
+    "predicted_total_GWh": 11738.062672992
+  },
+  "hourly_audit": {
+    "available": true,
+    "path": "prototipo_3/data/de_alemania/berlin_district_inference_2023/berlin_district_d3_inference_2023.csv",
+    "sha256": "c3f70a07a31cd04aedb8fc1d095a8f6900a789ce4ca0e70fae8e89ff2d77f843",
+    "n_unique_hours": 8740,
+    "expected_hours": 8760,
+    "coverage_pct": 99.77168949771689,
+    "n_rows": 104880,
+    "n_districts": 12
+  },
+  "software": {
+    "geopandas": "1.1.4",
+    "pandas": "3.0.5",
+    "matplotlib": "3.11.1"
+  },
+  "outputs": {
+    "png": {
+      "path": "corfo-report/results/figures/berlin_demanda_distrital_d3_2023.png",
+      "sha256": "7eec9a4e513ee8abe9368f332efef1430e6f2d247b96bae124735e12686c1c87"
+    },
+    "svg": {
+      "path": "corfo-report/results/figures/berlin_demanda_distrital_d3_2023.svg",
+      "sha256": "e9437802b2218e2f2867931a9ba9c88be9b33deec59c59020a25615967a56ec8"
+    }
+  }
+}

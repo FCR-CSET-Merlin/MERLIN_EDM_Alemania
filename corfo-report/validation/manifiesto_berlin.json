@@ -163,6 +163,16 @@
       "diagnostic": "12 distritos x 8740 horas; regla fija de shares j2023g; artefacto pesado ignorado"
     },
     {
+      "dataset": "berlin_demanda_distrital_d3_2023_map",
+      "path": "corfo-report/results/figures/berlin_demanda_distrital_d3_2023.png",
+      "sha256": "7eec9a4e513ee8abe9368f332efef1430e6f2d247b96bae124735e12686c1c87",
+      "vector_path": "corfo-report/results/figures/berlin_demanda_distrital_d3_2023.svg",
+      "vector_sha256": "e9437802b2218e2f2867931a9ba9c88be9b33deec59c59020a25615967a56ec8",
+      "manifest_path": "corfo-report/results/figures/berlin_demanda_distrital_d3_2023_manifest.json",
+      "manifest_sha256": "75ffcffa1cc38be7fe2eac2caefeb52e21f89b6b339a61299fd618238562ac36",
+      "diagnostic": "mapa anual por 12 distritos; GWh; asignacion condicionada por j2023g; cobertura 8740/8760"
+    },
+    {
       "dataset": "berlin_d3_temporal_validation_2024",
       "path": "prototipo_3/data/de_alemania/berlin_temporal_validation_2024/berlin_d3_temporal_validation_2024.csv",
       "sha256": "c1cca0d2b11fd014e9b01acfc7838aaefb9616adbb82bf3bc4b3646b2f6f0069",
@@ -261,6 +271,12 @@
       "path": "corfo-report/README.md",
       "sha256": "e3f1cbc79aac5f02205149ae186fdc065bce116b6daaba052c78d90a493ee5aa",
       "diagnostic": "indice de reportabilidad alemana"
+    },
+    {
+      "dataset": "visualizacion_demanda_distrital_berlin",
+      "path": "analisis/visualizacion_demanda_distrital_berlin.py",
+      "sha256": "6a26750beaa72d58c8d0ac70cf32241e0c4d6f9641fc420e5686902550c5c9cf",
+      "diagnostic": "GeoPandas + Matplotlib; valida IDs, CRS, cobertura y genera PNG/SVG"
     },
     {
       "dataset": "validacion_temporal_berlin_2024",

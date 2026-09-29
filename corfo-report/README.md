@@ -23,6 +23,8 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 |---|---|---|
 | Tablas reconstruidas | [`results/tables/`](results/tables/) | Solo Alemania, con año, territorio, sector y unidad |
 | Figuras | [`results/figures/`](results/figures/) | Fuente, cobertura y fecha de generación |
+
+Figura disponible: [mapa distrital de demanda anual Berlín 2023 (PNG)](results/figures/berlin_demanda_distrital_d3_2023.png), [versión vectorial SVG](results/figures/berlin_demanda_distrital_d3_2023.svg) y [manifiesto](results/figures/berlin_demanda_distrital_d3_2023_manifest.json).
 | Series horarias | [`results/timeseries/`](results/timeseries/) | Pesadas fuera de Git; índice y hash obligatorios |
 | Auditoría de fuentes | [`validation/sources/`](validation/sources/) | Cobertura, perímetro, licencia y transformaciones |
 | Validación Berlín | [`validation/berlin/`](validation/berlin/) | Comparaciones por año, territorio y sector |
