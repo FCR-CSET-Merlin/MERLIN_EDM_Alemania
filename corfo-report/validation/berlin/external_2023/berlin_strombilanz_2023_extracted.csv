@@ -1,0 +1,6 @@
+year,category,value_gwh,unit,source_sheet
+2023,consumo_final_total,11780.229000000,GWh (Mill. kWh),S.28_Strombilanz
+2023,industria_mineria,1293.994000000,GWh (Mill. kWh),S.28_Strombilanz
+2023,hogares,3965.647000000,GWh (Mill. kWh),S.28_Strombilanz
+2023,ghd_otros,5608.947000000,GWh (Mill. kWh),S.28_Strombilanz
+2023,transporte,911.641000000,GWh (Mill. kWh),S.28_Strombilanz

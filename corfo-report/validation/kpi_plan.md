@@ -15,8 +15,8 @@ Meta operativa: **MAPE menor o igual a 35 %**. El criterio contractual se copiar
 | Capa | Indicador | Referencia | Uso en KPI | Estado |
 |---|---|---|---|---|
 | A | MAPE, MAE, RMSE, sesgo y error de punta horarios | Perfil HV reservado temporalmente | KPI operativo interno | Pendiente de reconstrucción |
-| B | Energía anual, sesgo energético y shares sectoriales | Strombilanz Berlin | Consistencia externa condicionada | Fuente auditada; descarga comparable pendiente |
-| C | Correlación, MAE/RMSE de shares y cobertura distrital | Umweltatlas Berlin | Consistencia espacial externa | Fuente candidata; WFS pendiente |
+| B | Energía anual, sesgo energético y shares sectoriales | Strombilanz Berlin | Consistencia externa condicionada | Fuente auditada; extracción y control HV completados |
+| C | Correlación, MAE/RMSE de shares y cobertura distrital | Umweltatlas Berlin | Consistencia espacial externa | Fuente auditada; `j2023g` extraído; salida distrital del modelo pendiente |
 | D | Correlación y error de perfil normalizado | SMARD/ENTSO-E | Contexto horario | No válido para MAPE Berlín |
 | E | MAPE, MAE, RMSE, sesgo y punta horarios | Serie independiente de Berlín | Validación horaria externa | No evaluable hasta obtener la fuente |
 

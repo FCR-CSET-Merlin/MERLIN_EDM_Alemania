@@ -1,13 +1,15 @@
 # Auditoría de referencia anual — Strombilanz Berlin 2023
 
-**Fecha de acceso:** 21 de septiembre de 2026  
-**Fuente:** [Amt für Statistik Berlin-Brandenburg — Energie- und CO₂-Bilanz](https://www.statistik-berlin-brandenburg.de/e-iv-4-j/)  
-**Informe:** `SB E04-04-00_2023j01_BE.pdf`, 2.ª edición corregida, 25.11.2025  
+**Fecha de acceso:** 29 de septiembre de 2026
+**Fuente:** [Amt für Statistik Berlin-Brandenburg — Energie- und CO₂-Bilanz](https://www.statistik-berlin-brandenburg.de/e-iv-4-j/)
+**Informe:** `SB E04-04-00_2023j01_BE.pdf`, 2.ª edición corregida, 25.11.2025
 **SHA-256 del PDF:** `c8617c558fbd7e4bd46954f3487e71ada9302c5a55fbdfae5b3f36bfb5471166`
+**XLSX descargado:** [`SB_E04-04-00_2023j01_BE.xlsx`](https://download.statistik-berlin-brandenburg.de/0597e0e4556dacc4/b20f2c7c8ca5/SB_E04-04-00_2023j01_BE.xlsx)
+**SHA-256 del XLSX:** `5b9acbf60a48526c5a25c2a92f8343a9387327071e69418918bded08b7031cce`
 
 ## Qué mide
 
-La `Strombilanz` es una referencia anual de consumo y flujos eléctricos para Berlín. El informe se basa en la metodología del [Länderarbeitskreis Energiebilanzen](https://www.lak-energiebilanzen.de/) y separa generación interna, compras de electricidad, pérdidas de transmisión, consumo en transformación y consumo final.
+La `Strombilanz` es una referencia anual de consumo y flujos eléctricos para Berlín. La extracción reproducible de la hoja XLSX y la homologación con HV/WFS están en [auditoria_homologacion_externa_berlin_2023.md](../berlin/external_2023/auditoria_homologacion_externa_berlin_2023.md). El informe se basa en la metodología del [Länderarbeitskreis Energiebilanzen](https://www.lak-energiebilanzen.de/) y separa generación interna, compras de electricidad, pérdidas de transmisión, consumo en transformación y consumo final.
 
 El informe define el consumo final como el uso de energía por grupos consumidores. Para 2023, la tabla sectorial usa cuatro categorías compatibles con el piloto:
 

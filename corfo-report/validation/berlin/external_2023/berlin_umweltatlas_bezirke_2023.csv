@@ -1,0 +1,13 @@
+id_bezirk,bezirk,j2023g_gwh,share_pct,crs
+01,Mitte,2303.910000,19.361613262,urn:ogc:def:crs:EPSG::25833
+02,Friedrichshain-Kreuzberg,1120.200000,9.413943763,urn:ogc:def:crs:EPSG::25833
+03,Pankow,813.320000,6.834983701,urn:ogc:def:crs:EPSG::25833
+04,Charlottenburg-Wilmersdorf,1181.510000,9.929181125,urn:ogc:def:crs:EPSG::25833
+05,Spandau,885.600000,7.442410817,urn:ogc:def:crs:EPSG::25833
+06,Steglitz-Zehlendorf,827.520000,6.954317750,urn:ogc:def:crs:EPSG::25833
+07,Tempelhof-Schöneberg,1110.150000,9.329485511,urn:ogc:def:crs:EPSG::25833
+08,Neukölln,823.490000,6.920450410,urn:ogc:def:crs:EPSG::25833
+09,Treptow-Köpenick,747.820000,6.284534391,urn:ogc:def:crs:EPSG::25833
+10,Marzahn-Hellersdorf,569.290000,4.784202861,urn:ogc:def:crs:EPSG::25833
+11,Lichtenberg,604.470000,5.079848765,urn:ogc:def:crs:EPSG::25833
+12,Reinickendorf,912.090000,7.665027644,urn:ogc:def:crs:EPSG::25833

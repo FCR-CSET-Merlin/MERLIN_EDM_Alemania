@@ -1,10 +1,10 @@
 # Registro de avance — adaptación de MERLIN EDM a Alemania
 
 **Caso:** reconstrucción histórica de demanda eléctrica de Berlín
-**Fecha de corte:** 21 de septiembre de 2026
+**Fecha de corte:** 29 de septiembre de 2026
 **Repositorio:** `MERLIN_EDM_Alemania`
 **Rama:** `germany/main`
-**Estado global:** **Fase 0 en curso**. No se ha ejecutado el modelo alemán ni se ha evaluado el KPI.
+**Estado global:** **Fases 0, 2 y 4 en curso**. Los insumos y contratos están preparados; la inferencia completa y el KPI alemán aún no se han cerrado.
 
 Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_ADAPTACION_ALEMANIA.md). Se actualizará en cada hito con fecha, evidencia, decisión y siguiente acción. Un estado no cambia a `cerrado` sin el producto y los criterios de aceptación de la fase.
 
@@ -16,7 +16,7 @@ Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_
 | Fase 1 — Homologación territorial, sectorial y temporal | **En curso** | FNN climático provisional ejecutado con `tau=1`; tablas comparables para `d=3`, `d=5` y `d=8` preparadas; contrato sectorial y territorial aún no cerrado | [Diagnóstico FNN](sources/fnn_berlin_temperature_2023.md), [ablación de rezagos](sources/lag_ablation_berlin_2023.md), [contrato de entrenamiento](sources/contrato_entrenamiento_berlin_2023.md) | Correspondencias de red, Berlín, distritos y sectores; unidades, DST y selección predictiva de rezagos verificadas |
 | Fase 2 — Línea base y adaptación | **En curso** | Contrato alemán parametrizado y ablación TensorFlow ejecutada para `d=3`, `d=5` y `d=8`; `d=3` obtiene el menor MAPE de prueba (5,089 %); shares C/P y `region_comuna_share` siguen provisionales | [Contrato de entrenamiento](sources/contrato_entrenamiento_berlin_2023.md), [ablación predictiva](sources/lag_ablation_predictiva_berlin_2023.md), [entrenador alemán](../../prototipo_3/src/train_mlp_berlin.py) | Modelo, columnas, scaler, entorno y diferencias Chile–Alemania identificados; selección de rezagos estable en validaciones adicionales |
 | Fase 3 — Reconstrucción histórica de Berlín | Pendiente | Insumos HV, temperatura y tabla integrada generados; no hay inferencia ni tablas de resultados | [Series](../results/timeseries/README.md) | Corrida reproducible con cobertura, perímetro y hashes |
-| Fase 4 — Validación y KPI | **Contrato preparado** | Capas A–E definidas; matriz de fuentes y plantilla externa creadas; KPI alemán no evaluado | [Contrato de validación](sources/contrato_validacion_berlin.md), [matriz externa](sources/comparaciones_externas_berlin.csv), [plantilla externa](berlin/comparaciones_externas_2023.csv) | Fuentes B/C descargadas y homologadas; reconstrucción ejecutada; comparador horario independiente resuelto o limitación formalizada |
+| Fase 4 — Validación y KPI | **Fuentes B/C auditadas; KPI parcial** | Strombilanz y Umweltatlas descargados, auditados y homologados con HV observado; validación distrital del modelo no evaluable | [Auditoría externa](berlin/external_2023/auditoria_homologacion_externa_berlin_2023.md), [comparaciones](berlin/comparaciones_externas_2023.csv) | Salida predicha 2023 exportada; comparación por distrito ejecutada; comparador horario independiente resuelto o limitación formalizada |
 | Fase 5 — Escalamiento territorial | Pendiente | No iniciada | — | Piloto Berlín cerrado y reproducible |
 
 ## Estado de fuentes
@@ -25,7 +25,7 @@ Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_
 |---|---|---|
 | Stromnetz Berlin — categorías y HV 2019–2023 | **GO condicionado para el piloto** | Perfiles HV 2019–2023 completos en valores; HV es candidato principal, niveles no sumables; semántica de Lastgang confirmada y alcance HV/timestamps en revisión; se usa `11000` como referencia y HV como proxy |
 | Statistik Berlin-Brandenburg | **Aceptada como referencia anual** | Edición corregida 2023 auditada; consumo final total/sectorial independiente de HV; usar para consistencia anual condicionada |
-| Umweltatlas Berlin | Candidata espacial | Revisar cobertura distrital, privacidad y año de referencia |
+| Umweltatlas Berlin | **Aceptada como referencia espacial** | 12 distritos auditados; campo `j2023g` disponible; ficha del portal describe 2022; no hay salida distrital del modelo |
 | DWD Berlin-Tempelhof 00433 | **Seleccionada condicionada para primera corrida** | 8.760 horas 2023; cinco faltantes explícitos; usar casos completos y revisar representatividad espacial |
 | VG250/Zensus/Destatis/BA | Covariables y límites | VG250 `11000` aceptado para el perímetro piloto; las demás covariables se incorporan tras completar el contrato territorial |
 | SMARD/BDEW/DemandRegio | Contexto o prior | No usar como comparador independiente sin auditoría específica |
@@ -35,9 +35,9 @@ Los estados anteriores indican factibilidad potencial, no aceptación de datos. 
 ## KPI
 
 - **Meta operativa:** MAPE ≤35 %.
-- **Estado:** no evaluado.
+- **Estado:** parcial; controles externos completados sobre HV observado, KPI de reconstrucción predicha aún no evaluado.
 - **Comparador horario:** pendiente de confirmar una serie de red independiente.
-- **Comparador anual/sectorial:** Strombilanz 2023 auditada; uso condicionado como control de escala.
+- **Comparador anual/sectorial:** Strombilanz 2023 auditada; HV observado vs consumo final: +0,271208 %; consistencia condicionada.
 - **Regla:** si el balance se usa para shares o escalamiento, la comparación contra él se etiqueta como consistencia condicionada.
 
 No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una explicación en `cumplimiento_kpi.md`, una ficha firmada/revisada y un manifiesto reproducible.
@@ -51,8 +51,9 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 5. Fijar el entorno TensorFlow 2.21.0 usado en la corrida y conservar los pesos/resultados por dimensión con sus hashes.
 6. Ejecutar una línea base de reconstrucción sobre 2023, sin declarar todavía cumplimiento del KPI.
 7. Comparar los perfiles HV 2019–2023 una vez resuelto el contrato temporal y registrar cambios de metodología.
-8. Descargar y auditar las fuentes B y C de la matriz externa; completar sus unidades, cobertura, versión y hashes.
-9. Mantener la plantilla externa en estado pendiente hasta disponer de resultados calculados; no declarar KPI por la existencia del contrato.
+8. Exportar la salida predicha horaria 2023 del modelo d=3 y conservarla con timestamp, unidad y hash.
+9. Definir o implementar la desagregación distrital antes de calcular correlación/MAE de shares; no usar la referencia distrital como KPI mientras falte esa salida.
+10. Solicitar o identificar un comparador horario independiente de Berlín; SMARD permanece solo como contexto.
 
 ## Bitácora
 
@@ -75,6 +76,8 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 | 2026-09-28 | Fase 2 | Se ejecutó la ablación predictiva sobre el conjunto común | MAPE de prueba: `d=3` 5,089 %; `d=5` 5,294 %; `d=8` 5,811 %; `d=3` es la mejor configuración preliminar; no se declara KPI contractual | [Ablación predictiva](sources/lag_ablation_predictiva_berlin_2023.md), [índice de métricas](berlin/lag_ablation_predictiva_2023.csv) |
 
 | 2026-09-28 | Fase 4 | Se formalizó el contrato de validación y se prepararon las comparaciones externas | Se definieron cinco capas: KPI interno HV, consistencia anual, consistencia espacial, contexto horario y comparador externo horario pendiente; se crearon matriz de fuentes y plantilla de resultados; no se calcularon indicadores | [Contrato](sources/contrato_validacion_berlin.md), [matriz](sources/comparaciones_externas_berlin.csv), [plantilla](berlin/comparaciones_externas_2023.csv) |
+
+| 2026-09-29 | Fase 4 | Se descargaron y auditaron Strombilanz 2023 y WFS del Umweltatlas; se homologaron con la serie HV observada | Strombilanz: 11.780,229 GWh; HV: 11.812,177946 GWh; diferencia +0,271208 %. WFS: 12 distritos, suma `j2023g` 11.899,370 GWh; control HV–WFS -0,732745 %. La comparación distrital del modelo es `no_evaluable` porque aún no hay salida por distrito | [Auditoría externa](berlin/external_2023/auditoria_homologacion_externa_berlin_2023.md), [script](../../analisis/validacion_externa_berlin.py), [tabla](berlin/comparaciones_externas_2023.csv) |
 
 ## Regla de actualización
 

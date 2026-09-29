@@ -1,7 +1,7 @@
 fuente,rol,variable,escala_resolucion,estado,comparador_kpi,verificaciones_pendientes
 Stromnetz Berlin Restlast SLP 2023,objetivo horario parcial,carga residual de clientes SLP,area de red; 15 min,en_revision,condicionado,perimetro; zona horaria DST; no equivale a demanda total; auditar otras categorias
 Statistik Berlin-Brandenburg,referencia anual,consumo final y balance sectorial,Berlin; anual,aceptada como referencia anual,condicionado,edicion corregida 2023; definiciones; sectores; unidades; no usar como referencia horaria
-Umweltatlas Berlin,desagregacion espacial,consumo electrico territorial,distritos y bloques; anual,candidata,no,privacidad; cobertura; codigos; perimetro
+Umweltatlas Berlin,desagregacion espacial,consumo electrico territorial,distritos y bloques; anual,auditada como referencia espacial,no,privacidad; ficha describe 2022 pero WFS expone j2023g/j2024g; CRS EPSG:25833; sin salida distrital del modelo
 SMARD,contexto nacional,consumo efectivo desde red,Alemania; 15 min,contexto,no,desagregacion territorial y correspondencia con Berlin
 DWD Berlin-Tempelhof 00433,variable exogena,temperatura TT_TU; °C,Berlin; horaria,seleccionada condicionada,no,5 faltantes 2023; representatividad espacial; rezagos; no imputar
 Zensus 2022,covariable estructural,poblacion y vivienda,grilla/territorio; censal,candidata,no,nivel geografico; licencia; compatibilidad temporal

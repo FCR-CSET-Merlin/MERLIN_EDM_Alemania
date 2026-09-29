@@ -12,10 +12,10 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 |---|---|
 | Caso piloto | Berlín, Alemania |
 | Objetivo | Reconstrucción histórica de demanda eléctrica horaria |
-| Fuentes alemanas | Candidatas; BKG `11000` aceptado para el perímetro piloto; cobertura, unidades y licencia en revisión; semántica general HV confirmada y alcance/timestamps pendientes |
+| Fuentes alemanas | Strombilanz 2023 y Umweltatlas WFS descargados/auditados; BKG `11000` aceptado; alcance exacto HV y timestamps del operador siguen pendientes |
 | Modelo alemán | No ejecutado en esta etapa |
 | KPI alemán | No evaluado; no se declara cumplimiento |
-| Próximo producto | Contrato de variables alemán, entorno reproducible y primera línea base 2023 |
+| Próximo producto | Exportar la inferencia 2023, cerrar la desagregación distrital y evaluar el KPI formal |
 
 ## Resultados previstos
 
@@ -46,7 +46,8 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 - [Auditoría de Strombilanz 2023](validation/sources/statistik_berlin_strombilanz_2023_auditoria.md)
 - [Contrato de validación de Berlín](validation/sources/contrato_validacion_berlin.md)
 - [Matriz de comparaciones externas](validation/sources/comparaciones_externas_berlin.csv)
-- [Plantilla de resultados externos 2023](validation/berlin/comparaciones_externas_2023.csv)
+- [Plantilla/resultados externos 2023](validation/berlin/comparaciones_externas_2023.csv)
+- [Auditoría y homologación externa 2023](validation/berlin/external_2023/auditoria_homologacion_externa_berlin_2023.md)
 - [Normalización temporal HV 2023](validation/sources/normalizacion_temporal_hv_2023.md)
 - [Auditoría DWD Berlin-Tempelhof 2023](validation/sources/dwd_berlin_tempelhof_2023_auditoria.md)
 - [Tabla integrada HV–temperatura](validation/sources/berlin_hv_temperature_features_2023.md)

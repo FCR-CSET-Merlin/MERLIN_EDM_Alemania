@@ -1,11 +1,11 @@
 # Ficha de evidencia — reconstrucción histórica de Berlín
 
 - **ID:** `CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO`.
-- **Estado:** contrato de validación preparado; insumos externos aún no descargados; sin KPI alemán calculado.
+- **Estado:** fuentes externas anual y espacial descargadas y auditadas; sin KPI de reconstrucción predicha calculado.
 - **País:** Alemania.
 - **Territorio:** `Berlin-administrative` (`ars/ags=11000`, geometría BKG VG250); la serie Stromnetz Berlin se reportará como `Stromnetz-Berlin-HV-area-proxy` hasta confirmar equivalencia geométrica.
 - **Objetivo:** reconstrucción horaria y validación anual/sectorial.
-- **Fecha de corte:** 28 de septiembre de 2026.
+- **Fecha de corte:** 29 de septiembre de 2026.
 - **Commit y entorno de entrenamiento:** pendientes; los preprocesadores de insumos se ejecutaron con Python 3.13.13 y biblioteca estándar.
 - **Responsable y revisor:** pendientes.
 
@@ -14,8 +14,8 @@
 | Insumo | Fuente | Función | Estado |
 |---|---|---|---|
 | Demanda horaria | Stromnetz Berlin HV 2019–2023 | Objetivo horario de red y proxy territorial | GO condicionado; semántica general confirmada, alcance HV/timestamps pendientes |
-| Balance anual | Statistik Berlin-Brandenburg, edición corregida 2023 | Referencia total/sectorial | Aceptada para consistencia anual condicionada |
-| Distribución espacial | Umweltatlas Berlin | Validación distrital | Por verificar |
+| Balance anual | Statistik Berlin-Brandenburg, edición corregida 2023 | Referencia total/sectorial | Auditada; consistencia anual condicionada |
+| Distribución espacial | Umweltatlas Berlin WFS, campo `j2023g` | Validación distrital | Auditada; salida distrital del modelo pendiente |
 | Temperatura | DWD Berlin-Tempelhof 00433 | Variable explicativa horaria | Seleccionada condicionada; 5 faltantes 2023 y representatividad espacial pendientes |
 | Límites | BKG VG250 | Perímetro administrativo reproducible de Berlín (`11000`) | Aceptado para el piloto; correspondencia exacta con red pendiente |
 
@@ -32,6 +32,18 @@ La validación se ejecutará según el [contrato de validación](sources/contrat
 La matriz de fuentes y la plantilla de resultados están en
 [`sources/comparaciones_externas_berlin.csv`](sources/comparaciones_externas_berlin.csv)
 y [`berlin/comparaciones_externas_2023.csv`](berlin/comparaciones_externas_2023.csv).
+
+## Resultado de la homologación externa 2023
+
+La auditoría reproducible está en
+[`berlin/external_2023/auditoria_homologacion_externa_berlin_2023.md`](berlin/external_2023/auditoria_homologacion_externa_berlin_2023.md).
+Con la serie HV observada se obtuvo:
+
+- HV anual: `11.812,177946 GWh`;
+- Strombilanz, consumo final: `11.780,229 GWh`; diferencia relativa `+0,271208 %`;
+- Umweltatlas, suma de 12 distritos `j2023g`: `11.899,370 GWh`; diferencia HV–WFS `-0,732745 %`.
+
+Estos valores son controles de consistencia y no resultados predichos por la red. La comparación por distrito permanece `no_evaluable` hasta exportar una salida distrital o fijar una regla explícita de desagregación.
 
 ## Limitaciones
 

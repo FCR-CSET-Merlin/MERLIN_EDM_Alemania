@@ -1,12 +1,12 @@
 {
   "id_evidencia": "CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO",
-  "estado": "insumos_preparados; modelo no ejecutado",
+  "estado": "fuentes_externas_auditadas; inferencia_modelo_pendiente",
   "pais": "Alemania",
   "territorio": "Berlin-administrative",
   "codigo_territorial": "11000",
   "serie_red": "Stromnetz-Berlin-HV-area-proxy",
   "objetivo": "Reconstruccion historica de demanda electrica horaria",
-  "fecha_corte": "2026-09-28",
+  "fecha_corte": "2026-09-29",
   "repositorio": {
     "commit": null,
     "rama": "germany/main"
@@ -27,6 +27,34 @@
       "rol": "temperatura horaria",
       "url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/",
       "sha256": "ee67c7cf45b820ff3c28ac579fc3d3ce790ca41468709a45bd30ad8717de1267"
+    },
+    {
+      "nombre": "Amt für Statistik Berlin-Brandenburg Strombilanz 2023 XLSX",
+      "rol": "referencia anual externa",
+      "url": "https://download.statistik-berlin-brandenburg.de/0597e0e4556dacc4/b20f2c7c8ca5/SB_E04-04-00_2023j01_BE.xlsx",
+      "sha256": "5b9acbf60a48526c5a25c2a92f8343a9387327071e69418918bded08b7031cce",
+      "local_path": "prototipo_3/data/de_alemania/external_validation/berlin_2023/SB_E04-04-00_2023j01_BE.xlsx"
+    },
+    {
+      "nombre": "Umweltatlas WFS GetCapabilities 2026-09-29",
+      "rol": "metadatos fuente espacial",
+      "url": "https://gdi.berlin.de/services/wfs/ua_stromverbrauch?request=GetCapabilities&service=WFS",
+      "sha256": "23c7842236be80b28b04ea41a6c94c3f9f6af623878f8108fd324f15dffcbb8a",
+      "local_path": "prototipo_3/data/de_alemania/external_validation/berlin_2023/ua_stromverbrauch_GetCapabilities.xml"
+    },
+    {
+      "nombre": "Umweltatlas Berlin Bezirke j2023g",
+      "rol": "referencia espacial distrital externa",
+      "url": "https://gdi.berlin.de/services/wfs/ua_stromverbrauch?service=WFS&version=2.0.0&request=GetFeature&typeNames=ua_stromverbrauch%3Ab_verbrauchstrombez&outputFormat=application%2Fjson",
+      "sha256": "9ae3d44df152a3a58e511c75dde266e692325fd00ec8f4d6f00853aeabc018e2",
+      "local_path": "prototipo_3/data/de_alemania/external_validation/berlin_2023/berlin_strom_districts.geojson"
+    },
+    {
+      "nombre": "Umweltatlas Berlin Bezirke detallado 2023",
+      "rol": "control espacial sectorial externo",
+      "url": "https://gdi.berlin.de/services/wfs/ua_stromverbrauch?service=WFS&version=2.0.0&request=GetFeature&typeNames=ua_stromverbrauch%3Averbrauchstrombez_detail&outputFormat=application%2Fjson",
+      "sha256": "87454f14a5253e78ac4c4067ce4fe1939aeadb84c96ef307f413e38e0a061e06",
+      "local_path": "prototipo_3/data/de_alemania/external_validation/berlin_2023/berlin_strom_districts_detail.geojson"
     }
   ],
   "entradas": [
@@ -109,13 +137,61 @@
     {
       "dataset": "comparaciones_externas_berlin",
       "path": "corfo-report/validation/sources/comparaciones_externas_berlin.csv",
-      "sha256": "a43e3dc3b374d415e7bfc741a0cf3353e9ff5ec98295bf55b75f042f86a8bfc3"
+      "sha256": "b9989c3e6f43b7e559b5ba7989e309a5a0c15f7b6212b300ab02ab59db6be0c6"
     },
     {
-      "dataset": "comparaciones_externas_2023_template",
+      "dataset": "comparaciones_externas_2023",
       "path": "corfo-report/validation/berlin/comparaciones_externas_2023.csv",
-      "sha256": "52bb0d430568dd942e43c3aad8d6019739b10192b9c746e0c3546ada34a76727",
-      "diagnostic": "plantilla sin indicadores calculados"
+      "sha256": "9d750de6ffcd079777009228022984024491bf134eb7144b363cb83054411134",
+      "diagnostic": "annual control completed; district model comparison no_evaluable"
+    },
+    {
+      "dataset": "auditoria_homologacion_externa_berlin_2023",
+      "path": "corfo-report/validation/berlin/external_2023/auditoria_homologacion_externa_berlin_2023.md",
+      "sha256": "f68d90e1b13ee7bba4c5775b97093b6fef817ea6d557650e605b27dedacb09e4",
+      "diagnostic": "sources downloaded; observed HV homologation completed"
+    },
+    {
+      "dataset": "berlin_strombilanz_2023_extracted",
+      "path": "corfo-report/validation/berlin/external_2023/berlin_strombilanz_2023_extracted.csv",
+      "sha256": "32b9186073d22fb6c089822a773221810e9a99e932197425874d391187bd184f",
+      "diagnostic": "exact rows extracted from Strombilanz XLSX"
+    },
+    {
+      "dataset": "berlin_umweltatlas_bezirke_2023",
+      "path": "corfo-report/validation/berlin/external_2023/berlin_umweltatlas_bezirke_2023.csv",
+      "sha256": "e60df4aa7f71c1a11a14fa08d586120660e69fe55d6ae308f49d9ae238860489",
+      "diagnostic": "12 districts; j2023g; EPSG:25833"
+    },
+    {
+      "dataset": "berlin_umweltatlas_bezirke_detail_2023",
+      "path": "corfo-report/validation/berlin/external_2023/berlin_umweltatlas_bezirke_detail_2023.csv",
+      "sha256": "f196122e5732f2177fcc29c0311515d2f5a49ddbb86ad4f9c68ce250a514213e",
+      "diagnostic": "detail categories; not mapped one-to-one to Strombilanz"
+    },
+    {
+      "dataset": "homologacion_externa_berlin_2023",
+      "path": "corfo-report/validation/berlin/external_2023/homologacion_externa_berlin_2023.csv",
+      "sha256": "2d3c51145c5049ee4f72aa7f4b19f465bc34d4fcdaf70bdf43298e232c5fe8e2",
+      "diagnostic": "annual and spatial controls; district comparison no_evaluable"
+    },
+    {
+      "dataset": "validacion_externa_berlin",
+      "path": "analisis/validacion_externa_berlin.py",
+      "sha256": "abc95ccc491eff9bf956f326c5d2b14a651075997021505d17fac9c77e35fa58",
+      "diagnostic": "standard-library reproducible extractor and comparator"
+    },
+    {
+      "dataset": "cumplimiento_kpi",
+      "path": "corfo-report/validation/cumplimiento_kpi.md",
+      "sha256": "d610cf87346895165a72be5a801472b7c21405aef12b7a93cb3b91d2525ac7a1",
+      "diagnostic": "external controls recorded; formal KPI pending"
+    },
+    {
+      "dataset": "inventario_fuentes",
+      "path": "corfo-report/validation/sources/inventario_fuentes.csv",
+      "sha256": "216ed99447e29d54bc67901136186f2a416106bc35aa11650b4a4bb70f65ec60",
+      "diagnostic": "source statuses updated after external audit"
     }
   ],
   "kpis": [],
@@ -128,7 +204,10 @@
     "La Strombilanz corregida 2023 se usa como referencia anual independiente de la serie HV.",
     "DWD Berlin-Tempelhof presenta cinco observaciones faltantes en 2023; no se imputaron.",
     "La evidencia KPI no existe hasta ejecutar y auditar la reconstruccion alemana.",
-    "El FNN climatico es sensible a R; d=3 y d=5 son diagnosticos, no seleccion predictiva final de la red."
+    "El FNN climatico es sensible a R; d=3 y d=5 son diagnosticos, no seleccion predictiva final de la red.",
+    "El WFS del Umweltatlas describe el conjunto como 2022 en la ficha del portal, pero el servicio expone campos j2023g y j2024g; se seleccionó j2023g para homologar 2023.",
+    "La comparación anual y el control total espacial usan la serie HV observada; todavía no existe una salida predicha horaria o distrital exportada.",
+    "La comparación por distrito permanece no_evaluable hasta generar una salida distrital o fijar una regla de desagregación explícita."
   ],
   "contrato_entrenamiento": {
     "baseline_dimension": 8,
