@@ -69,5 +69,5 @@ La capa detallada contiene `verbr_gewerbe`, `verbr_haushalt`, `verbr_nachtspeich
 - **Fuente anual:** aceptada para consistencia externa condicionada; unidades y fila 2023 verificadas.
 - **Fuente espacial:** aceptada como referencia distrital; se detecta discrepancia entre el texto descriptivo del portal y los campos 2023 disponibles en el WFS.
 - **Homologación actual:** completada a nivel ciudad observado y preparada a nivel distrital.
-- **KPI espacial:** `no_evaluable` hasta que la reconstrucción genere una salida por distrito o se defina una regla de desagregación explícita.
+- **KPI espacial independiente:** continúa `no_evaluable`. La corrida d=3 posterior generó una salida distrital mediante shares anuales `j2023g`, pero esa asignación es condicionada y no independiente.
 - **KPI horario externo:** permanece pendiente; ninguna de estas fuentes es una referencia horaria independiente de Berlín.

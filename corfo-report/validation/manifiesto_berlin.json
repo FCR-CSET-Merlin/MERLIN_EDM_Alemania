@@ -1,6 +1,6 @@
 {
   "id_evidencia": "CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO",
-  "estado": "fuentes_externas_auditadas; inferencia_modelo_pendiente",
+  "estado": "fuentes_externas_auditadas; inferencia_d3_exportada; kpi_interno_cumplido; capa_espacial_condicionada",
   "pais": "Alemania",
   "territorio": "Berlin-administrative",
   "codigo_territorial": "11000",
@@ -13,7 +13,7 @@
   },
   "entorno": {
     "preprocesamiento": "Python 3.13.13; biblioteca estandar",
-    "entrenamiento": "pendiente de instalar y fijar dependencias de requirements.txt"
+    "entrenamiento": "TensorFlow 2.21.0; NumPy 2.5.3; Python 3.13.13; seed 2023; inferencia CPU reproducible"
   },
   "fuentes": [
     {
@@ -68,7 +68,7 @@
       "dataset": "berlin_tempelhof_temperature_2023",
       "rows": 8760,
       "path": "prototipo_3/data/de_alemania/berlin_temperature_2023/berlin_tempelhof_2023_hourly.csv",
-      "sha256": "fee8ce844791e12a78d9da25c4c99934a82a327bb77b3ece890eb954f61ee4b"
+      "sha256": "fee8ce844791e12a78d9da25c4c99934a82a327bb77b3ece890eb954f61ee4b4"
     },
     {
       "dataset": "berlin_sector_shares_2023_provisional",
@@ -83,7 +83,7 @@
       "dataset": "berlin_hv_2023_15min_normalized",
       "rows": 35040,
       "path": "prototipo_3/data/de_alemania/berlin_hv_2023/berlin_hv_2023_15min_normalized.csv",
-      "sha256": "3b5059da751112af7ab174dc4dae5d24f20d615a83aac20fadbb18b61fa411a"
+      "sha256": "3b5059da751112a4f17b174dc4dae5d24f20d615a83aac20fadbb18b61fa411a"
     },
     {
       "dataset": "berlin_hv_temperature_features_2023",
@@ -125,7 +125,28 @@
       "rows": 3,
       "path": "corfo-report/validation/berlin/lag_ablation_predictiva_2023.csv",
       "sha256": "b4affa55ceb71b835967d3375b665914637fb73a31a8b032ed3128ddb70053cc",
-      "diagnostic": "test MAPE d3=5.089%, d5=5.294%, d8=5.811%; corrida interna; KPI formal pendiente"
+      "diagnostic": "test MAPE d3=5.089%, d5=5.294%, d8=5.811%; corrida interna; d3 KPI interno documentado"
+    },
+    {
+      "dataset": "berlin_d3_inference_2023",
+      "path": "prototipo_3/data/de_alemania/berlin_inference_2023/berlin_d3_inference_2023.csv",
+      "sha256": "68aa81253e7aed55c4413012933582296e7a97f8eb92b3b05896250473cd65d3",
+      "rows": 8740,
+      "diagnostic": "inferencia horaria row-level; 8740/8760 filas; 20 horas no imputadas"
+    },
+    {
+      "dataset": "berlin_d3_inference_manifest",
+      "path": "prototipo_3/data/de_alemania/berlin_inference_2023/berlin_d3_inference_2023_manifest.json",
+      "sha256": "c0a09a4c6a56febeb3991f463a376feb9bebf2c07bc79fe38bb12e425310207e",
+      "rows": 1,
+      "diagnostic": "hashes, escalamiento, particion y metricas de inferencia d=3"
+    },
+    {
+      "dataset": "berlin_district_d3_inference_2023",
+      "path": "prototipo_3/data/de_alemania/berlin_district_inference_2023/berlin_district_d3_inference_2023.csv",
+      "sha256": "c3f70a07a31cd04aedb8fc1d095a8f6900a789ce4ca0e70fae8e89ff2d77f843",
+      "rows": 104880,
+      "diagnostic": "12 distritos x 8740 horas; regla fija de shares j2023g; artefacto pesado ignorado"
     }
   ],
   "documentos_validacion": [
@@ -142,13 +163,13 @@
     {
       "dataset": "comparaciones_externas_2023",
       "path": "corfo-report/validation/berlin/comparaciones_externas_2023.csv",
-      "sha256": "9d750de6ffcd079777009228022984024491bf134eb7144b363cb83054411134",
-      "diagnostic": "annual control completed; district model comparison no_evaluable"
+      "sha256": "8448e18e543cdd27b4bd49bf057ba48ebce1ca6a4b9c3c60c8cdb8eda79eaab0",
+      "diagnostic": "annual control completed; district model comparison conditioned and not independent"
     },
     {
       "dataset": "auditoria_homologacion_externa_berlin_2023",
       "path": "corfo-report/validation/berlin/external_2023/auditoria_homologacion_externa_berlin_2023.md",
-      "sha256": "f68d90e1b13ee7bba4c5775b97093b6fef817ea6d557650e605b27dedacb09e4",
+      "sha256": "820b9514789d30258b398d3804c4f7b389697ecc7e8e836012615e40e1940ed3",
       "diagnostic": "sources downloaded; observed HV homologation completed"
     },
     {
@@ -173,7 +194,7 @@
       "dataset": "homologacion_externa_berlin_2023",
       "path": "corfo-report/validation/berlin/external_2023/homologacion_externa_berlin_2023.csv",
       "sha256": "2d3c51145c5049ee4f72aa7f4b19f465bc34d4fcdaf70bdf43298e232c5fe8e2",
-      "diagnostic": "annual and spatial controls; district comparison no_evaluable"
+      "diagnostic": "annual and spatial controls; independent district KPI remains no_evaluable"
     },
     {
       "dataset": "validacion_externa_berlin",
@@ -184,17 +205,98 @@
     {
       "dataset": "cumplimiento_kpi",
       "path": "corfo-report/validation/cumplimiento_kpi.md",
-      "sha256": "d610cf87346895165a72be5a801472b7c21405aef12b7a93cb3b91d2525ac7a1",
-      "diagnostic": "external controls recorded; formal KPI pending"
+      "sha256": "245a22cf797ba31437d8519dda0b3bd79465be19c4c4200d796e2f982751f641",
+      "diagnostic": "internal KPI d3 documented; external controls and spatial independence pending"
     },
     {
       "dataset": "inventario_fuentes",
       "path": "corfo-report/validation/sources/inventario_fuentes.csv",
       "sha256": "216ed99447e29d54bc67901136186f2a416106bc35aa11650b4a4bb70f65ec60",
       "diagnostic": "source statuses updated after external audit"
+    },
+    {
+      "dataset": "inferencia_berlin_d3_2023",
+      "path": "analisis/inferencia_berlin_d3_2023.py",
+      "sha256": "1b022222765b1c7f3892dbc61cf722211d4d2b7f87e5c7fab9dd89c91f5932b0",
+      "diagnostic": "exportador reproducible de features, predicciones y metricas"
+    },
+    {
+      "dataset": "desagregacion_distrital_berlin_2023",
+      "path": "analisis/desagregacion_distrital_berlin_2023.py",
+      "sha256": "c6c4e05951b07448a4d25334750179b9190b85f263069dd69ccb9574df590b28",
+      "diagnostic": "regla P_d,h=P_Berlin,h*j2023g_d/sum(j2023g); status condicionado"
+    },
+    {
+      "dataset": "berlin_d3_inference_metrics_2023",
+      "path": "corfo-report/validation/berlin/inference_2023/berlin_d3_inference_metrics_2023.csv",
+      "sha256": "5b45436be7c71660ef05e95250a0d6b59923cccf3e963da145530cc639bd2c38",
+      "diagnostic": "MAPE test 5.089161454%; 1311 observaciones"
+    },
+    {
+      "dataset": "berlin_d3_inference_summary",
+      "path": "corfo-report/validation/berlin/inference_2023/berlin_d3_inference_2023_summary.md",
+      "sha256": "73c777734b6e62e071bc42cf9c0bcc247342690cc24bdc391564fe5639742f11",
+      "diagnostic": "cobertura y alcance del KPI interno"
+    },
+    {
+      "dataset": "berlin_district_allocation_2023",
+      "path": "corfo-report/validation/berlin/inference_2023/berlin_district_allocation_2023.csv",
+      "sha256": "c4621ec81dc91eb743c6e1fe10f223a123b43b5f8e8fb598737e3368bca393d5",
+      "diagnostic": "12 filas anuales de asignacion y errores condicionados"
+    },
+    {
+      "dataset": "spatial_validation_berlin_d3_2023",
+      "path": "corfo-report/validation/berlin/inference_2023/spatial_validation_berlin_d3_2023.md",
+      "sha256": "ee1f90567ff612692adbe432c100f4aff6ee9ca71396a8e99747ef06afa584aa",
+      "diagnostic": "evaluacion espacial; no KPI independiente"
+    },
+    {
+      "dataset": "kpi_validation_berlin",
+      "path": "corfo-report/validation/berlin/kpi_validation.csv",
+      "sha256": "4cf73566ffa146051a7a45fe1f845a83e08afc44eba63ae709487dbc691e596c",
+      "diagnostic": "KPI interno d=3 cumplido; espacial independiente no evaluable"
+    },
+    {
+      "dataset": "ficha_evidencia_berlin",
+      "path": "corfo-report/validation/ficha_evidencia_berlin.md",
+      "sha256": "dabd7054ab3e45c3be8375b44dab6579880048559a230d0bc44f720c223c8ed2",
+      "diagnostic": "ficha de evidencia y limitaciones del piloto"
+    },
+    {
+      "dataset": "registro_avance_berlin",
+      "path": "corfo-report/validation/registro_avance.md",
+      "sha256": "5ce31ded5f4549805256baa6127b62189e8b92cd100665a7da954fe1534b486f",
+      "diagnostic": "bitacora de fases y evidencia"
+    },
+    {
+      "dataset": "corfo_report_readme",
+      "path": "corfo-report/README.md",
+      "sha256": "ebb38157713cccc857721a59420095d114d8df21710dea5a22ed5e3f7f6d817b",
+      "diagnostic": "indice de reportabilidad alemana"
     }
   ],
-  "kpis": [],
+  "kpis": [
+    {
+      "id": "CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO-MAPE",
+      "indicator": "MAPE horario interno test d=3",
+      "value_pct": 5.089161454,
+      "threshold_pct": 35.0,
+      "meets_threshold": true,
+      "status": "cumple_interno_no_validacion_externa",
+      "n": 1311,
+      "coverage_pct": 99.771689
+    },
+    {
+      "id": "CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO-SPATIAL",
+      "indicator": "KPI espacial distrital independiente",
+      "value_pct": null,
+      "threshold_pct": null,
+      "meets_threshold": null,
+      "status": "no_evaluable_independiente",
+      "n": 12,
+      "coverage_pct": 100.0
+    }
+  ],
   "limitaciones": [
     "La demanda de red y el consumo final deben reconciliarse explicitamente.",
     "La serie HV se usa como proxy de Berlin-administrative; no se afirma equivalencia geométrica exacta.",
@@ -206,8 +308,11 @@
     "La evidencia KPI no existe hasta ejecutar y auditar la reconstruccion alemana.",
     "El FNN climatico es sensible a R; d=3 y d=5 son diagnosticos, no seleccion predictiva final de la red.",
     "El WFS del Umweltatlas describe el conjunto como 2022 en la ficha del portal, pero el servicio expone campos j2023g y j2024g; se seleccionó j2023g para homologar 2023.",
-    "La comparación anual y el control total espacial usan la serie HV observada; todavía no existe una salida predicha horaria o distrital exportada.",
-    "La comparación por distrito permanece no_evaluable hasta generar una salida distrital o fijar una regla de desagregación explícita."
+    "La comparación anual y el control total espacial se homologaron con HV observada; la inferencia d=3 agrega un control condicionado sobre 8740 horas completas.",
+    "La comparación distrital independiente permanece no_evaluable; existe una salida por shares j2023g, pero su coincidencia es condicionada y no independiente.",
+    "La inferencia d=3 se exporta sobre 8.740/8.760 horas; 20 filas con features incompletas no se imputan.",
+    "El MAPE 5,089161454 % es un KPI interno sobre la misma serie HV objetivo y no una validacion horaria externa independiente.",
+    "La desagregacion distrital usa shares anuales j2023g como pesos fijos; su coincidencia de shares es por construccion y no es un KPI espacial independiente."
   ],
   "contrato_entrenamiento": {
     "baseline_dimension": 8,
@@ -222,7 +327,7 @@
       "d8": 24
     },
     "split": "70% train, 15% validation, 15% test chronological",
-    "status": "predictive_ablation_executed; formal_KPI_pending",
+    "status": "predictive_ablation_executed; internal_KPI_documented; external_validation_pending",
     "weights_reused_from_chile": false,
     "script": "prototipo_3/preprocessing/berlin_training_contract_2023.py",
     "trainer": "prototipo_3/src/train_mlp_berlin.py",

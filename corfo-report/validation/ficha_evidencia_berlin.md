@@ -1,12 +1,12 @@
 # Ficha de evidencia — reconstrucción histórica de Berlín
 
 - **ID:** `CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO`.
-- **Estado:** fuentes externas anual y espacial descargadas y auditadas; sin KPI de reconstrucción predicha calculado.
+- **Estado:** inferencia d=3 exportada; KPI horario interno cumplido (MAPE test 5,089161 % <=35 %); capa espacial distrital implementada como asignación condicionada, sin KPI independiente.
 - **País:** Alemania.
 - **Territorio:** `Berlin-administrative` (`ars/ags=11000`, geometría BKG VG250); la serie Stromnetz Berlin se reportará como `Stromnetz-Berlin-HV-area-proxy` hasta confirmar equivalencia geométrica.
 - **Objetivo:** reconstrucción horaria y validación anual/sectorial.
 - **Fecha de corte:** 29 de septiembre de 2026.
-- **Commit y entorno de entrenamiento:** pendientes; los preprocesadores de insumos se ejecutaron con Python 3.13.13 y biblioteca estándar.
+- **Commit y entorno de entrenamiento:** corrida reproducible con Python 3.13.13, TensorFlow 2.21.0, NumPy 2.5.3 y semilla 2023; commit se registra al publicar los artefactos.
 - **Responsable y revisor:** pendientes.
 
 ## Fuentes previstas
@@ -43,7 +43,7 @@ Con la serie HV observada se obtuvo:
 - Strombilanz, consumo final: `11.780,229 GWh`; diferencia relativa `+0,271208 %`;
 - Umweltatlas, suma de 12 distritos `j2023g`: `11.899,370 GWh`; diferencia HV–WFS `-0,732745 %`.
 
-Estos valores son controles de consistencia y no resultados predichos por la red. La comparación por distrito permanece `no_evaluable` hasta exportar una salida distrital o fijar una regla explícita de desagregación.
+Estos valores son controles de consistencia. La inferencia d=3 exportada suma 11.738,063 GWh en las 8.740 filas completas (brecha -1,355596 % frente a la suma distrital `j2023g`). La salida distrital usa los shares `j2023g` como pesos fijos; por eso la coincidencia de shares es una consistencia condicionada y no una validación espacial independiente.
 
 ## Limitaciones
 
@@ -55,6 +55,7 @@ Estos valores son controles de consistencia y no resultados predichos por la red
 - El horario alemán contiene intervalos locales ausentes o repetidos.
 - Los CSV HV 2020–2022 contienen saltos o etiquetas de fecha que requieren normalización y confirmación del operador.
 - La Strombilanz es consumo final anual y no reemplaza la referencia horaria de red.
-- La tabla HV–temperatura contiene 20 filas sin ocho valores climáticos válidos; no se imputaron.
+- La tabla HV–temperatura contiene 20 filas sin ocho valores climáticos válidos; no se imputaron. La inferencia se exportó sobre 8.740 filas completas.
+- La desagregación distrital conserva la forma horaria agregada y usa shares anuales fijos; no acredita que la red haya aprendido perfiles horarios diferenciados por distrito.
 
-No se declara cumplimiento hasta completar la auditoría, ejecutar el modelo y generar los artefactos definidos en [`kpi_plan.md`](kpi_plan.md).
+El KPI horario interno del piloto está documentado en [`berlin/kpi_validation.csv`](berlin/kpi_validation.csv) y cumple el umbral de 35 %. El cumplimiento externo horario y el KPI espacial independiente siguen pendientes.

@@ -13,9 +13,9 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 | Caso piloto | Berlín, Alemania |
 | Objetivo | Reconstrucción histórica de demanda eléctrica horaria |
 | Fuentes alemanas | Strombilanz 2023 y Umweltatlas WFS descargados/auditados; BKG `11000` aceptado; alcance exacto HV y timestamps del operador siguen pendientes |
-| Modelo alemán | No ejecutado en esta etapa |
-| KPI alemán | No evaluado; no se declara cumplimiento |
-| Próximo producto | Exportar la inferencia 2023, cerrar la desagregación distrital y evaluar el KPI formal |
+| Modelo alemán | Inferencia d=3 exportada; 8.740/8.760 horas; salida distrital condicionada |
+| KPI alemán | MAPE interno d=3 = 5,089161454 % (cumple ≤35 %); validación externa pendiente |
+| Próximo producto | Resolver comparador horario externo y obtener insumos para un KPI espacial independiente |
 
 ## Resultados previstos
 
@@ -26,7 +26,7 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 | Series horarias | [`results/timeseries/`](results/timeseries/) | Pesadas fuera de Git; índice y hash obligatorios |
 | Auditoría de fuentes | [`validation/sources/`](validation/sources/) | Cobertura, perímetro, licencia y transformaciones |
 | Validación Berlín | [`validation/berlin/`](validation/berlin/) | Comparaciones por año, territorio y sector |
-| KPI | [`validation/kpi_plan.md`](validation/kpi_plan.md) | Fórmula, umbral, denominador e independencia |
+| KPI | [`validation/kpi_plan.md`](validation/kpi_plan.md), [`validation/berlin/kpi_validation.csv`](validation/berlin/kpi_validation.csv) | Fórmula, umbral, denominador e independencia |
 | Contrato de validación | [`validation/sources/contrato_validacion_berlin.md`](validation/sources/contrato_validacion_berlin.md) | Capas interna, anual, espacial y horaria |
 | Matriz comparadores | [`validation/sources/comparaciones_externas_berlin.csv`](validation/sources/comparaciones_externas_berlin.csv) | Fuentes, perímetro, dependencia y estado |
 | Plantilla resultados externos | [`validation/berlin/comparaciones_externas_2023.csv`](validation/berlin/comparaciones_externas_2023.csv) | Métricas sin resultados inventados |
@@ -64,4 +64,4 @@ La meta operativa es MAPE ≤35 %. Cada resultado debe indicar si mide demanda d
 
 Cada corrida registra commit, entorno, modelo, scaler, columnas, URL/fecha/licencia/hash de fuentes, período, zona horaria, cobertura, faltantes, transformaciones, perímetro y hashes de salida.
 
-Todavía no existen resultados de reconstrucción ni una evaluación KPI; ya están disponibles las primeras series alemanas de entrada y sus índices reproducibles.
+La inferencia d=3 y el KPI horario interno ya están documentados; el MAPE se calcula sobre la partición temporal HV y no sustituye un comparador externo independiente.

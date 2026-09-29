@@ -1,0 +1,13 @@
+id_bezirk,bezirk,reference_j2023g_GWh,reference_share_pct,predicted_district_GWh_complete_rows,predicted_share_pct,share_error_pp,relative_error_pct,allocation_rule,spatial_validation_status
+01,Mitte,2303.910000000,19.361613262,2272.678299182,19.361613262,0.000000000,-1.355595523,annual_umweltatlas_share_2023,consistencia_condicionada_no_independiente
+02,Friedrichshain-Kreuzberg,1120.200000000,9.413943763,1105.014618949,9.413943763,-0.000000000,-1.355595523,annual_umweltatlas_share_2023,consistencia_condicionada_no_independiente
+03,Pankow,813.320000000,6.834983701,802.294670491,6.834983701,-0.000000000,-1.355595523,annual_umweltatlas_share_2023,consistencia_condicionada_no_independiente
+04,Charlottenburg-Wilmersdorf,1181.510000000,9.929181125,1165.493503334,9.929181125,-0.000000000,-1.355595523,annual_umweltatlas_share_2023,consistencia_condicionada_no_independiente
+05,Spandau,885.600000000,7.442410817,873.594846047,7.442410817,0.000000000,-1.355595523,annual_umweltatlas_share_2023,consistencia_condicionada_no_independiente
+06,Steglitz-Zehlendorf,827.520000000,6.954317750,816.302175926,6.954317750,0.000000000,-1.355595523,annual_umweltatlas_share_2023,consistencia_condicionada_no_independiente
+07,Tempelhof-Schöneberg,1110.150000000,9.329485511,1095.100856299,9.329485511,0.000000000,-1.355595523,annual_umweltatlas_share_2023,consistencia_condicionada_no_independiente
+08,Neukölln,823.490000000,6.920450410,812.326806426,6.920450410,-0.000000000,-1.355595523,annual_umweltatlas_share_2023,consistencia_condicionada_no_independiente
+09,Treptow-Köpenick,747.820000000,6.284534391,737.682585558,6.284534391,-0.000000000,-1.355595523,annual_umweltatlas_share_2023,consistencia_condicionada_no_independiente
+10,Marzahn-Hellersdorf,569.290000000,4.784202861,561.572730246,4.784202861,-0.000000000,-1.355595523,annual_umweltatlas_share_2023,consistencia_condicionada_no_independiente
+11,Lichtenberg,604.470000000,5.079848765,596.275831741,5.079848765,-0.000000000,-1.355595523,annual_umweltatlas_share_2023,consistencia_condicionada_no_independiente
+12,Reinickendorf,912.090000000,7.665027644,899.725748793,7.665027644,-0.000000000,-1.355595523,annual_umweltatlas_share_2023,consistencia_condicionada_no_independiente

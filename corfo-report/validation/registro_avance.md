@@ -4,7 +4,7 @@
 **Fecha de corte:** 29 de septiembre de 2026
 **Repositorio:** `MERLIN_EDM_Alemania`
 **Rama:** `germany/main`
-**Estado global:** **Fases 0, 2 y 4 en curso**. Los insumos y contratos están preparados; la inferencia completa y el KPI alemán aún no se han cerrado.
+**Estado global:** **Fases 0, 2, 3 y 4 en curso**. La inferencia d=3 fue exportada con cobertura parcial; el KPI horario interno cumple el umbral, mientras la validación externa horaria y la capa espacial independiente siguen pendientes.
 
 Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_ADAPTACION_ALEMANIA.md). Se actualizará en cada hito con fecha, evidencia, decisión y siguiente acción. Un estado no cambia a `cerrado` sin el producto y los criterios de aceptación de la fase.
 
@@ -15,8 +15,8 @@ Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_
 | Fase 0 — Factibilidad y contrato de datos | **En curso** | HV 2019–2023 y Strombilanz 2023 auditadas; perímetro `11000`; HV 2023 normalizada a 15 min y hora; DWD Tempelhof y tabla integrada con ocho rezagos preparados; alcance HV, timestamps y cartografía siguen pendientes | [Auditoría HV 2019–2023](sources/stromnetz_berlin_hv_2019_2023_auditoria.md), [normalización HV](sources/normalizacion_temporal_hv_2023.md), [auditoría DWD](sources/dwd_berlin_tempelhof_2023_auditoria.md), [tabla integrada](sources/berlin_hv_temperature_features_2023.md), [solicitud enviada](sources/solicitud_stromnetz_berlin_perimetro_y_semantica.md) | Semántica general y referencias anuales verificadas; contrato HV, sectores y variables alemanas requiere cierre; dictamen GO/GO condicionado/NO-GO |
 | Fase 1 — Homologación territorial, sectorial y temporal | **En curso** | FNN climático provisional ejecutado con `tau=1`; tablas comparables para `d=3`, `d=5` y `d=8` preparadas; contrato sectorial y territorial aún no cerrado | [Diagnóstico FNN](sources/fnn_berlin_temperature_2023.md), [ablación de rezagos](sources/lag_ablation_berlin_2023.md), [contrato de entrenamiento](sources/contrato_entrenamiento_berlin_2023.md) | Correspondencias de red, Berlín, distritos y sectores; unidades, DST y selección predictiva de rezagos verificadas |
 | Fase 2 — Línea base y adaptación | **En curso** | Contrato alemán parametrizado y ablación TensorFlow ejecutada para `d=3`, `d=5` y `d=8`; `d=3` obtiene el menor MAPE de prueba (5,089 %); shares C/P y `region_comuna_share` siguen provisionales | [Contrato de entrenamiento](sources/contrato_entrenamiento_berlin_2023.md), [ablación predictiva](sources/lag_ablation_predictiva_berlin_2023.md), [entrenador alemán](../../prototipo_3/src/train_mlp_berlin.py) | Modelo, columnas, scaler, entorno y diferencias Chile–Alemania identificados; selección de rezagos estable en validaciones adicionales |
-| Fase 3 — Reconstrucción histórica de Berlín | Pendiente | Insumos HV, temperatura y tabla integrada generados; no hay inferencia ni tablas de resultados | [Series](../results/timeseries/README.md) | Corrida reproducible con cobertura, perímetro y hashes |
-| Fase 4 — Validación y KPI | **Fuentes B/C auditadas; KPI parcial** | Strombilanz y Umweltatlas descargados, auditados y homologados con HV observado; validación distrital del modelo no evaluable | [Auditoría externa](berlin/external_2023/auditoria_homologacion_externa_berlin_2023.md), [comparaciones](berlin/comparaciones_externas_2023.csv) | Salida predicha 2023 exportada; comparación por distrito ejecutada; comparador horario independiente resuelto o limitación formalizada |
+| Fase 3 — Reconstrucción histórica de Berlín | **En curso** | Inferencia d=3 exportada: 8.740/8.760 filas, MAPE test interno 5,089161 %, sin imputar 20 horas; pesos, hashes y métricas registrados | [Resumen de inferencia](berlin/inference_2023/berlin_d3_inference_2023_summary.md), [métricas](berlin/inference_2023/berlin_d3_inference_metrics_2023.csv), [script](../../analisis/inferencia_berlin_d3_2023.py) | Declarar cobertura/perímetro y cerrar limitaciones de HV; validación externa horaria pendiente |
+| Fase 4 — Validación y KPI | **KPI interno cumple; espacial condicionada** | MAPE test interno d=3 = 5,089161 % (1311 horas), bajo 35 %; desagregación distrital por shares `j2023g` ejecutada como consistencia condicionada, no independiente | [KPI](berlin/kpi_validation.csv), [comparaciones](berlin/comparaciones_externas_2023.csv), [evaluación espacial](berlin/inference_2023/spatial_validation_berlin_d3_2023.md) | Comparador horario independiente resuelto o limitación formalizada; disponer de variables/targets distritales para KPI espacial independiente |
 | Fase 5 — Escalamiento territorial | Pendiente | No iniciada | — | Piloto Berlín cerrado y reproducible |
 
 ## Estado de fuentes
@@ -35,12 +35,12 @@ Los estados anteriores indican factibilidad potencial, no aceptación de datos. 
 ## KPI
 
 - **Meta operativa:** MAPE ≤35 %.
-- **Estado:** parcial; controles externos completados sobre HV observado, KPI de reconstrucción predicha aún no evaluado.
-- **Comparador horario:** pendiente de confirmar una serie de red independiente.
-- **Comparador anual/sectorial:** Strombilanz 2023 auditada; HV observado vs consumo final: +0,271208 %; consistencia condicionada.
+- **Estado:** KPI interno cumplido; validación externa horaria y KPI espacial independiente pendientes.
+- **Comparador horario:** pendiente de confirmar una serie de red independiente; el MAPE reportado es interno sobre HV.
+- **Comparador anual/sectorial:** Strombilanz 2023 auditada; HV observado vs consumo final: +0,271208 %; la inferencia d=3 en filas completas suma 11.738,063 GWh y se compara con Umweltatlas con una brecha de -1,355596 %; ambos son controles condicionados.
 - **Regla:** si el balance se usa para shares o escalamiento, la comparación contra él se etiqueta como consistencia condicionada.
 
-No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una explicación en `cumplimiento_kpi.md`, una ficha firmada/revisada y un manifiesto reproducible.
+El KPI interno se declara con la fila correspondiente en `kpi_validation.csv`, la explicación en `cumplimiento_kpi.md`, la ficha de evidencia y el manifiesto reproducible. Los KPI externos mantienen su estado condicionado hasta disponer de comparadores independientes.
 
 ## Próximas acciones
 
@@ -49,10 +49,10 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 3. Sustituir los shares sectoriales provisionales por una separación alemana defendible de GHD y público, y cerrar la interpretación de `region_comuna_share`.
 4. Repetir la ablación con otra semilla, año o ventana temporal para verificar si la ventaja de `d=3` es estable.
 5. Fijar el entorno TensorFlow 2.21.0 usado en la corrida y conservar los pesos/resultados por dimensión con sus hashes.
-6. Ejecutar una línea base de reconstrucción sobre 2023, sin declarar todavía cumplimiento del KPI.
+6. Consolidar una línea base adicional sobre 2023 y verificar estabilidad del KPI interno antes de extrapolarlo a otros territorios.
 7. Comparar los perfiles HV 2019–2023 una vez resuelto el contrato temporal y registrar cambios de metodología.
-8. Exportar la salida predicha horaria 2023 del modelo d=3 y conservarla con timestamp, unidad y hash.
-9. Definir o implementar la desagregación distrital antes de calcular correlación/MAE de shares; no usar la referencia distrital como KPI mientras falte esa salida.
+8. ~~Exportar la salida predicha horaria 2023 del modelo d=3 y conservarla con timestamp, unidad y hash.~~ **Completado:** 8.740 filas, manifiesto y métricas.
+9. ~~Definir o implementar la desagregación distrital antes de calcular correlación/MAE de shares; no usar la referencia distrital como KPI mientras falte esa salida.~~ **Completado como regla provisional:** shares fijos `j2023g`; el control espacial queda condicionado y no independiente.
 10. Solicitar o identificar un comparador horario independiente de Berlín; SMARD permanece solo como contexto.
 
 ## Bitácora
@@ -78,6 +78,9 @@ No se publicará `cumple` hasta que exista una fila en `kpi_validation.csv`, una
 | 2026-09-28 | Fase 4 | Se formalizó el contrato de validación y se prepararon las comparaciones externas | Se definieron cinco capas: KPI interno HV, consistencia anual, consistencia espacial, contexto horario y comparador externo horario pendiente; se crearon matriz de fuentes y plantilla de resultados; no se calcularon indicadores | [Contrato](sources/contrato_validacion_berlin.md), [matriz](sources/comparaciones_externas_berlin.csv), [plantilla](berlin/comparaciones_externas_2023.csv) |
 
 | 2026-09-29 | Fase 4 | Se descargaron y auditaron Strombilanz 2023 y WFS del Umweltatlas; se homologaron con la serie HV observada | Strombilanz: 11.780,229 GWh; HV: 11.812,177946 GWh; diferencia +0,271208 %. WFS: 12 distritos, suma `j2023g` 11.899,370 GWh; control HV–WFS -0,732745 %. La comparación distrital del modelo es `no_evaluable` porque aún no hay salida por distrito | [Auditoría externa](berlin/external_2023/auditoria_homologacion_externa_berlin_2023.md), [script](../../analisis/validacion_externa_berlin.py), [tabla](berlin/comparaciones_externas_2023.csv) |
+
+| 2026-09-29 | Fase 3 | Se exportó la inferencia horaria d=3 sobre el contrato alemán y se generó la evidencia KPI | 8.740/8.760 horas con features completas (99,771689 %); test interno: MAPE 5,089161 %, MAE 70,395301 MW, RMSE 86,549150 MW, sesgo -36,899373 MW; 20 horas no imputadas | [Resumen d=3](berlin/inference_2023/berlin_d3_inference_2023_summary.md), [KPI](berlin/kpi_validation.csv), [script](../../analisis/inferencia_berlin_d3_2023.py) |
+| 2026-09-29 | Fase 4 | Se implementó la regla de desagregación distrital y se evaluó su alcance | 12 distritos; pesos fijos `j2023g`; total predicho 11.738,063 GWh frente a 11.899,370 GWh (-1,355596 %); shares coinciden por construcción, por lo que no se declara KPI espacial independiente | [Evaluación espacial](berlin/inference_2023/spatial_validation_berlin_d3_2023.md), [tabla distrital](berlin/inference_2023/berlin_district_allocation_2023.csv), [script](../../analisis/desagregacion_distrital_berlin_2023.py) |
 
 ## Regla de actualización
 
