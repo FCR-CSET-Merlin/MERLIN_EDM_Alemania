@@ -8,7 +8,7 @@
   "objetivo": "Reconstruccion historica de demanda electrica horaria",
   "fecha_corte": "2026-09-29",
   "repositorio": {
-    "commit": null,
+    "commit": "5d6c111",
     "rama": "germany/main"
   },
   "entorno": {
