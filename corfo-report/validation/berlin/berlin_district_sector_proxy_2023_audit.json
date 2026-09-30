@@ -1,0 +1,35 @@
+{
+  "status": "proxy_matrix_audited_conditionally",
+  "district_count": 12,
+  "district_reference_total_gwh": 11899.37,
+  "umweltatlas_detail_total_gwh": 11758.05,
+  "detail_vs_district_reference_pct": -1.1876258995224265,
+  "strombilanz_total_gwh": 11780.229,
+  "targets_gwh": {
+    "I": 1293.994,
+    "R": 3965.647,
+    "C": 5608.947,
+    "P": 0.0,
+    "T": 911.641
+  },
+  "seed_totals_gwh": {
+    "I": 1052.8292992561853,
+    "R": 3995.96,
+    "C": 4563.594374916022,
+    "P": 0.0,
+    "T": 741.7363258277921
+  },
+  "max_abs_row_residual_gwh": 1.0277290130034089e-10,
+  "max_abs_column_residual_gwh": 2.2737367544323206e-13,
+  "column_residual_gwh": {
+    "I": -2.2737367544323206e-13,
+    "R": 0.0,
+    "C": 0.0,
+    "P": 0.0,
+    "T": -1.1368683772161603e-13
+  },
+  "shares_sum_min": 1.0,
+  "shares_sum_max": 1.0,
+  "public_structural_zero": true,
+  "monthly_data_available": false
+}

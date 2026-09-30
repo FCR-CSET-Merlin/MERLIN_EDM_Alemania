@@ -1,0 +1,16 @@
+{
+  "status": "proxy_matrix_audited_conditionally",
+  "inputs": {
+    "corfo-report/validation/berlin/external_2023/berlin_umweltatlas_bezirke_detail_2023.csv": "f196122e5732f2177fcc29c0311515d2f5a49ddbb86ad4f9c68ce250a514213e",
+    "corfo-report/validation/berlin/external_2023/berlin_umweltatlas_bezirke_2023.csv": "e60df4aa7f71c1a11a14fa08d586120660e69fe55d6ae308f49d9ae238860489",
+    "corfo-report/validation/berlin/berlin_sector_shares_2023.csv": "aac9843be2e3b9965744a57fb9d109c6de4cb1a2c3e59435f924157529c5d1c9",
+    "corfo-report/validation/berlin/external_2023/berlin_strombilanz_2023_extracted.csv": "32b9186073d22fb6c089822a773221810e9a99e932197425874d391187bd184f"
+  },
+  "outputs": {
+    "corfo-report/validation/berlin/berlin_district_sector_proxy_2023.csv": "5cd864be3d34663d88c7874daaba5de84f1dd9694af1d53929dd7bbfc880cea6",
+    "corfo-report/validation/berlin/berlin_district_sector_proxy_2023_audit.json": "6685bc1d310ec6e59a1dc8faa4a80fda177c16d32f7ee25d43d87ab9dff9c135",
+    "corfo-report/validation/berlin/berlin_district_sector_proxy_2023_audit.md": "b2699bea3234aa43fc2e090fe322d0cf53e93a543f293d79b31ac0a3481a7c90"
+  },
+  "mapping_policy": "Haushalt+Nachtspeicher+Wärmepumpe->R; Gewerbe->C; Lastgangkunde split I/C/T by Strombilanz prior; IPF to totals",
+  "monthly_status": "not_available_from_current_inputs"
+}
