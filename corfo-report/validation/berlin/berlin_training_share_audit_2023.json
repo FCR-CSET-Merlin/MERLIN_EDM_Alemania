@@ -1,0 +1,28 @@
+{
+  "status": "pass",
+  "temporal_resolution": "annual_broadcast",
+  "dimensions": [
+    3,
+    5,
+    8
+  ],
+  "splits": [
+    "train",
+    "validation",
+    "test"
+  ],
+  "audited_rows": 54,
+  "all_share_columns_constant": true,
+  "all_values_match_annual_source": true,
+  "max_abs_share_sum_error": 0.0,
+  "expected_values": {
+    "region_comuna_share": 1.0,
+    "share_I": 0.109837874544,
+    "share_R": 0.336643748408,
+    "share_C": 0.476105593753,
+    "share_P": 0.0,
+    "share_T": 0.077412783295
+  },
+  "contract_root": "prototipo_3/data/de_alemania/berlin_training_2023",
+  "output_csv": "corfo-report/validation/berlin/berlin_training_share_audit_2023.csv"
+}

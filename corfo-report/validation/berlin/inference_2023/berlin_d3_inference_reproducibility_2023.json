@@ -1,0 +1,11 @@
+{
+  "status": "pass",
+  "baseline_commit": "cb1d080",
+  "current_metrics_sha256": "a29e967d58e2b5d955fa1af44c0a6c4ac2e71ed5e481ba3c381e33a9ae2e5c5a",
+  "tolerance": 1e-05,
+  "test_mape_baseline_pct": 5.089161454,
+  "test_mape_regenerated_pct": 5.089161564,
+  "test_mape_delta_pct_points": 1.1000000021965661e-07,
+  "max_abs_metric_delta": 2.7060000320489053e-06,
+  "comparisons": 24
+}

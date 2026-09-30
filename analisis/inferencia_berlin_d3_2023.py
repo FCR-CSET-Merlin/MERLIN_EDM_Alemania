@@ -119,6 +119,9 @@ def main() -> None:
     if len(shares) != 1:
         raise ValueError("Expected one Berlin sector-share row")
     share = shares[0]
+    temporal_resolution = manifest.get("shares", {}).get("temporal_resolution", manifest.get("sector_share_temporal_resolution", ""))
+    if temporal_resolution != "annual_broadcast":
+        raise ValueError(f"Expected annual_broadcast shares, got {temporal_resolution!r}")
     share_values = {name: float(share[name]) for name in ("region_comuna_share", "share_I", "share_R", "share_C", "share_P", "share_T")}
     mu = float(manifest["scaling"]["mu_train_MW"])
     sigma = float(manifest["scaling"]["sigma_train_MW"])
@@ -190,7 +193,7 @@ def main() -> None:
         "tau_hours": int(manifest.get("tau_hours", 1)),
         "input": {"path": str(input_path.relative_to(REPO)), "sha256": sha256(input_path), "rows": len(rows), "expected_annual_hours": expected_annual_hours, "missing_hours": expected_annual_hours - len(rows), "coverage_pct": coverage_pct, "missing_policy": "not_imputed; only complete d=3 feature rows exported"},
         "contract_manifest": {"path": str(manifest_path.relative_to(REPO)), "sha256": sha256(manifest_path)},
-        "shares": {"path": str(shares_path.relative_to(REPO)), "sha256": sha256(shares_path)},
+        "shares": {"path": str(shares_path.relative_to(REPO)), "sha256": sha256(shares_path), "temporal_resolution": temporal_resolution},
         "model": {"path": str(weight_path.relative_to(REPO)), "sha256": sha256(weight_path), "feature_count": len(features), "features": features},
         "scaling": {"mu_train_MW": mu, "sigma_train_MW": sigma, "policy": "contract train partition"},
         "split": {"train_rows": train_end, "validation_rows": validation_end - train_end, "test_rows": len(rows) - validation_end, "policy": "chronological contract split"},
@@ -209,7 +212,7 @@ def main() -> None:
     metrics_csv = report_root / "berlin_d3_inference_metrics_2023.csv"
     metric_fields = ["scope", "n", "mape_pct", "mae_MW", "rmse_MW", "bias_MW", "actual_mean_MW", "predicted_mean_MW"]
     with metrics_csv.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=metric_fields)
+        writer = csv.DictWriter(handle, fieldnames=metric_fields, lineterminator="\n")
         writer.writeheader()
         for name in ("all", "train", "validation", "test"):
             writer.writerow({"scope": name, **{key: fmt(value) for key, value in metrics[name].items()}})
@@ -220,10 +223,12 @@ def main() -> None:
         "Se reconstruyen únicamente las horas con temperatura contemporánea y dos rezagos disponibles; no se imputan las 20 horas faltantes.\n\n"
         f"- Filas exportadas: **{len(rows)} de {expected_annual_hours}** ({coverage_pct:.6f} %).\n"
         f"- Cobertura: **{expected_annual_hours - len(rows)} horas no exportadas** por completitud de features d=3.\n"
+        f"- Resolución temporal de shares sectoriales: **{temporal_resolution}**.\n"
         f"- Energía observada en filas completas: **{observed_energy_gwh:.6f} GWh**; predicha: **{predicted_energy_gwh:.6f} GWh**.\n"
         f"- MAPE test interno HV: **{metrics['test']['mape_pct']:.6f} %**; umbral operativo: **35 %**.\n"
         f"- MAE test: **{metrics['test']['mae_MW']:.6f} MW**; RMSE test: **{metrics['test']['rmse_MW']:.6f} MW**; sesgo test: **{metrics['test']['bias_MW']:.6f} MW**.\n\n"
         "## Alcance de validación\n\n"
+        "La fila formal del KPI está en [`../kpi_validation.csv`](../kpi_validation.csv).\n\n"
         "El MAPE es una validación interna sobre el mismo perfil HV de Stromnetz Berlin utilizado como objetivo del entrenamiento y su partición temporal de test. "
         "Por tanto, acredita el desempeño de reconstrucción interna del piloto, pero no constituye todavía una validación horaria externa independiente.\n\n"
         "La tabla de filas y el manifiesto reproducible se mantienen en el área de datos ignorada; este resumen y la tabla de métricas son la evidencia reportable.\n",
