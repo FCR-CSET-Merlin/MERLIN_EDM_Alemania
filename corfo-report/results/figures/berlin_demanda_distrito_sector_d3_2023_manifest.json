@@ -1,0 +1,56 @@
+{
+  "dataset": "berlin_district_sector_d3_2023",
+  "status": "pass_conditional_allocation",
+  "audit": {
+    "path": "corfo-report/validation/berlin/inference_2023/berlin_district_sector_d3_2023_audit.json",
+    "sha256": "1173962c16882aad3b5d1a8d2b0374b4c54eb914eaf873d2e49eaf73a716fef0"
+  },
+  "tables": {
+    "corfo-report/results/tables/berlin_district_sector_d3_2023_hourly.csv.gz": {
+      "sha256": "9a030a32fea63922f362f26d01542c3bf81f5d8e0ffb15f4eb5600307824ee21",
+      "bytes": 10331139
+    },
+    "corfo-report/results/tables/berlin_district_sector_d3_2023_hourly_sector_summary.csv.gz": {
+      "sha256": "205396eff391aad48d841c4df0f8a30ec4c84b99448c7d00f5490a4259e30804",
+      "bytes": 416069
+    },
+    "corfo-report/results/tables/berlin_district_sector_d3_2023_annual.csv": {
+      "sha256": "1ac4877a92eb99372b14c33acfaef97c1f5e81f47a83d9c21b2a83e537c08bc8",
+      "bytes": 13203
+    },
+    "corfo-report/results/tables/berlin_district_sector_d3_2023_annual_wide.csv": {
+      "sha256": "7cf603f1bd638aa06067256ec34b0a1ea5a2846f9b00494fa833017c5c65a3d3",
+      "bytes": 2077
+    }
+  },
+  "figures": {
+    "corfo-report/results/figures/berlin_demanda_distrito_sector_anual_d3_2023.png": {
+      "sha256": "75c90b5123e97e7274f125a9f0c269dc8fbff08b2e51f7023cb86f520677cb2b",
+      "bytes": 96503
+    },
+    "corfo-report/results/figures/berlin_demanda_distrito_sector_anual_d3_2023.svg": {
+      "sha256": "fdd740a5eb1a35b19ba5382c192eb6cecd811723a6754f1ef6e8f92e153b6a44",
+      "bytes": 2019926
+    },
+    "corfo-report/results/figures/berlin_demanda_distrito_sector_horaria_pico_d3_2023.png": {
+      "sha256": "5e8c378471156d8e8a3af63f782ff2eadbbb9f0a960478fdd29e8c28ae64857f",
+      "bytes": 94641
+    },
+    "corfo-report/results/figures/berlin_demanda_distrito_sector_horaria_pico_d3_2023.svg": {
+      "sha256": "4a173f4f2a832af6f6c6fab5907b8d9e0c7dd9d87bcb9cbd95fa54c8c13e7b4f",
+      "bytes": 2019889
+    }
+  },
+  "snapshot": {
+    "timestamp_hour_end_utc": "2023-11-30T17:00:00+00:00",
+    "timestamp_hour_end_local": "2023-11-30T18:00:00+01:00",
+    "city_predicted_MW": 1968.610041414
+  },
+  "sector_names": {
+    "I": "Industria y minería",
+    "R": "Hogares",
+    "C": "Comercio/GHD",
+    "P": "Público",
+    "T": "Transporte"
+  }
+}

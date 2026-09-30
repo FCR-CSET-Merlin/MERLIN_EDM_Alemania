@@ -1,0 +1,91 @@
+{
+  "status": "pass_conditional_allocation",
+  "interpretation": "The district-sector values are a deterministic annual-share allocation of the Berlin d=3 inference; they are not independent district-sector observations.",
+  "inputs": {
+    "inference": {
+      "path": "prototipo_3/data/de_alemania/berlin_inference_2023/berlin_d3_inference_2023.csv",
+      "sha256": "88bed2e6706d3af4f2b4f9975375f25b2110b8f2ffbe3ca685b00c0596206031",
+      "rows": 8740,
+      "expected_annual_hours": 8760,
+      "coverage_pct": 99.77168949771689
+    },
+    "proxy": {
+      "path": "corfo-report/validation/berlin/berlin_district_sector_proxy_2023.csv",
+      "sha256": "5cd864be3d34663d88c7874daaba5de84f1dd9694af1d53929dd7bbfc880cea6",
+      "rows": 12
+    },
+    "geometry": {
+      "path": "prototipo_3/data/de_alemania/external_validation/berlin_2023/berlin_strom_districts.geojson",
+      "sha256": "9ae3d44df152a3a58e511c75dde266e692325fd00ec8f4d6f00853aeabc018e2",
+      "districts": 12
+    }
+  },
+  "contract": {
+    "model": "d=3",
+    "sector_share_temporal_resolution": "annual_broadcast",
+    "allocation_rule": "L_d,h,s = L_Berlin,h * district_weight_d * sector_share_d,s",
+    "sector_codes": [
+      "I",
+      "R",
+      "C",
+      "P",
+      "T"
+    ]
+  },
+  "outputs": {
+    "hourly_rows": 524400,
+    "annual_rows": 60,
+    "hourly_sector_rows": 43700
+  },
+  "conservation": {
+    "district_weight_sum": 1.0,
+    "max_abs_district_weight_sum_error": 0.0,
+    "max_abs_sector_share_sum_error": 1.000000082740371e-09,
+    "max_abs_hourly_city_residual_MW": 6.821210263296962e-13,
+    "max_abs_hourly_district_residual_MW": 3.8115467759780586e-07,
+    "max_abs_annual_district_residual_GWh": 2.272689016535878e-06,
+    "city_predicted_GWh_complete_rows": 11738.06266991337,
+    "district_sector_predicted_GWh_complete_rows": 11738.062672098682,
+    "city_vs_district_sector_residual_GWh": 2.1853120415471494e-06,
+    "predicted_sector_GWh": {
+      "I": 1289.362258320383,
+      "R": 3951.452303311531,
+      "C": 5588.870252365428,
+      "P": 0.0,
+      "T": 908.3778581013397
+    },
+    "proxy_sector_GWh": {
+      "I": 1293.994,
+      "R": 3965.647000002,
+      "C": 5608.947,
+      "P": 0.0,
+      "T": 911.641
+    },
+    "expected_scaled_sector_GWh": {
+      "I": 1289.3622582794699,
+      "R": 3951.4523030723353,
+      "C": 5588.870250163338,
+      "P": 0.0,
+      "T": 908.3778583982262
+    },
+    "sector_residual_after_city_scaling_GWh": {
+      "I": 4.091316441190429e-08,
+      "R": 2.3919574232422747e-07,
+      "C": 2.2020903998054564e-06,
+      "P": 0.0,
+      "T": -2.968864691865747e-07
+    }
+  },
+  "snapshot": {
+    "timestamp_hour_end_utc": "2023-11-30T17:00:00+00:00",
+    "timestamp_hour_end_local": "2023-11-30T18:00:00+01:00",
+    "city_predicted_MW": 1968.610041414
+  },
+  "limitations": [
+    "Annual district weights and sector shares are broadcast to every hour; no monthly or hourly sector profiles are estimated.",
+    "The spatial and sectoral outputs inherit the Umweltatlas/Strombilanz proxy assumptions and cannot be used as independent spatial or sector KPIs.",
+    "The inference covers only complete d=3 feature rows (currently 8,740/8,760 hours); 20 missing hours are not imputed.",
+    "The public sector share is structurally zero in the current proxy matrix because Strombilanz does not separate it in the selected input.",
+    "The HV proxy and administrative Berlin perimeter remain subject to the pending Stromnetz Berlin semantic/cartographic clarification."
+  ]
+}

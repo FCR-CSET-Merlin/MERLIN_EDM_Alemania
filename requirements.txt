@@ -27,6 +27,7 @@ numba
 # 5. Visualización y Exploración de Datos
 matplotlib>=3.7.0
 seaborn>=0.13.0
+Pillow>=10.0.0
 
 # 6. Entorno de Desarrollo (Jupyter)
 jupyter>=1.0.0

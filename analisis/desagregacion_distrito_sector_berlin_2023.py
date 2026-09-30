@@ -1,0 +1,519 @@
+"""Generate Berlin d=3 district-sector tables, audits and reportable maps.
+
+The neural network produces one Berlin-level hourly prediction.  This script
+keeps that prediction unchanged and applies the audited annual post-processing
+rule::
+
+    L_hat[d,h,s] = L_hat[Berlin,h] * district_weight[d] * sector_share[d,s]
+
+The shares are annual and broadcast to every complete 2023 hour.  The output
+is therefore a reproducible allocation scenario, not an independent district
+or district-sector measurement.  The hourly map is a deterministic snapshot
+at the hour with the highest predicted Berlin load; the complete hourly table
+contains every district-sector-hour combination available in the d=3
+inference (8,740 rows at the time of writing).
+
+The renderer intentionally uses only the Python standard library plus Pillow
+for PNG output.  SVG output is generated directly, so the reportable maps do
+not depend on a particular GeoPandas version.
+"""
+from __future__ import annotations
+
+import argparse
+import csv
+import gzip
+import hashlib
+import html
+import json
+import math
+from collections import defaultdict
+from pathlib import Path
+from typing import Iterable
+
+REPO = Path(__file__).resolve().parents[1]
+DEFAULT_INFERENCE = REPO / "prototipo_3/data/de_alemania/berlin_inference_2023/berlin_d3_inference_2023.csv"
+DEFAULT_PROXY = REPO / "corfo-report/validation/berlin/berlin_district_sector_proxy_2023.csv"
+DEFAULT_GEOMETRY = REPO / "prototipo_3/data/de_alemania/external_validation/berlin_2023/berlin_strom_districts.geojson"
+DEFAULT_TABLE_DIR = REPO / "corfo-report/results/tables"
+DEFAULT_FIGURE_DIR = REPO / "corfo-report/results/figures"
+DEFAULT_REPORT_DIR = REPO / "corfo-report/validation/berlin/inference_2023"
+EXPECTED_DISTRICTS = 12
+EXPECTED_ANNUAL_HOURS = 8_760
+SECTOR_NAMES = {
+    "I": "Industria y minería",
+    "R": "Hogares",
+    "C": "Comercio/GHD",
+    "P": "Público",
+    "T": "Transporte",
+}
+SECTOR_ORDER = tuple(SECTOR_NAMES)
+
+
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def read_csv(path: Path) -> list[dict[str, str]]:
+    with path.open("r", encoding="utf-8", newline="") as handle:
+        return list(csv.DictReader(handle))
+
+
+def number(value: str, label: str) -> float:
+    parsed = float(value)
+    if not math.isfinite(parsed):
+        raise ValueError(f"Non-finite {label}: {value!r}")
+    return parsed
+
+
+def fmt(value: float | int | str) -> str:
+    if isinstance(value, float):
+        return f"{value:.9f}"
+    return str(value)
+
+
+def relative(path: Path) -> str:
+    try:
+        return str(path.relative_to(REPO))
+    except ValueError:
+        return str(path)
+
+
+def load_geometry(path: Path) -> list[dict[str, object]]:
+    document = json.loads(path.read_text(encoding="utf-8"))
+    features = document.get("features", [])
+    if len(features) != EXPECTED_DISTRICTS:
+        raise ValueError(f"Expected {EXPECTED_DISTRICTS} district geometries, got {len(features)}")
+    result = []
+    for feature in features:
+        properties = feature.get("properties", {})
+        geometry = feature.get("geometry", {})
+        geometry_type = geometry.get("type")
+        coordinates = geometry.get("coordinates")
+        if geometry_type == "Polygon":
+            polygons = [coordinates]
+        elif geometry_type == "MultiPolygon":
+            polygons = coordinates
+        else:
+            raise ValueError(f"Unsupported geometry type: {geometry_type!r}")
+        if not polygons:
+            raise ValueError(f"Empty geometry for {properties.get('id_bezirk')}")
+        result.append({
+            "id_bezirk": str(properties["id_bezirk"]).zfill(2),
+            "bezirk": str(properties["bezirk"]),
+            "polygons": polygons,
+        })
+    identifiers = [item["id_bezirk"] for item in result]
+    if len(set(identifiers)) != len(identifiers):
+        raise ValueError("District identifiers in geometry must be unique")
+    return result
+
+
+def flatten_points(districts: list[dict[str, object]]) -> list[tuple[float, float]]:
+    points: list[tuple[float, float]] = []
+    for district in districts:
+        for polygon in district["polygons"]:
+            for ring in polygon:
+                points.extend((float(point[0]), float(point[1])) for point in ring)
+    return points
+
+
+def transform_factory(districts: list[dict[str, object]], x0: float, y0: float, width: float, height: float):
+    points = flatten_points(districts)
+    min_x = min(x for x, _ in points)
+    max_x = max(x for x, _ in points)
+    min_y = min(y for _, y in points)
+    max_y = max(y for _, y in points)
+    scale = min(width / (max_x - min_x), height / (max_y - min_y))
+    used_width = (max_x - min_x) * scale
+    used_height = (max_y - min_y) * scale
+    left = x0 + (width - used_width) / 2.0
+    top = y0 + (height - used_height) / 2.0
+
+    def transform(point: Iterable[float]) -> tuple[float, float]:
+        x, y = float(point[0]), float(point[1])
+        return left + (x - min_x) * scale, top + (max_y - y) * scale
+
+    return transform
+
+
+def color_for(value: float, minimum: float, maximum: float) -> str:
+    if maximum <= minimum + 1e-12:
+        ratio = 0.5
+    else:
+        ratio = max(0.0, min(1.0, (value - minimum) / (maximum - minimum)))
+    # Pale yellow to dark red, matching the existing annual district figure.
+    start = (255, 247, 188)
+    end = (177, 0, 38)
+    rgb = tuple(round(a + ratio * (b - a)) for a, b in zip(start, end))
+    return "#%02x%02x%02x" % rgb
+
+
+def centroid(district: dict[str, object], transform) -> tuple[float, float]:
+    ring = district["polygons"][0][0]
+    points = [transform(point) for point in ring]
+    return sum(point[0] for point in points) / len(points), sum(point[1] for point in points) / len(points)
+
+
+def outer_path(district: dict[str, object], transform) -> str:
+    commands: list[str] = []
+    for polygon in district["polygons"]:
+        for ring in polygon:
+            transformed = [transform(point) for point in ring]
+            if not transformed:
+                continue
+            commands.append("M " + " ".join(f"{x:.2f},{y:.2f}" for x, y in transformed) + " Z")
+    return " ".join(commands)
+
+
+def render_png(path: Path, districts, values: dict[tuple[str, str], float], title: str, subtitle: str, footer: str) -> None:
+    from PIL import Image, ImageDraw, ImageFont
+
+    width, height = 1800, 1240
+    image = Image.new("RGB", (width, height), "white")
+    draw = ImageDraw.Draw(image)
+    font_paths = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/dejavu/DejaVuSans.ttf",
+    ]
+    font_path = next((path for path in font_paths if Path(path).is_file()), None)
+    font = ImageFont.truetype(font_path, 24) if font_path else ImageFont.load_default()
+    small = ImageFont.truetype(font_path, 17) if font_path else ImageFont.load_default()
+    tiny = ImageFont.truetype(font_path, 14) if font_path else ImageFont.load_default()
+    draw.text((width / 2, 22), title, fill="#171717", anchor="ma", font=font)
+    draw.text((width / 2, 58), subtitle, fill="#4b4b4b", anchor="ma", font=small)
+    points = flatten_points(districts)
+    min_x, max_x = min(x for x, _ in points), max(x for x, _ in points)
+    min_y, max_y = min(y for _, y in points), max(y for _, y in points)
+    all_values = list(values.values())
+    panel_w, panel_h = 555, 500
+    for index, sector in enumerate(SECTOR_ORDER):
+        row, column = divmod(index, 3)
+        px, py = 45 + column * 585, 105 + row * 515
+        transform = transform_factory(districts, px, py + 35, panel_w - 20, panel_h - 75)
+        sector_values = {district["id_bezirk"]: values[(district["id_bezirk"], sector)] for district in districts}
+        minimum, maximum = min(sector_values.values()), max(sector_values.values())
+        draw.text((px + panel_w / 2, py), f"{sector} · {SECTOR_NAMES[sector]}", fill="#202020", anchor="ma", font=small)
+        for district in districts:
+            polygon_colors = color_for(sector_values[district["id_bezirk"]], minimum, maximum)
+            for polygon in district["polygons"]:
+                ring = polygon[0]
+                draw.polygon([transform(point) for point in ring], fill=polygon_colors, outline="#3d3d3d")
+            label_x, label_y = centroid(district, transform)
+            draw.text((label_x, label_y - 8), district["id_bezirk"], fill="#161616", anchor="mm", font=tiny)
+        draw.text((px + 10, py + panel_h - 50), f"mín {minimum:.1f} · máx {maximum:.1f} GWh/MW", fill="#555555", font=tiny)
+    draw.text((width / 2, height - 38), footer, fill="#555555", anchor="ma", font=tiny)
+    image.save(path, format="PNG", optimize=True)
+
+
+def render_svg(path: Path, districts, values: dict[tuple[str, str], float], title: str, subtitle: str, footer: str, unit: str) -> None:
+    width, height = 1800, 1240
+    chunks = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1240" viewBox="0 0 1800 1240">',
+        '<rect width="100%" height="100%" fill="white"/>',
+        f'<text x="900" y="34" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="25" font-weight="bold" fill="#171717">{html.escape(title)}</text>',
+        f'<text x="900" y="67" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="17" fill="#4b4b4b">{html.escape(subtitle)}</text>',
+    ]
+    for index, sector in enumerate(SECTOR_ORDER):
+        row, column = divmod(index, 3)
+        px, py = 45 + column * 585, 105 + row * 515
+        transform = transform_factory(districts, px, py + 35, 535, 425)
+        sector_values = {district["id_bezirk"]: values[(district["id_bezirk"], sector)] for district in districts}
+        minimum, maximum = min(sector_values.values()), max(sector_values.values())
+        chunks.append(f'<text x="{px + 277}" y="{py + 20}" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="18" fill="#202020">{html.escape(sector + " · " + SECTOR_NAMES[sector])}</text>')
+        for district in districts:
+            value = sector_values[district["id_bezirk"]]
+            color = color_for(value, minimum, maximum)
+            chunks.append(f'<path d="{outer_path(district, transform)}" fill="{color}" fill-rule="evenodd" stroke="#3d3d3d" stroke-width="1.3"/>')
+            label_x, label_y = centroid(district, transform)
+            chunks.append(f'<text x="{label_x:.2f}" y="{label_y:.2f}" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="12" fill="#161616">{html.escape(district["id_bezirk"])}</text>')
+        chunks.append(f'<text x="{px + 10}" y="{py + 470}" font-family="DejaVu Sans, sans-serif" font-size="12" fill="#555555">mín {minimum:.1f} · máx {maximum:.1f} {html.escape(unit)}</text>')
+    chunks.append(f'<text x="900" y="1205" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="13" fill="#555555">{html.escape(footer)}</text>')
+    chunks.append("</svg>")
+    path.write_text("\n".join(chunks) + "\n", encoding="utf-8")
+
+
+def text_writer(path: Path):
+    if path.suffix == ".gz":
+        return gzip.open(path, "wt", encoding="utf-8", newline="")
+    return path.open("w", encoding="utf-8", newline="")
+
+
+def write_csv(path: Path, fields: list[str], rows: Iterable[dict[str, object]]) -> None:
+    with text_writer(path) as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({field: fmt(row[field]) if isinstance(row[field], float) else row[field] for field in fields})
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--inference", type=Path, default=DEFAULT_INFERENCE)
+    parser.add_argument("--proxy", type=Path, default=DEFAULT_PROXY)
+    parser.add_argument("--geometry", type=Path, default=DEFAULT_GEOMETRY)
+    parser.add_argument("--table-dir", type=Path, default=DEFAULT_TABLE_DIR)
+    parser.add_argument("--figure-dir", type=Path, default=DEFAULT_FIGURE_DIR)
+    parser.add_argument("--report-dir", type=Path, default=DEFAULT_REPORT_DIR)
+    parser.add_argument("--snapshot-utc", type=str, default="", help="Optional deterministic snapshot timestamp; defaults to peak predicted hour")
+    args = parser.parse_args()
+    inference_path = args.inference.resolve()
+    proxy_path = args.proxy.resolve()
+    geometry_path = args.geometry.resolve()
+    for path in (inference_path, proxy_path, geometry_path):
+        if not path.is_file():
+            raise FileNotFoundError(path)
+
+    inference = read_csv(inference_path)
+    proxy = read_csv(proxy_path)
+    districts = load_geometry(geometry_path)
+    if not inference or len(proxy) != EXPECTED_DISTRICTS:
+        raise ValueError("Expected non-empty inference and 12 district-sector proxy rows")
+    required_inference = {"timestamp_hour_end_utc", "timestamp_hour_end_local", "load_predicted_MW", "coverage_flag"}
+    if required_inference.difference(inference[0]):
+        raise ValueError(f"Inference lacks columns: {sorted(required_inference.difference(inference[0]))}")
+    required_proxy = {"id_bezirk", "bezirk", "district_weight", *(f"share_{sector}" for sector in SECTOR_ORDER)}
+    if required_proxy.difference(proxy[0]):
+        raise ValueError(f"Proxy lacks columns: {sorted(required_proxy.difference(proxy[0]))}")
+    proxy_by_id = {str(row["id_bezirk"]).zfill(2): row for row in proxy}
+    geometry_ids = {district["id_bezirk"] for district in districts}
+    if set(proxy_by_id) != geometry_ids:
+        raise ValueError("Proxy and geometry district identifiers differ")
+    district_weights = {district_id: number(row["district_weight"], f"district_weight[{district_id}]") for district_id, row in proxy_by_id.items()}
+    shares = {
+        (district_id, sector): number(row[f"share_{sector}"], f"share_{district_id},{sector}")
+        for district_id, row in proxy_by_id.items()
+        for sector in SECTOR_ORDER
+    }
+    if any(value < -1e-12 for value in district_weights.values()) or any(value < -1e-12 for value in shares.values()):
+        raise ValueError("District weights and sector shares must be non-negative")
+    district_weight_sum_error = sum(district_weights.values()) - 1.0
+    share_sum_errors = {district_id: sum(shares[(district_id, sector)] for sector in SECTOR_ORDER) - 1.0 for district_id in proxy_by_id}
+    # Inputs are persisted at nine decimal places; allow the resulting
+    # floating-point rounding while retaining a tight conservation check.
+    if abs(district_weight_sum_error) > 2e-9 or max(abs(error) for error in share_sum_errors.values()) > 2e-9:
+        raise ValueError("District weights or sector shares do not sum to one")
+
+    timestamps = {row["timestamp_hour_end_utc"] for row in inference}
+    if len(timestamps) != len(inference):
+        raise ValueError("Inference contains duplicate hourly timestamps")
+    if args.snapshot_utc:
+        selected = [row for row in inference if row["timestamp_hour_end_utc"] == args.snapshot_utc]
+        if not selected:
+            raise ValueError(f"Requested snapshot timestamp is absent: {args.snapshot_utc}")
+        snapshot = selected[0]
+    else:
+        snapshot = max(inference, key=lambda row: number(row["load_predicted_MW"], "load_predicted_MW"))
+
+    args.table_dir.resolve().mkdir(parents=True, exist_ok=True)
+    args.figure_dir.resolve().mkdir(parents=True, exist_ok=True)
+    args.report_dir.resolve().mkdir(parents=True, exist_ok=True)
+    hourly_path = args.table_dir.resolve() / "berlin_district_sector_d3_2023_hourly.csv.gz"
+    annual_path = args.table_dir.resolve() / "berlin_district_sector_d3_2023_annual.csv"
+    annual_wide_path = args.table_dir.resolve() / "berlin_district_sector_d3_2023_annual_wide.csv"
+    hourly_sector_path = args.table_dir.resolve() / "berlin_district_sector_d3_2023_hourly_sector_summary.csv.gz"
+    annual_accumulator: dict[tuple[str, str], float] = defaultdict(float)
+    sector_hour_accumulator: dict[tuple[str, str], float] = defaultdict(float)
+    city_energy_mwh = 0.0
+    max_hour_city_residual = 0.0
+    max_hour_district_residual = 0.0
+    hourly_fields = [
+        "timestamp_hour_end_utc", "timestamp_hour_end_local", "id_bezirk", "bezirk", "sector_code", "sector_name",
+        "district_weight", "sector_share_annual", "city_predicted_MW", "district_predicted_MW",
+        "district_sector_predicted_MW", "district_sector_predicted_MWh", "allocation_rule", "temporal_resolution", "coverage_flag",
+    ]
+    with text_writer(hourly_path) as handle:
+        writer = csv.DictWriter(handle, fieldnames=hourly_fields, lineterminator="\n")
+        writer.writeheader()
+        for model_row in inference:
+            city_mw = number(model_row["load_predicted_MW"], "load_predicted_MW")
+            city_energy_mwh += city_mw
+            district_sum = 0.0
+            for district in districts:
+                district_id = district["id_bezirk"]
+                district_mw = city_mw * district_weights[district_id]
+                district_sum += district_mw
+                sector_sum = 0.0
+                for sector in SECTOR_ORDER:
+                    value = district_mw * shares[(district_id, sector)]
+                    sector_sum += value
+                    annual_accumulator[(district_id, sector)] += value
+                    sector_hour_accumulator[(model_row["timestamp_hour_end_utc"], sector)] += value
+                    writer.writerow({
+                        "timestamp_hour_end_utc": model_row["timestamp_hour_end_utc"],
+                        "timestamp_hour_end_local": model_row["timestamp_hour_end_local"],
+                        "id_bezirk": district_id,
+                        "bezirk": district["bezirk"],
+                        "sector_code": sector,
+                        "sector_name": SECTOR_NAMES[sector],
+                        "district_weight": district_weights[district_id],
+                        "sector_share_annual": shares[(district_id, sector)],
+                        "city_predicted_MW": city_mw,
+                        "district_predicted_MW": district_mw,
+                        "district_sector_predicted_MW": value,
+                        "district_sector_predicted_MWh": value,
+                        "allocation_rule": "annual_district_weight_times_annual_sector_share",
+                        "temporal_resolution": "annual_broadcast",
+                        "coverage_flag": model_row.get("coverage_flag", "complete_d3_features"),
+                    })
+                max_hour_district_residual = max(max_hour_district_residual, abs(sector_sum - district_mw))
+            max_hour_city_residual = max(max_hour_city_residual, abs(district_sum - city_mw))
+
+    annual_fields = [
+        "id_bezirk", "bezirk", "sector_code", "sector_name", "district_weight", "sector_share_annual",
+        "predicted_district_sector_GWh_complete_rows", "proxy_raked_sector_GWh", "proxy_to_model_ratio",
+        "city_predicted_GWh_complete_rows", "city_share_pct", "allocation_rule", "spatial_validation_status",
+    ]
+    city_predicted_gwh = city_energy_mwh / 1000.0
+    # The audited proxy matrix stores ``raked_*`` directly in GWh (unlike
+    # the hourly model output, which is MW/MWh and is converted below).
+    proxy_target = {
+        (district_id, sector): number(row[f"raked_{sector}"], f"raked_{district_id},{sector}")
+        for district_id, row in proxy_by_id.items()
+        for sector in SECTOR_ORDER
+    }
+    predicted_total_by_sector = {sector: sum(annual_accumulator[(district_id, sector)] for district_id in proxy_by_id) / 1000.0 for sector in SECTOR_ORDER}
+    annual_rows: list[dict[str, object]] = []
+    for district in districts:
+        district_id = district["id_bezirk"]
+        for sector in SECTOR_ORDER:
+            predicted_gwh = annual_accumulator[(district_id, sector)] / 1000.0
+            annual_rows.append({
+                "id_bezirk": district_id,
+                "bezirk": district["bezirk"],
+                "sector_code": sector,
+                "sector_name": SECTOR_NAMES[sector],
+                "district_weight": district_weights[district_id],
+                "sector_share_annual": shares[(district_id, sector)],
+                "predicted_district_sector_GWh_complete_rows": predicted_gwh,
+                "proxy_raked_sector_GWh": proxy_target[(district_id, sector)],
+                "proxy_to_model_ratio": predicted_gwh / proxy_target[(district_id, sector)] if proxy_target[(district_id, sector)] else 0.0,
+                "city_predicted_GWh_complete_rows": city_predicted_gwh,
+                "city_share_pct": predicted_gwh / city_predicted_gwh * 100.0 if city_predicted_gwh else 0.0,
+                "allocation_rule": "annual_district_weight_times_annual_sector_share",
+                "spatial_validation_status": "consistencia_condicionada_no_independiente",
+            })
+    write_csv(annual_path, annual_fields, annual_rows)
+
+    wide_fields = ["id_bezirk", "bezirk", "district_weight"] + [f"predicted_{sector}_GWh" for sector in SECTOR_ORDER] + ["predicted_total_GWh", "allocation_rule"]
+    wide_rows = []
+    for district in districts:
+        district_id = district["id_bezirk"]
+        values_by_sector = {sector: annual_accumulator[(district_id, sector)] / 1000.0 for sector in SECTOR_ORDER}
+        wide_rows.append({"id_bezirk": district_id, "bezirk": district["bezirk"], "district_weight": district_weights[district_id], **{f"predicted_{sector}_GWh": value for sector, value in values_by_sector.items()}, "predicted_total_GWh": sum(values_by_sector.values()), "allocation_rule": "annual_district_weight_times_annual_sector_share"})
+    write_csv(annual_wide_path, wide_fields, wide_rows)
+
+    hourly_sector_fields = ["timestamp_hour_end_utc", "sector_code", "sector_name", "district_sector_predicted_MW", "allocation_rule", "temporal_resolution"]
+    hourly_sector_rows = [
+        {"timestamp_hour_end_utc": timestamp, "sector_code": sector, "sector_name": SECTOR_NAMES[sector], "district_sector_predicted_MW": value, "allocation_rule": "annual_district_weight_times_annual_sector_share", "temporal_resolution": "annual_broadcast"}
+        for (timestamp, sector), value in sorted(sector_hour_accumulator.items())
+    ]
+    write_csv(hourly_sector_path, hourly_sector_fields, hourly_sector_rows)
+
+    annual_district_residuals = []
+    for district in districts:
+        district_id = district["id_bezirk"]
+        predicted_total = sum(annual_accumulator[(district_id, sector)] for sector in SECTOR_ORDER) / 1000.0
+        expected_total = city_predicted_gwh * district_weights[district_id]
+        annual_district_residuals.append(abs(predicted_total - expected_total))
+    # The model output scales the annual proxy shares to the inferred city total.
+    proxy_total_gwh = sum(proxy_target.values())
+    expected_scaled_by_sector = {sector: sum(proxy_target[(district_id, sector)] for district_id in proxy_by_id) * city_predicted_gwh / proxy_total_gwh if proxy_total_gwh else 0.0 for sector in SECTOR_ORDER}
+    annual_sector_residuals = {sector: predicted_total_by_sector[sector] - expected_scaled_by_sector[sector] for sector in SECTOR_ORDER}
+    audit = {
+        "status": "pass_conditional_allocation",
+        "interpretation": "The district-sector values are a deterministic annual-share allocation of the Berlin d=3 inference; they are not independent district-sector observations.",
+        "inputs": {
+            "inference": {"path": relative(inference_path), "sha256": sha256(inference_path), "rows": len(inference), "expected_annual_hours": EXPECTED_ANNUAL_HOURS, "coverage_pct": len(inference) / EXPECTED_ANNUAL_HOURS * 100.0},
+            "proxy": {"path": relative(proxy_path), "sha256": sha256(proxy_path), "rows": len(proxy)},
+            "geometry": {"path": relative(geometry_path), "sha256": sha256(geometry_path), "districts": len(districts)},
+        },
+        "contract": {"model": "d=3", "sector_share_temporal_resolution": "annual_broadcast", "allocation_rule": "L_d,h,s = L_Berlin,h * district_weight_d * sector_share_d,s", "sector_codes": list(SECTOR_ORDER)},
+        "outputs": {"hourly_rows": len(inference) * EXPECTED_DISTRICTS * len(SECTOR_ORDER), "annual_rows": len(annual_rows), "hourly_sector_rows": len(hourly_sector_rows)},
+        "conservation": {
+            "district_weight_sum": sum(district_weights.values()),
+            "max_abs_district_weight_sum_error": abs(district_weight_sum_error),
+            "max_abs_sector_share_sum_error": max(abs(error) for error in share_sum_errors.values()),
+            "max_abs_hourly_city_residual_MW": max_hour_city_residual,
+            "max_abs_hourly_district_residual_MW": max_hour_district_residual,
+            "max_abs_annual_district_residual_GWh": max(annual_district_residuals),
+            "city_predicted_GWh_complete_rows": city_predicted_gwh,
+            "district_sector_predicted_GWh_complete_rows": sum(annual_accumulator.values()) / 1000.0,
+            "city_vs_district_sector_residual_GWh": sum(annual_accumulator.values()) / 1000.0 - city_predicted_gwh,
+            "predicted_sector_GWh": predicted_total_by_sector,
+            "proxy_sector_GWh": {sector: sum(proxy_target[(district_id, sector)] for district_id in proxy_by_id) for sector in SECTOR_ORDER},
+            "expected_scaled_sector_GWh": expected_scaled_by_sector,
+            "sector_residual_after_city_scaling_GWh": annual_sector_residuals,
+        },
+        "snapshot": {"timestamp_hour_end_utc": snapshot["timestamp_hour_end_utc"], "timestamp_hour_end_local": snapshot["timestamp_hour_end_local"], "city_predicted_MW": number(snapshot["load_predicted_MW"], "snapshot load")},
+        "limitations": [
+            "Annual district weights and sector shares are broadcast to every hour; no monthly or hourly sector profiles are estimated.",
+            "The spatial and sectoral outputs inherit the Umweltatlas/Strombilanz proxy assumptions and cannot be used as independent spatial or sector KPIs.",
+            "The inference covers only complete d=3 feature rows (currently 8,740/8,760 hours); 20 missing hours are not imputed.",
+            "The public sector share is structurally zero in the current proxy matrix because Strombilanz does not separate it in the selected input.",
+            "The HV proxy and administrative Berlin perimeter remain subject to the pending Stromnetz Berlin semantic/cartographic clarification.",
+        ],
+    }
+    audit_json = args.report_dir.resolve() / "berlin_district_sector_d3_2023_audit.json"
+    audit_json.write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    audit_md = args.report_dir.resolve() / "berlin_district_sector_d3_2023_audit.md"
+    audit_md.write_text(
+        "# Auditoría de desagregación distrito–sector de Berlín 2023\n\n"
+        "Estado: **controles de conservación aprobados; resultado espacial y sectorial condicionado**.\n\n"
+        "## Regla aplicada\n\n"
+        "Para cada hora completa se aplica `L_d,h,s = L_Berlín,h × district_weight_d × sector_share_d,s`. Los pesos distritales y shares sectoriales son anuales y se difunden a todas las horas (`annual_broadcast`).\n\n"
+        f"- Filas de inferencia utilizadas: **{len(inference):,}/{EXPECTED_ANNUAL_HOURS:,} ({len(inference) / EXPECTED_ANNUAL_HOURS * 100.0:.6f} %)**.\n"
+        f"- Filas horarias distrito–sector: **{len(inference) * EXPECTED_DISTRICTS * len(SECTOR_ORDER):,}**.\n"
+        f"- Filas anuales distrito–sector: **{len(annual_rows)}**.\n"
+        f"- Energía Berlín predicha en filas completas: **{city_predicted_gwh:.6f} GWh**.\n"
+        f"- Residuo máximo horario ciudad vs. distritos: **{max_hour_city_residual:.12g} MW**.\n"
+        f"- Residuo máximo horario distrito vs. sectores: **{max_hour_district_residual:.12g} MW**.\n"
+        f"- Residuo máximo anual distrito: **{max(annual_district_residuals):.12g} GWh**.\n"
+        f"- Hora de instantánea cartográfica: **{snapshot['timestamp_hour_end_utc']}** ({snapshot['timestamp_hour_end_local']}), máxima carga predicha de Berlín.\n\n"
+        "## Evidencia generada\n\n"
+        f"- Tabla horaria larga: `{relative(hourly_path)}`.\n"
+        f"- Tabla anual larga: `{relative(annual_path)}`.\n"
+        f"- Tabla anual ancha: `{relative(annual_wide_path)}`.\n"
+        f"- Resumen horario por sector: `{relative(hourly_sector_path)}`.\n"
+        "- Mapas anuales y de la instantánea horaria: ver el manifiesto de figuras y los archivos PNG/SVG en `corfo-report/results/figures/`.\n\n"
+        "## Limitaciones que deben acompañar cualquier uso\n\n"
+        "La salida conserva exactamente la energía agregada del modelo por construcción, pero no demuestra que la red haya aprendido diferencias horarias entre distritos o sectores. Los shares anuales provienen de proxies de Umweltatlas/Strombilanz; el sector público queda con share estructural cero; la cobertura no incluye 20 horas faltantes; y el alcance HV frente al perímetro administrativo `11000` aún requiere confirmación de Stromnetz Berlin. Por ello, estas tablas y mapas se reportan como escenario de desagregación reproducible, no como validación externa independiente.\n",
+        encoding="utf-8",
+    )
+
+    annual_values = {(row["id_bezirk"], row["sector_code"]): float(row["predicted_district_sector_GWh_complete_rows"]) for row in annual_rows}
+    snapshot_values = {(district["id_bezirk"], sector): number(snapshot["load_predicted_MW"], "snapshot load") * district_weights[district["id_bezirk"]] * shares[(district["id_bezirk"], sector)] for district in districts for sector in SECTOR_ORDER}
+    annual_title = "Berlín: demanda anual reconstruida por distrito y sector (2023, d=3)"
+    annual_subtitle = "Shares distritales y sectoriales anuales difundidos; unidades: GWh en las 8.740 horas completas"
+    hourly_title = "Berlín: demanda horaria por distrito y sector (d=3)"
+    hourly_subtitle = f"Instantánea en el máximo horario predicho · {snapshot['timestamp_hour_end_local']} · unidades: MW"
+    footer = "Asignación condicionada por proxies anuales; no constituye KPI espacial o sectorial independiente."
+    annual_png = args.figure_dir.resolve() / "berlin_demanda_distrito_sector_anual_d3_2023.png"
+    annual_svg = args.figure_dir.resolve() / "berlin_demanda_distrito_sector_anual_d3_2023.svg"
+    hourly_png = args.figure_dir.resolve() / "berlin_demanda_distrito_sector_horaria_pico_d3_2023.png"
+    hourly_svg = args.figure_dir.resolve() / "berlin_demanda_distrito_sector_horaria_pico_d3_2023.svg"
+    render_png(annual_png, districts, annual_values, annual_title, annual_subtitle, footer)
+    render_svg(annual_svg, districts, annual_values, annual_title, annual_subtitle, footer, "GWh")
+    render_png(hourly_png, districts, snapshot_values, hourly_title, hourly_subtitle, footer)
+    render_svg(hourly_svg, districts, snapshot_values, hourly_title, hourly_subtitle, footer, "MW")
+
+    manifest = {
+        "dataset": "berlin_district_sector_d3_2023",
+        "status": audit["status"],
+        "audit": {"path": relative(audit_json), "sha256": sha256(audit_json)},
+        "tables": {relative(path): {"sha256": sha256(path), "bytes": path.stat().st_size} for path in (hourly_path, hourly_sector_path, annual_path, annual_wide_path)},
+        "figures": {relative(path): {"sha256": sha256(path), "bytes": path.stat().st_size} for path in (annual_png, annual_svg, hourly_png, hourly_svg)},
+        "snapshot": audit["snapshot"],
+        "sector_names": SECTOR_NAMES,
+    }
+    manifest_path = args.figure_dir.resolve() / "berlin_demanda_distrito_sector_d3_2023_manifest.json"
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({"status": audit["status"], "audit": relative(audit_json), "hourly_rows": len(inference) * EXPECTED_DISTRICTS * len(SECTOR_ORDER), "annual_rows": len(annual_rows), "city_predicted_GWh": city_predicted_gwh, "snapshot": audit["snapshot"], "figures": [relative(path) for path in (annual_png, annual_svg, hourly_png, hourly_svg)]}, ensure_ascii=False, indent=2))
+
+
+if __name__ == "__main__":
+    main()
