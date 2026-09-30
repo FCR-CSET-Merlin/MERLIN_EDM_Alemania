@@ -30,6 +30,7 @@ def feature_columns(dimension: int) -> list[str]:
         raise ValueError("dimension must be 3, 5 or 8")
     return [*CALENDAR_COLUMNS, "temperatura", *[f"temp_t - {lag}" for lag in range(1, dimension)]]
 SHARE_COLUMNS = ["share_I", "share_R", "share_C", "share_P", "share_T"]
+SHARE_TEMPORAL_RESOLUTION = "annual_broadcast"
 DEFAULT_INPUT = REPO / "prototipo_3/data/de_alemania/berlin_lag_ablation_2023/common_d3_d5_d8/d8/berlin_hv_temperature_d8_2023_common.csv"
 DEFAULT_SHARES = REPO / "corfo-report/validation/berlin/berlin_sector_shares_2023.csv"
 DEFAULT_OUTPUT = REPO / "prototipo_3/data/de_alemania/berlin_training_2023"
@@ -113,6 +114,7 @@ def read_shares(path: Path) -> dict[str, object]:
         **values,
         "source": row.get("source", ""),
         "sector_mapping_policy": row.get("sector_mapping_policy", ""),
+        "temporal_resolution": SHARE_TEMPORAL_RESOLUTION,
     }
 
 
@@ -230,6 +232,7 @@ def main() -> None:
         "status": "provisional_contract_ready_for_german_retraining",
         "input": {"path": str(input_path.relative_to(REPO)), "sha256": sha256(input_path), "rows": n},
         "shares": {"path": str(shares_path.relative_to(REPO)), "sha256": sha256(shares_path), **shares},
+        "sector_share_temporal_resolution": SHARE_TEMPORAL_RESOLUTION,
         "dimension": args.dimension,
         "tau_hours": 1,
         "features": model_features,

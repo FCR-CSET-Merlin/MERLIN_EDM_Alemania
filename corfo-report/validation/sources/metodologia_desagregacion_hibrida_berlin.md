@@ -2,6 +2,8 @@
 
 Estado: diseño operativo inicial; no constituye todavía un KPI independiente.
 
+**Decisión temporal del piloto:** `sector_share_temporal_resolution = annual_broadcast`. Los shares anuales se repiten durante las horas de 2023; la generación de perfiles mensuales queda como extensión opcional.
+
 ## Definición
 
 La inferencia horaria agregada del modelo se conserva como magnitud de referencia:
@@ -10,25 +12,27 @@ La inferencia horaria agregada del modelo se conserva como magnitud de referenci
 \hat L_{B,h} = \text{demanda horaria estimada para Berlín}.
 \]
 
-Para cada distrito `d`, mes `m` y sector `s` se utilizarán dos familias de pesos:
+Para el piloto regional se utilizan shares anuales por distrito `d`, año `y` y sector `s`:
 
 \[
-w_{d,m}=\frac{E_{d,m}}{E_{B,m}}, \qquad
-p_{d,m,s}=\frac{E_{d,m,s}}{\sum_s E_{d,m,s}}.
+w_{d,y}=\frac{E_{d,y}}{E_{B,y}}, \qquad
+p_{d,y,s}=\frac{E_{d,y,s}}{\sum_s E_{d,y,s}}.
 \]
 
-La salida distrito–sector será:
+La salida horaria distrito–sector se obtiene difundiendo esos pesos durante el año:
 
 \[
-\hat L_{d,h,s}=\hat L_{B,h}\,w_{d,m(h)}\,p_{d,m(h),s}.
+\hat L_{d,h,s}=\hat L_{B,h}\,w_{d,y(h)}\,p_{d,y(h),s}.
 \]
 
-Cada mes se comprobará que la suma de distritos y sectores conserve el total agregado, dentro de la tolerancia numérica definida en el contrato de datos.
+Los índices mensuales quedan reservados para una futura extensión comunal; no forman parte del contrato de entrenamiento de Berlín 2023.
+
+Para el piloto regional se comprobará que la suma de distritos y sectores conserve el total anual agregado. No se calculan shares mensuales en la entrada de la red; la matriz distrito–sector se reporta como salida anual.
 
 ## Implementación por niveles de datos
 
-1. Si existe consumo mensual distrito–sector, `w` y `p` se calculan directamente.
-2. Si existen consumos anuales distrito–sector, se conserva la matriz anual y se aplican perfiles mensuales sectoriales alemanes normalizados.
+1. Para el piloto actual, se usa la matriz anual distrito–sector y se difunden sus shares a todas las horas del año.
+2. Si en una fase posterior se requiere una capa comunal alemana mensual, se podrán introducir perfiles sectoriales normalizados.
 3. Si solo existe consumo anual por distrito, se usa la matriz de proxies territorializados y se ajusta mediante un raking proporcional restringido para que coincidan los totales distritales y los totales sectoriales de Berlín.
 
 La matriz restringida se obtiene minimizando la divergencia relativa respecto de los proxies, con restricciones de suma por distrito y por sector. Los valores negativos se prohíben y los ceros estructurales se mantienen como ceros.
@@ -43,4 +47,4 @@ La primera corrida será, por tanto, un escenario híbrido condicionado. `verbr_
 
 ## Limitaciones y validación
 
-Los perfiles BDEW/SLP y las variables proxy sirven para asignar energía, no para validar independientemente la red neuronal. La validación espacial independiente requiere observaciones distritales que no hayan sido usadas como pesos. Toda salida debe conservar `source`, `mapping_policy`, `imputation_flag`, `spatial_perimeter` y `temporal_profile_source`.
+Los perfiles BDEW/SLP y las variables proxy quedan fuera del contrato temporal del piloto; podrían usarse en una extensión mensual, pero no son necesarios para la reconstrucción regional 2023. La validación espacial independiente requiere observaciones distritales que no hayan sido usadas como pesos. Toda salida debe conservar `source`, `mapping_policy`, `imputation_flag`, `spatial_perimeter` y `sector_share_temporal_resolution`.
