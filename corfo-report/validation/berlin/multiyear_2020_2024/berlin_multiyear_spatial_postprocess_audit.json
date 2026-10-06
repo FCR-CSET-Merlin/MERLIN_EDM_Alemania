@@ -11,7 +11,7 @@
   ],
   "inference": {
     "path": "prototipo_3/data/de_alemania/berlin_multiyear_inference_d8/berlin_multiyear_d8_inference.csv.gz",
-    "sha256": "b6c6d9a5762a393d266282ebd8c8c02fd715717ff993d32d0ffceb1cd723a6d3",
+    "sha256": "81d57e100deed6214537fd536df88ffa498ab75052b088b409491956610958cd",
     "rows": 43677,
     "hours_by_year": {
       "2020": 8784,
@@ -58,19 +58,19 @@
     },
     "district_png": {
       "path": "corfo-report/results/figures/berlin_demanda_distrital_multiyear_d8_2020_2024.png",
-      "sha256": "533379acfe9527c667cb04711a746acbf0c84d6cf16df557c9abac952aba9ac9"
+      "sha256": "2404cbf8e90170e3d98b6684562802bfdb63da72a927ac00594855755fafc786"
     },
     "district_svg": {
       "path": "corfo-report/results/figures/berlin_demanda_distrital_multiyear_d8_2020_2024.svg",
-      "sha256": "9f55b83b666b59f5863ccd304ba3e4b2037544115a6f84d2802e6935c99e0a24"
+      "sha256": "7608108bea8261c83d65fa3595ed5dbe591cca70c80aeb0415359e4274c647bb"
     },
     "sector_png": {
       "path": "corfo-report/results/figures/berlin_demanda_distrito_sector_anual_multiyear_d8_2020_2024.png",
-      "sha256": "8e1eb859a1fd73d1ae42a157fcf35b4b10686a4246ce5fc96b70bb9a3d0d7783"
+      "sha256": "08d7dc6c2f239170786837b846dce0e178c14fc87a609ac10d28515aeee24e40"
     },
     "sector_svg": {
       "path": "corfo-report/results/figures/berlin_demanda_distrito_sector_anual_multiyear_d8_2020_2024.svg",
-      "sha256": "fa6135e4a08dba4954d38e8226b09bcbafc21b19cc2bcaa1ab7ffaa2de055675"
+      "sha256": "a80049f2cd1103d53d58f25239150cb5a33b9a184e2c5fe9a211da1568fb7979"
     }
   },
   "limitations": [

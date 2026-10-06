@@ -21,6 +21,7 @@ import csv
 import gzip
 import hashlib
 import html
+import io
 import json
 import math
 from collections import defaultdict
@@ -78,9 +79,12 @@ def read_csv(path: Path) -> list[dict[str, str]]:
 
 def write_csv(path: Path, fields: list[str], rows: Iterable[dict[str, object]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    opener = gzip.open if path.suffix == ".gz" else open
-    kwargs = {"encoding": "utf-8", "newline": ""} if path.suffix == ".gz" else {"encoding": "utf-8", "newline": ""}
-    with opener(path, "wt", **kwargs) as handle:
+    if path.suffix == ".gz":
+        raw = gzip.GzipFile(filename=str(path), mode="wb", mtime=0)
+        handle = io.TextIOWrapper(raw, encoding="utf-8", newline="")
+    else:
+        handle = path.open("w", encoding="utf-8", newline="")
+    with handle:
         writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
@@ -148,6 +152,20 @@ def draw_map_png(draw, districts, values: dict[str, float], x0: float, y0: float
             draw.text((px, py), district["id_bezirk"], fill="#171717", anchor="mm", font=font(12))
 
 
+def draw_colorbar_png(draw, x: float, y: float, width: float, height: float, minimum: float, maximum: float, label: str) -> None:
+    draw.text((x + width / 2, y - 10), label, fill="#555555", anchor="ms", font=font(13))
+    for offset in range(int(width)):
+        ratio = offset / max(width - 1, 1)
+        value = minimum + ratio * (maximum - minimum)
+        draw.line((x + offset, y, x + offset, y + height), fill=color_for(value, minimum, maximum))
+    draw.rectangle((x, y, x + width, y + height), outline="#555555", width=1)
+    for fraction in (0.0, 0.25, 0.5, 0.75, 1.0):
+        tick_x = x + fraction * width
+        value = minimum + fraction * (maximum - minimum)
+        draw.line((tick_x, y + height, tick_x, y + height + 6), fill="#555555", width=1)
+        draw.text((tick_x, y + height + 9), f"{value:.1f}", fill="#555555", anchor="ma", font=font(12))
+
+
 def render_district_png(path: Path, districts, values: dict[tuple[int, str], float], minimum: float, maximum: float) -> None:
     from PIL import Image, ImageDraw
     width, height = 2350, 720
@@ -159,8 +177,8 @@ def render_district_png(path: Path, districts, values: dict[tuple[int, str], flo
         x = 30 + index * 465
         draw.text((x + 205, 105), str(year), fill="#202020", anchor="ma", font=font(20))
         draw_map_png(draw, districts, {district["id_bezirk"]: values[(year, district["id_bezirk"])] for district in districts}, x, 135, 410, 430, minimum, maximum)
-    draw.text((width / 2, 610), f"Escala común (GWh): {minimum:.1f}–{maximum:.1f}", fill="#555555", anchor="ma", font=font(14))
-    draw.text((width / 2, 650), "Asignación condicional: predicción agregada d=8 × district_weight 2023; no constituye un KPI espacial independiente.", fill="#555555", anchor="ma", font=font(13))
+    draw_colorbar_png(draw, 875, 595, 600, 18, minimum, maximum, "Demanda anual reconstruida (GWh)")
+    draw.text((width / 2, 675), "Asignación condicional: predicción agregada d=8 × district_weight 2023; no constituye un KPI espacial independiente.", fill="#555555", anchor="ma", font=font(13))
     image.save(path, format="PNG", optimize=True)
 
 
@@ -176,13 +194,28 @@ def render_sector_png(path: Path, districts, values: dict[tuple[int, str, str], 
             x, y = 25 + column * 465, 95 + row * 335
             draw.text((x + 205, y), f"{year} · {sector} - {SECTOR_FIGURE_NAMES[sector]}", fill="#202020", anchor="ma", font=font(14))
             draw_map_png(draw, districts, {district["id_bezirk"]: values[(year, district["id_bezirk"], sector)] for district in districts}, x, y + 26, 410, 265, minimum, maximum)
-    draw.text((width / 2, 1780), f"Escala común para todos los paneles (GWh): {minimum:.1f}–{maximum:.1f}", fill="#555555", anchor="ma", font=font(14))
-    draw.text((width / 2, 1815), "Público = 0 porque Strombilanz no permite separarlo; la asignación es un escenario condicionado, no una medición distrito-sector.", fill="#555555", anchor="ma", font=font(13))
+    draw_colorbar_png(draw, 875, 1740, 600, 18, minimum, maximum, "Demanda anual reconstruida por distrito-sector (GWh)")
+    draw.text((width / 2, 1830), "Público = 0 porque Strombilanz no permite separarlo; la asignación es un escenario condicionado, no una medición distrito-sector.", fill="#555555", anchor="ma", font=font(13))
     image.save(path, format="PNG", optimize=True)
 
 
 def svg_text(x: float, y: float, value: object, size: int, anchor: str = "middle", weight: str = "normal", fill: str = "#202020") -> str:
     return f'<text x="{x:.1f}" y="{y:.1f}" text-anchor="{anchor}" font-family="DejaVu Sans,Arial,sans-serif" font-size="{size}px" font-weight="{weight}" fill="{fill}">{html.escape(str(value))}</text>'
+
+
+def colorbar_svg(x: float, y: float, width: float, height: float, minimum: float, maximum: float, label: str) -> list[str]:
+    chunks = [svg_text(x + width / 2, y - 10, label, 13, fill="#555555")]
+    for step in range(100):
+        fraction = step / 99
+        value = minimum + fraction * (maximum - minimum)
+        chunks.append(f'<rect x="{x + step * width / 100:.2f}" y="{y:.1f}" width="{width / 100 + 0.1:.2f}" height="{height:.1f}" fill="{color_for(value, minimum, maximum)}"/>')
+    chunks.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{width:.1f}" height="{height:.1f}" fill="none" stroke="#555555" stroke-width="1"/>')
+    for fraction in (0.0, 0.25, 0.5, 0.75, 1.0):
+        tick_x = x + fraction * width
+        value = minimum + fraction * (maximum - minimum)
+        chunks.append(f'<line x1="{tick_x:.1f}" y1="{y + height:.1f}" x2="{tick_x:.1f}" y2="{y + height + 6:.1f}" stroke="#555555" stroke-width="1"/>')
+        chunks.append(svg_text(tick_x, y + height + 22, f"{value:.1f}", 12, fill="#555555"))
+    return chunks
 
 
 def render_district_svg(path: Path, districts, values: dict[tuple[int, str], float], minimum: float, maximum: float) -> None:
@@ -197,7 +230,8 @@ def render_district_svg(path: Path, districts, values: dict[tuple[int, str], flo
             chunks.append(f'<path d="{outer_path(district, transform)}" fill="{color}" fill-rule="evenodd" stroke="#3d3d3d" stroke-width="1.1"/>')
             px, py = centroid(district, transform)
             chunks.append(svg_text(px, py, district["id_bezirk"], 12))
-    chunks.extend([svg_text(width / 2, 615, f"Escala común (GWh): {minimum:.1f}–{maximum:.1f}", 14, fill="#555555"), svg_text(width / 2, 654, "Asignación condicional: predicción agregada d=8 × district_weight 2023; no constituye un KPI espacial independiente.", 13, fill="#555555"), "</svg>"])
+    chunks.extend(colorbar_svg(875, 595, 600, 18, minimum, maximum, "Demanda anual reconstruida (GWh)"))
+    chunks.extend([svg_text(width / 2, 675, "Asignación condicional: predicción agregada d=8 × district_weight 2023; no constituye un KPI espacial independiente.", 13, fill="#555555"), "</svg>"])
     path.write_text("\n".join(chunks) + "\n", encoding="utf-8")
 
 
@@ -214,7 +248,8 @@ def render_sector_svg(path: Path, districts, values: dict[tuple[int, str, str], 
                 chunks.append(f'<path d="{outer_path(district, transform)}" fill="{color}" fill-rule="evenodd" stroke="#3d3d3d" stroke-width="1.0"/>')
                 px, py = centroid(district, transform)
                 chunks.append(svg_text(px, py, district["id_bezirk"], 10))
-    chunks.extend([svg_text(width / 2, 1782, f"Escala común para todos los paneles (GWh): {minimum:.1f}–{maximum:.1f}", 14, fill="#555555"), svg_text(width / 2, 1817, "Público = 0 porque Strombilanz no permite separarlo; la asignación es un escenario condicionado, no una medición distrito-sector.", 13, fill="#555555"), "</svg>"])
+    chunks.extend(colorbar_svg(875, 1740, 600, 18, minimum, maximum, "Demanda anual reconstruida por distrito-sector (GWh)"))
+    chunks.extend([svg_text(width / 2, 1830, "Público = 0 porque Strombilanz no permite separarlo; la asignación es un escenario condicionado, no una medición distrito-sector.", 13, fill="#555555"), "</svg>"])
     path.write_text("\n".join(chunks) + "\n", encoding="utf-8")
 
 
