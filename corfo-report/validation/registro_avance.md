@@ -1,10 +1,10 @@
 # Registro de avance — adaptación de MERLIN EDM a Alemania
 
 **Caso:** reconstrucción histórica de demanda eléctrica de Berlín
-**Fecha de corte:** 30 de septiembre de 2026
+**Fecha de corte:** 6 de octubre de 2026
 **Repositorio:** `MERLIN_EDM_Alemania`
-**Rama:** `germany/main`
-**Estado global:** **Fases 0, 1 y 2 en curso; Fases 3 y 4 cerradas con limitaciones documentadas; Fase 5 con desagregación distrito–sector ejecutada y auditada**. El piloto tiene KPI interno 2023, holdout temporal 2024 y controles de conservación distrito–sector; la validación horaria independiente y la espacial/sectorial independiente no son evaluables con las fuentes públicas identificadas.
+**Rama:** `germany/expansion-multianual-2020-2024`
+**Estado global:** **Fases 0, 1 y 2 en curso; Fases 3 y 4 cerradas con limitaciones documentadas; Fase 5 con desagregación distrito–sector ejecutada y auditada; expansión multianual en ejecución**. El piloto tiene KPI interno 2023, holdout temporal 2024 y controles de conservación distrito–sector; la validación horaria independiente y la espacial/sectorial independiente no son evaluables con las fuentes públicas identificadas.
 
 Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_ADAPTACION_ALEMANIA.md). Se actualizará en cada hito con fecha, evidencia, decisión y siguiente acción. Un estado no cambia a `cerrado` sin el producto y los criterios de aceptación de la fase.
 
@@ -18,6 +18,7 @@ Este archivo es la bitácora operativa del [plan de trabajo](../../PLAN_TRABAJO_
 | Fase 3 — Reconstrucción histórica de Berlín | **Cerrada con cobertura documentada** | Inferencia d=3 exportada: 8.740/8.760 filas, MAPE test interno 5,089161 %, sin imputar 20 horas; pesos, hashes y métricas registrados | [Resumen de inferencia](berlin/inference_2023/berlin_d3_inference_2023_summary.md), [métricas](berlin/inference_2023/berlin_d3_inference_metrics_2023.csv), [script](../../analisis/inferencia_berlin_d3_2023.py) | Cobertura, perímetro proxy y limitaciones HV documentados |
 | Fase 4 — Validación y KPI | **Cerrada con limitación documentada** | KPI interno 2023: MAPE 5,089161 %; holdout temporal 2024: MAPE 3,095866 %; control anual −0,357941 %; espacial condicionada; fuente horaria independiente no identificada | [KPI](berlin/kpi_validation.csv), [resumen](berlin/temporal_2024/berlin_d3_temporal_validation_2024_summary.md), [comparaciones](berlin/comparaciones_externas_2023.csv), [contrato](sources/contrato_validacion_berlin.md) | Mantener la limitación; reabrir solo si aparece una serie horaria independiente compatible |
 | Fase 5 — Escalamiento territorial | **Postproceso ejecutado con limitaciones** | Tablas horarias y anuales distrito–sector generadas para 12 Bezirke y cinco sectores; mapas anual y horario generados; conservación ciudad–distrito–sector aprobada; shares mensuales quedan fuera del alcance actual | [Auditoría distrito–sector](berlin/inference_2023/berlin_district_sector_d3_2023_audit.md), [tabla horaria](../results/tables/berlin_district_sector_d3_2023_hourly.csv.gz), [tabla anual](../results/tables/berlin_district_sector_d3_2023_annual.csv), [mapa anual](../results/figures/berlin_demanda_distrito_sector_anual_d3_2023.png), [mapa horario](../results/figures/berlin_demanda_distrito_sector_horaria_pico_d3_2023.png) | Mantener la trazabilidad de proxies, cerrar la aclaración territorial de Stromnetz y no presentar la asignación como KPI espacial/sectorial independiente |
+| Extensión transversal — Cobertura multianual | **En ejecución; contratos auditados** | HV y DWD 2020–2024 integrados en 43.848 horas UTC; 43.677 filas completas d=8; shares Strombilanz específicos 2020–2023 y carry-forward 2023 etiquetado para holdout 2024; contratos d=3/d=5/d=8 con entrenamiento 2020–2022, validación 2023 y holdout 2024; MLP multianual entrenada y métricas registradas | [Auditoría fuentes](berlin/multiyear_2020_2024/berlin_multiyear_source_audit.md), [shares](berlin/berlin_sector_shares_multiyear_2020_2024.md), [contrato](berlin/multiyear_2020_2024/berlin_multiyear_contract.md), [auditoría contrato](berlin/multiyear_2020_2024/berlin_multiyear_contract_audit.md), [métricas](berlin/multiyear_2020_2024/berlin_multiyear_model_metrics.md) | Cerrar interpretación de timestamps HV 2020–2022; decidir shares 2024 observados o carry-forward; seleccionar d usando validación 2023; preservar 2024 como holdout |
 
 ## Estado de fuentes
 
@@ -56,6 +57,8 @@ El KPI interno se declara con la fila correspondiente en `kpi_validation.csv`, l
 10. Mantener documentada la ausencia de comparador horario independiente; si aparece una fuente compatible, abrir una nueva versión de la Fase 4.
 11. Completar el cierre de Fase 5: revisar las tablas y mapas distrito–sector, conservar los controles de conservación y mantener la asignación por shares fuera de cualquier KPI espacial/sectorial independiente.
 12. Tras cerrar el contrato territorial y sectorial, preparar la extensión a otros territorios y la fase de pronóstico.
+13. Para la extensión multianual, resolver la aclaración del operador sobre timestamps 2020–2022 y evaluar si la fila 2024 de shares puede reemplazarse por una Strombilanz observada.
+14. Seleccionar la dimensión multianual con la validación 2023, conservar el modelo elegido y reportar 2024 solo como holdout temporal del mismo operador.
 
 ## Bitácora
 
@@ -92,6 +95,10 @@ El KPI interno se declara con la fila correspondiente en `kpi_validation.csv`, l
 | 2026-09-30 | Fase 3/Fase 4 | Se repitió la inferencia d=3 usando el contrato regenerado | MAPE test anterior 5,089161454 %; regenerado 5,089161564 %; diferencia 1,1e-7 puntos porcentuales; todas las métricas dentro de tolerancia 1e-5; conclusión KPI sin cambios | [Reproducibilidad](berlin/inference_2023/berlin_d3_inference_reproducibility_2023.md), [métricas](berlin/inference_2023/berlin_d3_inference_metrics_2023.csv), [script](../../analisis/comparar_inferencia_d3_2023.py) | Conservar el resultado como reproducción numérica del KPI interno; no convertirlo en validación externa |
 
 | 2026-09-30 | Fase 5 | Se ejecutó la desagregación distrito–sector sobre la inferencia d=3 | 524.400 filas horarias, 60 filas anuales y resumen horario por sector; residuos máximos: 6,8e-13 MW ciudad–distritos, 3,8e-7 MW distrito–sectores y 2,3e-6 GWh anual; se generaron mapas anual y de hora pico | [Auditoría](berlin/inference_2023/berlin_district_sector_d3_2023_audit.md), [script](../../analisis/desagregacion_distrito_sector_berlin_2023.py), [tablas](../results/tables/berlin_district_sector_d3_2023_annual.csv), [figuras](../results/figures/berlin_demanda_distrito_sector_anual_d3_2023.png) | Resultado condicionado por shares anuales y proxies; no constituye KPI espacial o sectorial independiente |
+
+| 2026-10-06 | Extensión multianual | Se normalizaron y auditaron perfiles HV/DWD 2020–2024 | 43.848 horas UTC; 43.677 filas completas d=8; hashes HV 2020–2022 coinciden con la auditoría histórica; 2020–2022 conservan riesgo de etiquetas DST y no se corrigieron manualmente | [Auditoría fuentes](berlin/multiyear_2020_2024/berlin_multiyear_source_audit.md), [preprocesador](../../prototipo_3/preprocessing/berlin_multiyear_features.py) |
+| 2026-10-06 | Extensión multianual | Se construyeron shares anuales y contratos cronológicos | Strombilanz aporta shares observados 2020–2023; 2024 queda como carry-forward etiquetado; contratos d=3/d=5/d=8 pasan auditoría de integridad; scaler ajustado solo en 2020–2022 | [Shares](berlin/berlin_sector_shares_multiyear_2020_2024.csv), [contratos](berlin/multiyear_2020_2024/berlin_multiyear_contract.md), [auditoría](berlin/multiyear_2020_2024/berlin_multiyear_contract_audit.md) |
+| 2026-10-06 | Extensión multianual | Se entrenaron MLP multianuales d=3, d=5 y d=8 | Mejor validación 2023: d=8 con MAPE 3,452548 %; holdout 2024 d=8: MAPE 3,426289 %; todas las dimensiones cumplen MAPE ≤35 %; holdout reservado para reporte, no selección | [Métricas](berlin/multiyear_2020_2024/berlin_multiyear_model_metrics.md), [entrenador](../../prototipo_3/src/train_mlp_berlin_multiyear.py) |
 
 ## Regla de actualización
 

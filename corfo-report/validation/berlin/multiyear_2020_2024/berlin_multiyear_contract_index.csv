@@ -1,0 +1,10 @@
+dimension,split,rows,years,mu_train_MW,sigma_train_MW,output
+3,train,26172,"2020,2021,2022",1393.710895776020,309.047605111226,prototipo_3/data/de_alemania/berlin_training_multiyear/berlin_multiyear_d3_train.parquet
+3,validation,8752,2023,1393.710895776020,309.047605111226,prototipo_3/data/de_alemania/berlin_training_multiyear/berlin_multiyear_d3_validation.parquet
+3,test,8778,2024,1393.710895776020,309.047605111226,prototipo_3/data/de_alemania/berlin_training_multiyear/berlin_multiyear_d3_test.parquet
+5,train,26166,"2020,2021,2022",1393.664223935642,309.067493048817,prototipo_3/data/de_alemania/berlin_training_multiyear/berlin_multiyear_d5_train.parquet
+5,validation,8750,2023,1393.664223935642,309.067493048817,prototipo_3/data/de_alemania/berlin_training_multiyear/berlin_multiyear_d5_validation.parquet
+5,test,8776,2024,1393.664223935642,309.067493048817,prototipo_3/data/de_alemania/berlin_training_multiyear/berlin_multiyear_d5_test.parquet
+8,train,26157,"2020,2021,2022",1393.587503020224,309.092614867246,prototipo_3/data/de_alemania/berlin_training_multiyear/berlin_multiyear_d8_train.parquet
+8,validation,8747,2023,1393.587503020224,309.092614867246,prototipo_3/data/de_alemania/berlin_training_multiyear/berlin_multiyear_d8_validation.parquet
+8,test,8773,2024,1393.587503020224,309.092614867246,prototipo_3/data/de_alemania/berlin_training_multiyear/berlin_multiyear_d8_test.parquet
