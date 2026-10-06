@@ -27,6 +27,8 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 Figura disponible: [mapa distrital de demanda anual Berlín 2023 (PNG)](results/figures/berlin_demanda_distrital_d3_2023.png), [versión vectorial SVG](results/figures/berlin_demanda_distrital_d3_2023.svg) y [manifiesto](results/figures/berlin_demanda_distrital_d3_2023_manifest.json).
 
 Para la expansión multianual 2020–2024 se generaron la [figura comparativa de MAPE (PNG)](results/figures/berlin_multiyear_kpi_mape.png), su [versión vectorial (SVG)](results/figures/berlin_multiyear_kpi_mape.svg), la [figura de cobertura d=8 (PNG)](results/figures/berlin_multiyear_d8_coverage.png), su [versión vectorial (SVG)](results/figures/berlin_multiyear_d8_coverage.svg) y el [manifiesto con hashes](results/figures/berlin_multiyear_reportability_manifest.json).
+
+La salida espacial multianual está disponible como [mapa anual por distrito](results/figures/berlin_demanda_distrital_multiyear_d8_2020_2024.png), [mapa anual distrito–sector](results/figures/berlin_demanda_distrito_sector_anual_multiyear_d8_2020_2024.png), [tabla distrital](results/tables/berlin_multiyear_d8_district_annual.csv), [tabla distrito–sector](results/tables/berlin_multiyear_d8_district_sector_annual.csv) y [auditoría de conservación y limitaciones](validation/berlin/multiyear_2020_2024/berlin_multiyear_spatial_postprocess_audit.md).
 | Series horarias | [`results/timeseries/`](results/timeseries/) | Pesadas fuera de Git; índice y hash obligatorios |
 | Auditoría de fuentes | [`validation/sources/`](validation/sources/) | Cobertura, perímetro, licencia y transformaciones |
 | Validación Berlín | [`validation/berlin/`](validation/berlin/) | Comparaciones por año, territorio y sector |

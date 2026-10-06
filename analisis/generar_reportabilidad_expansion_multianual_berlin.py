@@ -308,6 +308,20 @@ def main() -> None:
         {"name": "berlin_multiyear_kpi_mape", **mape_figure(metrics, figures / "berlin_multiyear_kpi_mape.svg", figures / "berlin_multiyear_kpi_mape.png")},
         {"name": "berlin_multiyear_d8_coverage", **coverage_figure(sources, figures / "berlin_multiyear_d8_coverage.svg", figures / "berlin_multiyear_d8_coverage.png")},
     ]
+    spatial_figure_names = (
+        "berlin_demanda_distrital_multiyear_d8_2020_2024",
+        "berlin_demanda_distrito_sector_anual_multiyear_d8_2020_2024",
+    )
+    for name in spatial_figure_names:
+        record = {"name": name}
+        for suffix in ("svg", "png"):
+            path = figures / f"{name}.{suffix}"
+            if path.is_file():
+                record[suffix] = str(path.relative_to(REPO))
+                record[f"{suffix}_sha256"] = sha256(path)
+        if "svg" in record or "png" in record:
+            record["png_generated"] = "png" in record
+            figure_records.append(record)
     for record in figure_records:
         for key in ("svg", "png"):
             relative = record.get(key)
@@ -324,6 +338,14 @@ def main() -> None:
             {"path": str(CANONICAL_KPI.relative_to(REPO)), "sha256": sha256(CANONICAL_KPI)},
         ],
         "figures": figure_records,
+        "spatial_postprocess": {
+            "status": "generated" if (figures / "berlin_demanda_distrital_multiyear_d8_2020_2024.png").is_file() else "pending",
+            "audit": "corfo-report/validation/berlin/multiyear_2020_2024/berlin_multiyear_spatial_postprocess_audit.json",
+            "district_table": "corfo-report/results/tables/berlin_multiyear_d8_district_annual.csv",
+            "district_sector_table": "corfo-report/results/tables/berlin_multiyear_d8_district_sector_annual.csv",
+            "annual_summary": "corfo-report/results/tables/berlin_multiyear_d8_annual_summary.csv",
+            "interpretation": "conditional_allocation_not_independent_spatial_or_sector_kpi",
+        },
         "limitations": [
             "Holdout 2024 is temporal generalisation from the same Stromnetz Berlin operator and HV measurement family, not independent-source validation.",
             "2024 sector shares are a labelled 2023 carry-forward for holdout inference.",

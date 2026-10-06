@@ -55,3 +55,6 @@ La configuración seleccionada por validación 2023 es **d=8**, con MAPE **3.452
 - Matriz de cumplimiento KPI: corfo-report/results/tables/berlin_multiyear_kpi_compliance.csv
 - Figuras de reportabilidad: corfo-report/results/figures/berlin_multiyear_kpi_mape.svg y berlin_multiyear_d8_coverage.svg
 - Manifiesto de figuras y hashes: corfo-report/results/figures/berlin_multiyear_reportability_manifest.json
+- Postproceso espacial: corfo-report/validation/berlin/multiyear_2020_2024/berlin_multiyear_spatial_postprocess_audit.md
+- Mapas anuales: corfo-report/results/figures/berlin_demanda_distrital_multiyear_d8_2020_2024.png y berlin_demanda_distrito_sector_anual_multiyear_d8_2020_2024.png
+- Tablas anuales espaciales: corfo-report/results/tables/berlin_multiyear_d8_district_annual.csv y berlin_multiyear_d8_district_sector_annual.csv

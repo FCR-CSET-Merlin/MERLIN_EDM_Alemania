@@ -1,0 +1,82 @@
+{
+  "dataset": "berlin_multiyear_d8_spatial_postprocess_2020_2024",
+  "status": "pass",
+  "model_dimension": 8,
+  "years": [
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "inference": {
+    "path": "prototipo_3/data/de_alemania/berlin_multiyear_inference_d8/berlin_multiyear_d8_inference.csv.gz",
+    "sha256": "b6c6d9a5762a393d266282ebd8c8c02fd715717ff993d32d0ffceb1cd723a6d3",
+    "rows": 43677,
+    "hours_by_year": {
+      "2020": 8784,
+      "2021": 8760,
+      "2022": 8613,
+      "2023": 8747,
+      "2024": 8773
+    }
+  },
+  "district_rule": "predicted_city_GWh * fixed_2023_Umweltatlas_district_weight",
+  "sector_rule": "district_GWh * annual_Strombilanz_sector_share",
+  "district_weights_source": {
+    "path": "corfo-report/validation/berlin/berlin_district_sector_proxy_2023.csv",
+    "sha256": "5cd864be3d34663d88c7874daaba5de84f1dd9694af1d53929dd7bbfc880cea6",
+    "districts": 12
+  },
+  "sector_shares_source": {
+    "path": "corfo-report/validation/berlin/berlin_sector_shares_multiyear_2020_2024.csv",
+    "sha256": "c9da91030d5da8656689bf955c41fd2ee8903cbb6c3f942cc11652de2d1e2458",
+    "temporal_resolution": "annual_broadcast",
+    "share_status_2024": "frozen_last_available_for_holdout_only"
+  },
+  "controls": {
+    "max_district_conservation_residual_GWh": 1.8189894035458565e-12,
+    "max_district_sector_conservation_residual_GWh": 1.2123564374633133e-08,
+    "district_weight_sum_error": 0.0,
+    "max_sector_share_sum_error": 9.999778782798785e-13
+  },
+  "outputs": {
+    "district_table": {
+      "path": "corfo-report/results/tables/berlin_multiyear_d8_district_annual.csv",
+      "sha256": "56264f485d31648b493961a3f7d7b173ccdbed7ea6d56182728b55d5ec2a32a2",
+      "rows": 60
+    },
+    "district_sector_table": {
+      "path": "corfo-report/results/tables/berlin_multiyear_d8_district_sector_annual.csv",
+      "sha256": "0a1c62021c11f32ae20031027030fc825142f5b18376e96abc54e3c4206b4a26",
+      "rows": 300
+    },
+    "annual_summary": {
+      "path": "corfo-report/results/tables/berlin_multiyear_d8_annual_summary.csv",
+      "sha256": "372d3d6c81bd4cd9a6db34ee1e26e8a86c93ea8257a5fd37249bcc41a2f21432",
+      "rows": 5
+    },
+    "district_png": {
+      "path": "corfo-report/results/figures/berlin_demanda_distrital_multiyear_d8_2020_2024.png",
+      "sha256": "533379acfe9527c667cb04711a746acbf0c84d6cf16df557c9abac952aba9ac9"
+    },
+    "district_svg": {
+      "path": "corfo-report/results/figures/berlin_demanda_distrital_multiyear_d8_2020_2024.svg",
+      "sha256": "9f55b83b666b59f5863ccd304ba3e4b2037544115a6f84d2802e6935c99e0a24"
+    },
+    "sector_png": {
+      "path": "corfo-report/results/figures/berlin_demanda_distrito_sector_anual_multiyear_d8_2020_2024.png",
+      "sha256": "8e1eb859a1fd73d1ae42a157fcf35b4b10686a4246ce5fc96b70bb9a3d0d7783"
+    },
+    "sector_svg": {
+      "path": "corfo-report/results/figures/berlin_demanda_distrito_sector_anual_multiyear_d8_2020_2024.svg",
+      "sha256": "fa6135e4a08dba4954d38e8226b09bcbafc21b19cc2bcaa1ab7ffaa2de055675"
+    }
+  },
+  "limitations": [
+    "No annual district measurement is available; 2023 Umweltatlas district weights are reused for all years.",
+    "Sector shares are annual Strombilanz shares; 2024 is a labelled 2023 carry-forward for holdout only.",
+    "Public share is zero because the available Strombilanz category does not separate public consumption.",
+    "The maps are conditional allocation scenarios and do not establish independent district or district-sector KPIs."
+  ]
+}
