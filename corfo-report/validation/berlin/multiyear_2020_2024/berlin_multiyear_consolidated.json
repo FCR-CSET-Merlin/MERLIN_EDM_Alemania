@@ -1,0 +1,179 @@
+{
+  "dataset": "berlin_multiyear_expansion_2020_2024",
+  "status": "pass",
+  "source_rows": 43848,
+  "d8_complete_rows": 43677,
+  "contract_audit_status": "pass",
+  "all_mape_under_35_pct": true,
+  "selection_policy": "minimum validation 2023 MAPE; holdout 2024 excluded from selection",
+  "selected_dimension": 8,
+  "selected_validation_mape_pct": 3.4525481161570886,
+  "selected_holdout_2024_mape_pct": 3.4262893346369867,
+  "metric_rows": [
+    {
+      "dimension": 3,
+      "split": "train",
+      "years": "2020-2022",
+      "n": 26172,
+      "mape_pct": 2.6767267913992168,
+      "mae_MW": 37.63310623669664,
+      "rmse_MW": 53.24614867166493,
+      "bias_MW": 0.6807913909024981,
+      "actual_mean_MW": 1393.7108957760202,
+      "predicted_mean_MW": 1394.3916871669228
+    },
+    {
+      "dimension": 3,
+      "split": "validation",
+      "years": "2023",
+      "n": 8752,
+      "mape_pct": 3.9042884994489353,
+      "mae_MW": 51.19008031829492,
+      "rmse_MW": 65.27628292689795,
+      "bias_MW": 43.032949666511556,
+      "actual_mean_MW": 1348.1914491544792,
+      "predicted_mean_MW": 1391.2243988209905
+    },
+    {
+      "dimension": 3,
+      "split": "test",
+      "years": "2024",
+      "n": 8778,
+      "mape_pct": 3.846283197253027,
+      "mae_MW": 51.16302029909738,
+      "rmse_MW": 69.16524423684794,
+      "bias_MW": 42.55018220401549,
+      "actual_mean_MW": 1347.1252660059238,
+      "predicted_mean_MW": 1389.6754482099393
+    },
+    {
+      "dimension": 5,
+      "split": "train",
+      "years": "2020-2022",
+      "n": 26166,
+      "mape_pct": 4.624035887656434,
+      "mae_MW": 61.98186255500371,
+      "rmse_MW": 78.05692198191757,
+      "bias_MW": -28.743231414361418,
+      "actual_mean_MW": 1393.6642239356415,
+      "predicted_mean_MW": 1364.9209925212804
+    },
+    {
+      "dimension": 5,
+      "split": "validation",
+      "years": "2023",
+      "n": 8750,
+      "mape_pct": 4.017141068619615,
+      "mae_MW": 52.28585737475264,
+      "rmse_MW": 67.87291308425205,
+      "bias_MW": 14.466756846432322,
+      "actual_mean_MW": 1348.1351390285713,
+      "predicted_mean_MW": 1362.6018958750037
+    },
+    {
+      "dimension": 5,
+      "split": "test",
+      "years": "2024",
+      "n": 8776,
+      "mape_pct": 4.186405022828252,
+      "mae_MW": 54.748948153437986,
+      "rmse_MW": 72.37219029934414,
+      "bias_MW": 11.33233227951385,
+      "actual_mean_MW": 1347.0828087682316,
+      "predicted_mean_MW": 1358.4151410477457
+    },
+    {
+      "dimension": 8,
+      "split": "train",
+      "years": "2020-2022",
+      "n": 26157,
+      "mape_pct": 2.8844904612540794,
+      "mae_MW": 40.922235283644795,
+      "rmse_MW": 56.36139645958185,
+      "bias_MW": -10.782723022225447,
+      "actual_mean_MW": 1393.5875030202237,
+      "predicted_mean_MW": 1382.8047799979986
+    },
+    {
+      "dimension": 8,
+      "split": "validation",
+      "years": "2023",
+      "n": 8747,
+      "mape_pct": 3.4525481161570886,
+      "mae_MW": 45.309801824132954,
+      "rmse_MW": 59.45123220594155,
+      "bias_MW": 32.390678356264445,
+      "actual_mean_MW": 1348.0229365496743,
+      "predicted_mean_MW": 1380.4136149059389
+    },
+    {
+      "dimension": 8,
+      "split": "test",
+      "years": "2024",
+      "n": 8773,
+      "mape_pct": 3.4262893346369867,
+      "mae_MW": 45.68239940919464,
+      "rmse_MW": 62.82647091423887,
+      "bias_MW": 31.772885019115083,
+      "actual_mean_MW": 1346.9985799612446,
+      "predicted_mean_MW": 1378.77146498036
+    }
+  ],
+  "source_summary": [
+    {
+      "year": 2020,
+      "hv_hours": 8784,
+      "d8_complete_hours": 8784,
+      "d8_coverage_pct": 100.0,
+      "hv_label_mismatch_count": "20166",
+      "dwd_missing_temperature_rows": 0,
+      "computed_energy_GWh": 12247.20453975,
+      "computed_vs_declared_pct": "-0.000000002"
+    },
+    {
+      "year": 2021,
+      "hv_hours": 8760,
+      "d8_complete_hours": 8760,
+      "d8_coverage_pct": 100.0,
+      "hv_label_mismatch_count": "24",
+      "dwd_missing_temperature_rows": 0,
+      "computed_energy_GWh": 12271.750956,
+      "computed_vs_declared_pct": "0.000000000"
+    },
+    {
+      "year": 2022,
+      "hv_hours": 8760,
+      "d8_complete_hours": 8613,
+      "d8_coverage_pct": 98.321917808,
+      "hv_label_mismatch_count": "20257",
+      "dwd_missing_temperature_rows": 126,
+      "computed_energy_GWh": 12142.364343,
+      "computed_vs_declared_pct": "0.000000000"
+    },
+    {
+      "year": 2023,
+      "hv_hours": 8760,
+      "d8_complete_hours": 8747,
+      "d8_coverage_pct": 99.851598174,
+      "hv_label_mismatch_count": "not_available",
+      "dwd_missing_temperature_rows": 5,
+      "computed_energy_GWh": 11812.177946,
+      "computed_vs_declared_pct": ""
+    },
+    {
+      "year": 2024,
+      "hv_hours": 8784,
+      "d8_complete_hours": 8773,
+      "d8_coverage_pct": 99.874772313,
+      "hv_label_mismatch_count": "2",
+      "dwd_missing_temperature_rows": 4,
+      "computed_energy_GWh": 11834.38963125,
+      "computed_vs_declared_pct": "0.000000002"
+    }
+  ],
+  "limitations": [
+    "HV 2020-2022 timestamps have documented DST/order anomalies; UTC is reconstructed by source row order pending operator confirmation.",
+    "2024 sector shares are a labelled 2023 carry-forward for holdout inference, not observed Strombilanz 2024 data.",
+    "HV remains the same Stromnetz Berlin operator family; the holdout is temporal generalisation, not independent-source validation."
+  ]
+}
