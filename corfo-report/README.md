@@ -8,14 +8,16 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 
 ## Estado actual
 
+> **Versión reportable vigente:** expansión multianual 2020–2024, dimensión `d=8`. La línea base 2023 `d=3` se conserva exclusivamente como referencia histórica.
+
 | Elemento | Estado |
 |---|---|
 | Caso piloto | Berlín, Alemania |
 | Objetivo | Reconstrucción histórica de demanda eléctrica horaria |
-| Fuentes alemanas | Strombilanz 2023 y Umweltatlas WFS descargados/auditados; BKG `11000` aceptado; alcance exacto HV y timestamps del operador siguen pendientes |
-| Modelo alemán | Inferencia d=3 exportada; 8.740/8.760 horas; salida distrital condicionada |
-| KPI alemán | Test interno 2023 = 5,089161454 %; holdout temporal 2024 = 3,095865639 %; ambos <=35 % |
-| Próximo producto | Preparar Fase 5: escalamiento territorial con limitaciones de validación explicitadas |
+| Fuentes alemanas | Strombilanz histórica 2020–2023, Umweltatlas WFS y DWD auditados; BKG `11000` aceptado; alcance exacto HV y timestamps del operador siguen pendientes |
+| Modelo alemán vigente | Expansión multianual `d=8`; entrenamiento 2020–2022, validación 2023 y holdout temporal 2024; 43.677 horas completas |
+| KPI alemán vigente | Validación 2023 = 3,452548 %; holdout temporal 2024 = 3,426289 %; ambos ≤35 % |
+| Próximo producto | Mantener la expansión multianual como versión reportable y cerrar las limitaciones territoriales/sectoriales |
 
 ## Resultados previstos
 
@@ -24,7 +26,7 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 | Tablas reconstruidas | [`results/tables/`](results/tables/) | Solo Alemania, con año, territorio, sector y unidad |
 | Figuras | [`results/figures/`](results/figures/) | Fuente, cobertura y fecha de generación |
 
-Figura disponible: [mapa distrital de demanda anual Berlín 2023 (PNG)](results/figures/berlin_demanda_distrital_d3_2023.png), [versión vectorial SVG](results/figures/berlin_demanda_distrital_d3_2023.svg) y [manifiesto](results/figures/berlin_demanda_distrital_d3_2023_manifest.json).
+La [salida d=3 de 2023](results/figures/berlin_demanda_distrital_d3_2023.png) y sus tablas se conservan como referencia histórica; no son la versión vigente del modelo.
 
 Para la expansión multianual 2020–2024 se generaron la [figura comparativa de MAPE (PNG)](results/figures/berlin_multiyear_kpi_mape.png), su [versión vectorial (SVG)](results/figures/berlin_multiyear_kpi_mape.svg), la [figura de cobertura d=8 (PNG)](results/figures/berlin_multiyear_d8_coverage.png), su [versión vectorial (SVG)](results/figures/berlin_multiyear_d8_coverage.svg) y el [manifiesto con hashes](results/figures/berlin_multiyear_reportability_manifest.json).
 
@@ -72,6 +74,8 @@ La meta operativa es MAPE ≤35 %. Cada resultado debe indicar si mide demanda d
 
 Cada corrida registra commit, entorno, modelo, scaler, columnas, URL/fecha/licencia/hash de fuentes, período, zona horaria, cobertura, faltantes, transformaciones, perímetro y hashes de salida.
 
-La inferencia d=3 y el KPI horario interno ya están documentados; el MAPE se calcula sobre la partición temporal HV y no sustituye un comparador externo independiente.
+La inferencia d=3 y su KPI horario se conservan como referencia histórica; el modelo vigente d=8 se evalúa sobre las particiones multianuales HV y tampoco sustituye un comparador externo independiente.
 
 La expansión multianual conserva su evidencia en una matriz separada y en el ledger canónico mediante el identificador `CORFO-MERLIN-EDM-DE-BERLIN-MULTIYEAR`. El holdout 2024 se reporta como generalización temporal del mismo operador, no como validación horaria independiente.
+
+La ficha que identifica la versión reportable vigente está en [`validation/berlin/modelo_vigente.md`](validation/berlin/modelo_vigente.md).

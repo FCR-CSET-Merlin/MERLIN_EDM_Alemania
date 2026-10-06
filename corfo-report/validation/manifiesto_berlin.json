@@ -1,14 +1,27 @@
 {
-  "id_evidencia": "CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO",
-  "estado": "fuentes_externas_auditadas; fases_3_y_4_cerradas_con_limitaciones; holdout_temporal_2024_ejecutado; fase5_pendiente",
+  "id_evidencia": "CORFO-MERLIN-EDM-DE-BERLIN-MULTIYEAR",
+  "estado": "version_reportable_vigente_expansion_multianual_d8; baseline_2023_historica; limitaciones_externas_documentadas",
+  "version_reportable_vigente": {
+    "id": "CORFO-MERLIN-EDM-DE-BERLIN-MULTIYEAR",
+    "modelo": "expansion_multianual_2020_2024",
+    "dimension_seleccionada": 8,
+    "entrenamiento": "2020-2022",
+    "validacion": "2023",
+    "holdout": "2024",
+    "mape_validacion_pct": 3.4525481161570886,
+    "mape_holdout_pct": 3.4262893346369867,
+    "umbral_pct": 35.0,
+    "estado": "cumple; generalizacion_temporal_mismo_operador",
+    "linea_base_historica": "d=3_2023_no_version_vigente"
+  },
   "pais": "Alemania",
   "territorio": "Berlin-administrative",
   "codigo_territorial": "11000",
   "serie_red": "Stromnetz-Berlin-HV-area-proxy",
   "objetivo": "Reconstruccion historica de demanda electrica horaria",
-  "fecha_corte": "2026-09-29",
+  "fecha_corte": "2026-10-06",
   "repositorio": {
-    "commit": "5d6c111",
+    "commit": "4d26a0b",
     "rama": "germany/main"
   },
   "entorno": {

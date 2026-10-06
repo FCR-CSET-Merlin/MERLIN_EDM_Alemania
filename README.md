@@ -2,6 +2,8 @@
 
 Este repositorio es el fork específico para adaptar y replicar en Alemania el pipeline de ingeniería de datos y machine learning desarrollado originalmente para Chile. El piloto inicial es Berlín y sus sectores, fronteras, fuentes y resolución se definirán mediante el [plan de trabajo alemán](PLAN_TRABAJO_ADAPTACION_ALEMANIA.md).
 
+**Versión alemana vigente para reportabilidad:** expansión multianual 2020–2024, modelo d=8. La línea base d=3 basada únicamente en 2023 permanece como referencia histórica y no debe utilizarse como resultado principal del informe.
+
 La metodología base de este proyecto está basada en las técnicas de desagregación (downscaling) espacial propuestas por *Kusumoto et al. (2024)*, adaptada a la disponibilidad de datos y metadatos territoriales del sector eléctrico chileno.
 
 ---
@@ -44,6 +46,8 @@ MERLIN_EDM/
 ## Reportes y validación
 
 La reportabilidad activa y el plan de adaptación se encuentran en [corfo-report](corfo-report/README.md) y [PLAN_TRABAJO_ADAPTACION_ALEMANIA.md](PLAN_TRABAJO_ADAPTACION_ALEMANIA.md). Los resultados chilenos heredados están separados en [corfo-report-chile-referencia](corfo-report-chile-referencia/README.md) y no deben usarse para acreditar KPIs de Alemania.
+
+La ficha de versión vigente está en [corfo-report/validation/berlin/modelo_vigente.md](corfo-report/validation/berlin/modelo_vigente.md).
 
 ## Arquitectura del Modelo (Modelo Global)
 

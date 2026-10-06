@@ -81,6 +81,8 @@ def main() -> None:
     holdout = next(row for row in metric_rows if row["dimension"] == selected["dimension"] and row["split"] == "test")
     summary = {
         "dataset": "berlin_multiyear_expansion_2020_2024",
+        "reportable_version": "expansion_multianual_2020_2024_d8",
+        "baseline_2023_status": "historical_reference_only",
         "status": "pass" if kpi_pass and contract_pass else "review_required",
         "source_rows": sum(row["hv_hours"] for row in source_summary),
         "d8_complete_rows": sum(row["d8_complete_hours"] for row in source_summary),
@@ -106,6 +108,8 @@ def main() -> None:
 
     lines = [
         "# Consolidado de la expansión multianual de Berlín 2020-2024",
+        "",
+        "**Versión reportable vigente del fork alemán:** expansión multianual 2020–2024, dimensión seleccionada d=8. La corrida d=3 basada únicamente en 2023 se conserva como línea base histórica y no debe utilizarse como resultado principal.",
         "",
         f"Estado: **{summary['status'].upper()}**. Se integraron HV/DWD, shares sectoriales, contratos y métricas MLP en una sola evidencia.",
         "",

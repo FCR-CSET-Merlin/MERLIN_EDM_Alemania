@@ -1,9 +1,11 @@
 # Plan de trabajo — adaptación de MERLIN EDM a Alemania
 
 **Caso piloto:** reconstrucción histórica de demanda eléctrica para Berlín
-**Estado:** planificación y evaluación de factibilidad; no se declara ningún KPI alemán cumplido.
+**Estado:** expansión multianual 2020–2024 consolidada; versión reportable vigente `d=8`, con KPI de validación 2023 y holdout temporal 2024 documentados.
 **Reportabilidad activa:** [`corfo-report/`](corfo-report/README.md)
 **Referencia heredada de Chile:** [`corfo-report-chile-referencia/`](corfo-report-chile-referencia/README.md)
+
+**Regla de versión:** los resultados d=3 basados únicamente en 2023 se mantienen como línea base histórica. Los resultados principales del informe deben provenir de la [expansión multianual vigente](corfo-report/validation/berlin/modelo_vigente.md).
 
 ## 1. Objetivo y alcance
 

@@ -1,5 +1,7 @@
 {
   "dataset": "berlin_multiyear_expansion_2020_2024",
+  "reportable_version": "expansion_multianual_2020_2024_d8",
+  "baseline_2023_status": "historical_reference_only",
   "status": "pass",
   "source_rows": 43848,
   "d8_complete_rows": 43677,

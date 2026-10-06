@@ -1,11 +1,13 @@
 # Ficha de evidencia — reconstrucción histórica de Berlín
 
-- **ID:** `CORFO-MERLIN-EDM-DE-BERLIN-HISTORICO`.
-- **Estado:** Fase 4 cerrada con limitación documentada; KPI interno 2023 y holdout temporal 2024 cumplen MAPE <=35 %; KPI horario independiente y espacial independiente no evaluables.
+> **Versión reportable vigente:** expansión multianual 2020–2024, d=8. La corrida d=3 basada únicamente en 2023 se conserva como línea base histórica y no debe utilizarse como resultado principal.
+
+- **ID vigente:** `CORFO-MERLIN-EDM-DE-BERLIN-MULTIYEAR`.
+- **Estado:** expansión multianual consolidada; validación 2023 y holdout temporal 2024 cumplen MAPE <=35 %; KPI horario independiente y espacial independiente no evaluables.
 - **País:** Alemania.
 - **Territorio:** `Berlin-administrative` (`ars/ags=11000`, geometría BKG VG250); la serie Stromnetz Berlin se reportará como `Stromnetz-Berlin-HV-area-proxy` hasta confirmar equivalencia geométrica.
 - **Objetivo:** reconstrucción horaria y validación anual/sectorial.
-- **Fecha de corte:** 29 de septiembre de 2026.
+- **Fecha de corte:** 6 de octubre de 2026.
 - **Commit y entorno de entrenamiento:** corrida reproducible con Python 3.13.13, TensorFlow 2.21.0, NumPy 2.5.3 y semilla 2023; commit se registra al publicar los artefactos.
 - **Responsable y revisor:** pendientes.
 
@@ -13,7 +15,7 @@
 
 | Insumo | Fuente | Función | Estado |
 |---|---|---|---|
-| Demanda horaria | Stromnetz Berlin HV 2019–2023 | Objetivo horario de red y proxy territorial | GO condicionado; semántica general confirmada, alcance HV/timestamps pendientes |
+| Demanda horaria | Stromnetz Berlin HV 2020–2024 | Objetivo horario de red y proxy territorial | GO condicionado; versión vigente multianual; alcance HV/timestamps pendientes |
 | Balance anual | Statistik Berlin-Brandenburg, edición corregida 2023 | Referencia total/sectorial | Auditada; consistencia anual condicionada |
 | Distribución espacial | Umweltatlas Berlin WFS, campo `j2023g` | Validación distrital | Auditada; salida distrital del modelo pendiente |
 | Temperatura | DWD Berlin-Tempelhof 00433 | Variable explicativa horaria | Seleccionada condicionada; 5 faltantes 2023 y representatividad espacial pendientes |
@@ -33,7 +35,7 @@ La matriz de fuentes y la plantilla de resultados están en
 [`sources/comparaciones_externas_berlin.csv`](sources/comparaciones_externas_berlin.csv)
 y [`berlin/comparaciones_externas_2023.csv`](berlin/comparaciones_externas_2023.csv).
 
-## Resultado de la homologación externa 2023
+## Resultado de la homologación externa 2023 — referencia histórica
 
 La auditoría reproducible está en
 [`berlin/external_2023/auditoria_homologacion_externa_berlin_2023.md`](berlin/external_2023/auditoria_homologacion_externa_berlin_2023.md).
@@ -46,6 +48,15 @@ Con la serie HV observada se obtuvo:
 Estos valores son controles de consistencia. La inferencia d=3 exportada suma 11.738,063 GWh en las 8.740 filas completas (brecha -1,355596 % frente a la suma distrital `j2023g`). La salida distrital usa los shares `j2023g` como pesos fijos; por eso la coincidencia de shares es una consistencia condicionada y no una validación espacial independiente.
 
 ## Cierre de validación
+
+### Versión vigente: expansión multianual d=8
+
+- Entrenamiento 2020–2022; validación 2023: MAPE `3,452548116 %` sobre 8.747 horas completas.
+- Holdout temporal 2024: MAPE `3,426289335 %` sobre 8.773 horas completas.
+- Todas las combinaciones d=3/d=5/d=8 cumplen MAPE ≤35 %; d=8 se seleccionó por el menor MAPE de validación 2023.
+- La desagregación anual distrito–sector conserva el agregado con residuos máximos inferiores a `1,3e-08 GWh` y permanece condicionada por proxies externos.
+
+### Línea base histórica d=3, 2023
 
 - Test interno 2023: MAPE 5,089161454 % sobre 1.311 horas.
 - Holdout temporal 2024: MAPE 3,095865639 % sobre 8.776 horas válidas de 8.784.
@@ -65,4 +76,4 @@ Estos valores son controles de consistencia. La inferencia d=3 exportada suma 11
 - La tabla HV–temperatura contiene 20 filas sin ocho valores climáticos válidos; no se imputaron. La inferencia se exportó sobre 8.740 filas completas.
 - La desagregación distrital conserva la forma horaria agregada y usa shares anuales fijos; no acredita que la red haya aprendido perfiles horarios diferenciados por distrito.
 
-El KPI horario interno del piloto está documentado en [`berlin/kpi_validation.csv`](berlin/kpi_validation.csv) y cumple el umbral de 35 %. El cumplimiento externo horario y el KPI espacial independiente siguen pendientes.
+El KPI de la versión vigente está documentado en [`berlin/kpi_validation.csv`](berlin/kpi_validation.csv), [`berlin/multiyear_2020_2024/berlin_multiyear_consolidated.md`](berlin/multiyear_2020_2024/berlin_multiyear_consolidated.md) y [`berlin/modelo_vigente.md`](berlin/modelo_vigente.md). El cumplimiento externo horario y el KPI espacial independiente siguen pendientes.
