@@ -1,0 +1,6 @@
+year,hv_hours,d8_complete_hours,d8_coverage_pct,dwd_missing_temperature_rows,timestamp_label_mismatch_count,computed_energy_GWh,source_control_status,evidencia
+2020,8784,8784,100.0,0,20166,12247.20453975,pass,corfo-report/validation/berlin/multiyear_2020_2024/berlin_multiyear_source_audit.csv
+2021,8760,8760,100.0,0,24,12271.750956,pass,corfo-report/validation/berlin/multiyear_2020_2024/berlin_multiyear_source_audit.csv
+2022,8760,8613,98.321917808,126,20257,12142.364343,pass,corfo-report/validation/berlin/multiyear_2020_2024/berlin_multiyear_source_audit.csv
+2023,8760,8747,99.851598174,5,not_available,11812.177946,pass,corfo-report/validation/berlin/multiyear_2020_2024/berlin_multiyear_source_audit.csv
+2024,8784,8773,99.874772313,4,2,11834.38963125,pass,corfo-report/validation/berlin/multiyear_2020_2024/berlin_multiyear_source_audit.csv

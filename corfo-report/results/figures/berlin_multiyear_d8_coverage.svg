@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="700" viewBox="0 0 1280 700">
+<rect width="100%" height="100%" fill="white"/>
+<text x="640.0" y="42.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="24px" text-anchor="middle" font-weight="bold" fill="#222222">Cobertura anual de filas completas para d=8</text>
+<text x="640.0" y="70.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="14px" text-anchor="middle" font-weight="normal" fill="#555555">Control de disponibilidad de HV y ocho rezagos DWD antes del entrenamiento/inferencia</text>
+<line x1="120" y1="465.0" x2="1225" y2="465.0" stroke="#d9d9d9" stroke-width="1"/>
+<text x="108.0" y="470.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="13px" text-anchor="end" font-weight="normal" fill="#555555">98</text>
+<line x1="120" y1="305.0" x2="1225" y2="305.0" stroke="#d9d9d9" stroke-width="1"/>
+<text x="108.0" y="310.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="13px" text-anchor="end" font-weight="normal" fill="#555555">99</text>
+<line x1="120" y1="145.0" x2="1225" y2="145.0" stroke="#d9d9d9" stroke-width="1"/>
+<text x="108.0" y="150.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="13px" text-anchor="end" font-weight="normal" fill="#555555">100</text>
+<text x="32.0" y="325.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="15px" text-anchor="middle" font-weight="bold" fill="#222222" transform="rotate(-90 32 355)">Cobertura (%)</text>
+<rect x="183.0" y="145.0" width="95" height="400.0" fill="#fdbb84" stroke="#8c8c8c" stroke-width="1"/>
+<text x="230.5" y="135.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="13px" text-anchor="middle" font-weight="bold" fill="#222222">100.000</text>
+<text x="230.5" y="576.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="16px" text-anchor="middle" font-weight="normal" fill="#222222">2020</text>
+<rect x="404.0" y="145.0" width="95" height="400.0" fill="#fdbb84" stroke="#8c8c8c" stroke-width="1"/>
+<text x="451.5" y="135.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="13px" text-anchor="middle" font-weight="bold" fill="#222222">100.000</text>
+<text x="451.5" y="576.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="16px" text-anchor="middle" font-weight="normal" fill="#222222">2021</text>
+<rect x="625.0" y="413.5" width="95" height="131.5" fill="#fdbb84" stroke="#8c8c8c" stroke-width="1"/>
+<text x="672.5" y="403.5" font-family="DejaVu Sans,Arial,sans-serif" font-size="13px" text-anchor="middle" font-weight="bold" fill="#222222">98.322</text>
+<text x="672.5" y="576.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="16px" text-anchor="middle" font-weight="normal" fill="#222222">2022</text>
+<rect x="846.0" y="168.7" width="95" height="376.3" fill="#fdbb84" stroke="#8c8c8c" stroke-width="1"/>
+<text x="893.5" y="158.7" font-family="DejaVu Sans,Arial,sans-serif" font-size="13px" text-anchor="middle" font-weight="bold" fill="#222222">99.852</text>
+<text x="893.5" y="576.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="16px" text-anchor="middle" font-weight="normal" fill="#222222">2023</text>
+<rect x="1067.0" y="165.0" width="95" height="380.0" fill="#fdbb84" stroke="#8c8c8c" stroke-width="1"/>
+<text x="1114.5" y="155.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="13px" text-anchor="middle" font-weight="bold" fill="#222222">99.875</text>
+<text x="1114.5" y="576.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="16px" text-anchor="middle" font-weight="bold" fill="#222222">2024</text>
+<polyline points="230.5,145.0 451.5,145.0 672.5,413.5 893.5,168.7 1114.5,165.0" fill="none" stroke="#7f0000" stroke-width="3"/>
+<circle cx="230.5" cy="145.0" r="5" fill="#7f0000"/>
+<circle cx="451.5" cy="145.0" r="5" fill="#7f0000"/>
+<circle cx="672.5" cy="413.5" r="5" fill="#7f0000"/>
+<circle cx="893.5" cy="168.7" r="5" fill="#7f0000"/>
+<circle cx="1114.5" cy="165.0" r="5" fill="#7f0000"/>
+<text x="640.0" y="626.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="13px" text-anchor="middle" font-weight="normal" fill="#555555">2020–2021: 100 % · 2022: 98,322 % · 2023: 99,852 % · 2024: 99,875 %</text>
+<text x="640.0" y="652.0" font-family="DejaVu Sans,Arial,sans-serif" font-size="12px" text-anchor="middle" font-weight="normal" fill="#555555">Las filas sin features completas se excluyen sin imputación; la disponibilidad no sustituye la validación externa.</text>
+</svg>

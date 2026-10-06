@@ -52,3 +52,6 @@ La configuración seleccionada por validación 2023 es **d=8**, con MAPE **3.452
 - Auditoría contractual: corfo-report/validation/berlin/multiyear_2020_2024/berlin_multiyear_contract_audit.md
 - Métricas completas: corfo-report/validation/berlin/multiyear_2020_2024/berlin_multiyear_model_metrics.csv
 - Tabla KPI para resultados: corfo-report/results/tables/berlin_multiyear_expansion_kpi.csv
+- Matriz de cumplimiento KPI: corfo-report/results/tables/berlin_multiyear_kpi_compliance.csv
+- Figuras de reportabilidad: corfo-report/results/figures/berlin_multiyear_kpi_mape.svg y berlin_multiyear_d8_coverage.svg
+- Manifiesto de figuras y hashes: corfo-report/results/figures/berlin_multiyear_reportability_manifest.json

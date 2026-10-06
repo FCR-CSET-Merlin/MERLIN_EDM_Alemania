@@ -157,6 +157,9 @@ def main() -> None:
         f"- Auditoría contractual: {validation_root.relative_to(REPO)}/berlin_multiyear_contract_audit.md",
         f"- Métricas completas: {validation_root.relative_to(REPO)}/berlin_multiyear_model_metrics.csv",
         f"- Tabla KPI para resultados: {results_csv.relative_to(REPO)}",
+        "- Matriz de cumplimiento KPI: corfo-report/results/tables/berlin_multiyear_kpi_compliance.csv",
+        "- Figuras de reportabilidad: corfo-report/results/figures/berlin_multiyear_kpi_mape.svg y berlin_multiyear_d8_coverage.svg",
+        "- Manifiesto de figuras y hashes: corfo-report/results/figures/berlin_multiyear_reportability_manifest.json",
     ])
     report = "\n".join(lines) + "\n"
     validation_md = validation_root / "berlin_multiyear_consolidated.md"

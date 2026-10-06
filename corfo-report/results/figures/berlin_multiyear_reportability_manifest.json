@@ -1,0 +1,53 @@
+{
+  "dataset": "berlin_multiyear_expansion_2020_2024",
+  "status": "pass",
+  "kpi": {
+    "indicator": "MAPE horario",
+    "threshold_pct": 35.0,
+    "all_rows_comply": true,
+    "selected_dimension": 8,
+    "selected_validation_mape_pct": 3.4525481161570886,
+    "selected_holdout_2024_mape_pct": 3.4262893346369867
+  },
+  "tables": [
+    {
+      "path": "corfo-report/results/tables/berlin_multiyear_kpi_compliance.csv",
+      "sha256": "e03fa49dcb4ef429346b5cd2c54271c776bb074091d954f18320c9cfd6b7121c"
+    },
+    {
+      "path": "corfo-report/results/tables/berlin_multiyear_source_coverage.csv",
+      "sha256": "1791a399bf93a41ffbb6b7cba72bdf01c3a35156839886601380081a950f7237"
+    },
+    {
+      "path": "corfo-report/results/tables/berlin_multiyear_kpi_compliance.md",
+      "sha256": "4b4dad660a53d21b38e5486f2f7c4af8c9d30f62e22b320245ec58f4ce419df8"
+    },
+    {
+      "path": "corfo-report/validation/berlin/kpi_validation.csv",
+      "sha256": "9f1edd22e1cc4bac0f8e048c402166506adcfcb18a1769dbec321cd064d1126f"
+    }
+  ],
+  "figures": [
+    {
+      "name": "berlin_multiyear_kpi_mape",
+      "svg": "corfo-report/results/figures/berlin_multiyear_kpi_mape.svg",
+      "png": "corfo-report/results/figures/berlin_multiyear_kpi_mape.png",
+      "png_generated": true,
+      "svg_sha256": "144c1109bedf63259a36bcd3934d14572b1dfc62b3a5de21baef9b59781edb85",
+      "png_sha256": "7961f5fbb918f77b0128a4ffd2d8207262a0b6171899586cbc75e419de772548"
+    },
+    {
+      "name": "berlin_multiyear_d8_coverage",
+      "svg": "corfo-report/results/figures/berlin_multiyear_d8_coverage.svg",
+      "png": "corfo-report/results/figures/berlin_multiyear_d8_coverage.png",
+      "png_generated": true,
+      "svg_sha256": "5b0531e5015b8b96fa09819c2dec3541898d22d45d48a1d6e83cfd9643583276",
+      "png_sha256": "5112069b322378dee3988466c158f8875da36d88234131f3072e379b8db0788a"
+    }
+  ],
+  "limitations": [
+    "Holdout 2024 is temporal generalisation from the same Stromnetz Berlin operator and HV measurement family, not independent-source validation.",
+    "2024 sector shares are a labelled 2023 carry-forward for holdout inference.",
+    "HV timestamp anomalies in 2020–2022 remain documented pending operator confirmation."
+  ]
+}

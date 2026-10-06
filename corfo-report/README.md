@@ -25,10 +25,13 @@ La estructura sigue el [estándar de reportabilidad CORFO](https://github.com/FC
 | Figuras | [`results/figures/`](results/figures/) | Fuente, cobertura y fecha de generación |
 
 Figura disponible: [mapa distrital de demanda anual Berlín 2023 (PNG)](results/figures/berlin_demanda_distrital_d3_2023.png), [versión vectorial SVG](results/figures/berlin_demanda_distrital_d3_2023.svg) y [manifiesto](results/figures/berlin_demanda_distrital_d3_2023_manifest.json).
+
+Para la expansión multianual 2020–2024 se generaron la [figura comparativa de MAPE (PNG)](results/figures/berlin_multiyear_kpi_mape.png), su [versión vectorial (SVG)](results/figures/berlin_multiyear_kpi_mape.svg), la [figura de cobertura d=8 (PNG)](results/figures/berlin_multiyear_d8_coverage.png), su [versión vectorial (SVG)](results/figures/berlin_multiyear_d8_coverage.svg) y el [manifiesto con hashes](results/figures/berlin_multiyear_reportability_manifest.json).
 | Series horarias | [`results/timeseries/`](results/timeseries/) | Pesadas fuera de Git; índice y hash obligatorios |
 | Auditoría de fuentes | [`validation/sources/`](validation/sources/) | Cobertura, perímetro, licencia y transformaciones |
 | Validación Berlín | [`validation/berlin/`](validation/berlin/) | Comparaciones por año, territorio y sector |
 | KPI | [`validation/kpi_plan.md`](validation/kpi_plan.md), [`validation/berlin/kpi_validation.csv`](validation/berlin/kpi_validation.csv), [`results/tables/kpi_summary.csv`](results/tables/kpi_summary.csv) | Fórmula, umbral, denominador e independencia |
+| KPI expansión multianual | [`results/tables/berlin_multiyear_kpi_compliance.csv`](results/tables/berlin_multiyear_kpi_compliance.csv), [`results/tables/berlin_multiyear_kpi_compliance.md`](results/tables/berlin_multiyear_kpi_compliance.md), [ledger canónico](validation/berlin/kpi_validation.csv) | MAPE ≤35 %, partición, comparador, independencia, estado y evidencia |
 | Contrato de validación | [`validation/sources/contrato_validacion_berlin.md`](validation/sources/contrato_validacion_berlin.md) | Capas interna, anual, espacial y horaria |
 | Matriz comparadores | [`validation/sources/comparaciones_externas_berlin.csv`](validation/sources/comparaciones_externas_berlin.csv) | Fuentes, perímetro, dependencia y estado |
 | Plantilla resultados externos | [`validation/berlin/comparaciones_externas_2023.csv`](validation/berlin/comparaciones_externas_2023.csv) | Métricas sin resultados inventados |
@@ -68,3 +71,5 @@ La meta operativa es MAPE ≤35 %. Cada resultado debe indicar si mide demanda d
 Cada corrida registra commit, entorno, modelo, scaler, columnas, URL/fecha/licencia/hash de fuentes, período, zona horaria, cobertura, faltantes, transformaciones, perímetro y hashes de salida.
 
 La inferencia d=3 y el KPI horario interno ya están documentados; el MAPE se calcula sobre la partición temporal HV y no sustituye un comparador externo independiente.
+
+La expansión multianual conserva su evidencia en una matriz separada y en el ledger canónico mediante el identificador `CORFO-MERLIN-EDM-DE-BERLIN-MULTIYEAR`. El holdout 2024 se reporta como generalización temporal del mismo operador, no como validación horaria independiente.
