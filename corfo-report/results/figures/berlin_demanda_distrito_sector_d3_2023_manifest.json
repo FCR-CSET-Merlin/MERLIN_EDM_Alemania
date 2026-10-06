@@ -25,21 +25,30 @@
   },
   "figures": {
     "corfo-report/results/figures/berlin_demanda_distrito_sector_anual_d3_2023.png": {
-      "sha256": "75c90b5123e97e7274f125a9f0c269dc8fbff08b2e51f7023cb86f520677cb2b",
-      "bytes": 96503
+      "sha256": "d775a84391b8acfed6b8a5b4a334b55380d6ca66f8f6bfdab122d6de0354f398",
+      "bytes": 107453
     },
     "corfo-report/results/figures/berlin_demanda_distrito_sector_anual_d3_2023.svg": {
-      "sha256": "fdd740a5eb1a35b19ba5382c192eb6cecd811723a6754f1ef6e8f92e153b6a44",
-      "bytes": 2019926
+      "sha256": "b6950b82430b74e46740b147855c8d7b3a585fd66a88ff9e10d3b8c7e95db4e5",
+      "bytes": 2026622
     },
     "corfo-report/results/figures/berlin_demanda_distrito_sector_horaria_pico_d3_2023.png": {
-      "sha256": "5e8c378471156d8e8a3af63f782ff2eadbbb9f0a960478fdd29e8c28ae64857f",
-      "bytes": 94641
+      "sha256": "72fb11d94ccfc787e027cdb24ae9fcd1344cddabbc8c57ed2a999c7c0a877d44",
+      "bytes": 105475
     },
     "corfo-report/results/figures/berlin_demanda_distrito_sector_horaria_pico_d3_2023.svg": {
-      "sha256": "4a173f4f2a832af6f6c6fab5907b8d9e0c7dd9d87bcb9cbd95fa54c8c13e7b4f",
-      "bytes": 2019889
+      "sha256": "22bbc161bf01030d92cfb4f77f341b7d013d0ff1d1c17c39c2059b253ae09163",
+      "bytes": 2026598
     }
+  },
+  "color_palette": "YlOrRd",
+  "heatmap_legend": "shared_figure_colorbar_with_global_minimum_and_maximum_values",
+  "sector_figure_labels": {
+    "I": "Industria y minería",
+    "R": "Residencial",
+    "C": "Comercio/GHD",
+    "P": "Público",
+    "T": "Transporte"
   },
   "snapshot": {
     "timestamp_hour_end_utc": "2023-11-30T17:00:00+00:00",
