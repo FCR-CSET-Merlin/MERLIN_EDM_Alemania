@@ -1,0 +1,96 @@
+{
+  "export": "MERLIN_EDM ArcGIS GeoPackage copies",
+  "generated_at_utc": "2026-10-09T19:34:33.354845+00:00",
+  "originals_preserved": true,
+  "germany": {
+    "path": "/srv/compartido/inbox/MERLIN_EDM_Alemania/corfo-report/results/geopackages/berlin_demanda_arcgis.gpkg",
+    "sha256": "109a44b3783ea176b7097559c3320ec319072cf832e58306101bc3f4f84a1389",
+    "layers": [
+      "berlin_d8_district_annual",
+      "berlin_d8_district_sector_annual"
+    ],
+    "tables": {
+      "berlin_d8_annual_summary": 5,
+      "berlin_d8_hourly": 43677,
+      "berlin_d3_hourly_historical": 8740
+    },
+    "crs": "EPSG:25833",
+    "sources": [
+      {
+        "path": "/srv/compartido/inbox/MERLIN_EDM_Alemania/prototipo_3/data/de_alemania/external_validation/berlin_2023/berlin_strom_districts.geojson",
+        "sha256": "9ae3d44df152a3a58e511c75dde266e692325fd00ec8f4d6f00853aeabc018e2"
+      },
+      {
+        "path": "/srv/compartido/inbox/MERLIN_EDM_Alemania/corfo-report/results/tables/berlin_multiyear_d8_district_annual.csv",
+        "sha256": "56264f485d31648b493961a3f7d7b173ccdbed7ea6d56182728b55d5ec2a32a2"
+      },
+      {
+        "path": "/srv/compartido/inbox/MERLIN_EDM_Alemania/corfo-report/results/tables/berlin_multiyear_d8_district_sector_annual.csv",
+        "sha256": "0a1c62021c11f32ae20031027030fc825142f5b18376e96abc54e3c4206b4a26"
+      },
+      {
+        "path": "/srv/compartido/inbox/MERLIN_EDM_Alemania/corfo-report/results/tables/berlin_multiyear_d8_annual_summary.csv",
+        "sha256": "372d3d6c81bd4cd9a6db34ee1e26e8a86c93ea8257a5fd37249bcc41a2f21432"
+      },
+      {
+        "path": "/srv/compartido/inbox/MERLIN_EDM_Alemania/prototipo_3/data/de_alemania/berlin_multiyear_inference_d8/berlin_multiyear_d8_inference.csv.gz",
+        "sha256": "81d57e100deed6214537fd536df88ffa498ab75052b088b409491956610958cd"
+      },
+      {
+        "path": "/srv/compartido/inbox/MERLIN_EDM_Alemania/prototipo_3/data/de_alemania/berlin_inference_2023/berlin_d3_inference_2023.csv",
+        "sha256": "88bed2e6706d3af4f2b4f9975375f25b2110b8f2ffbe3ca685b00c0596206031"
+      }
+    ],
+    "spatial_interpretation": "Annual district and district-sector layers are conditional allocations, not independent spatial observations."
+  },
+  "chile": {
+    "path": "/srv/compartido/inbox/MERLIN_EDM_GIS_exports/chile/chile_demanda_arcgis.gpkg",
+    "sha256": "f5862904fd95f41c5101462ed175fd12a1c4d4b46178dc287c18461518cd21ec",
+    "layers": [
+      "wp2_output_demanda_electrica_regional",
+      "wp2_output_demanda_electrica_comunal"
+    ],
+    "tables": {
+      "chile_regional_hourly_2023": 140160,
+      "chile_regional_hourly_2024_2025": 280704,
+      "chile_comunal_hourly_2024_2025": 6052680
+    },
+    "crs": "EPSG:4326 (result layers)",
+    "source_geopackages": [
+      "/srv/compartido/inbox/datos_modelos_MERLIN_EDM_prot_3/data/rec_2024_2025/results/capas_regionales/wp2_output_demanda_electrica_regional.gpkg",
+      "/srv/compartido/inbox/datos_modelos_MERLIN_EDM_prot_3/data/rec_2024_2025/results/capas_comunales/wp2_output_demanda_electrica_comunal.gpkg"
+    ],
+    "note": "The original Chile repository and source files were not modified; this export is outside that repository.",
+    "sources": [
+      {
+        "path": "/srv/compartido/inbox/datos_modelos_MERLIN_EDM_prot_3/data/rec_2024_2025/results/capas_regionales/wp2_output_demanda_electrica_regional.gpkg",
+        "sha256": "0f08e92f9213af6cbfcb5b8b16474211c57fc9fe142b305223dcc5b35e9d3063"
+      },
+      {
+        "path": "/srv/compartido/inbox/datos_modelos_MERLIN_EDM_prot_3/data/rec_2024_2025/results/capas_comunales/wp2_output_demanda_electrica_comunal.gpkg",
+        "sha256": "104095b8a618a117062d8221e4e18cbba1ab117d9e5929c2c86b813ac35316c3"
+      },
+      {
+        "path": "/srv/compartido/inbox/MERLIN_EDM/prototipo_3/data/rec_historica/2023/demanda_regional_2023_horaria.parquet",
+        "sha256": "9457ae67b36d257340c665affe64547c10cbad959d02aa0c1c05346d48f49de8"
+      },
+      {
+        "path": "/srv/compartido/inbox/datos_modelos_MERLIN_EDM_prot_3/data/rec_2024_2025/results/capas_regionales/wp2_output_demanda_electrica_regional_ts.parquet",
+        "sha256": "a4c1b2732b6759aed4f3bf2148b6c7187b3fe1603255e62ee728f263c0deeab6"
+      },
+      {
+        "path": "/srv/compartido/inbox/datos_modelos_MERLIN_EDM_prot_3/data/rec_2024_2025/results/capas_comunales/wp2_output_demanda_electrica_comunal_ts.parquet",
+        "sha256": "dcf11a7ebf682531435e4da51b7679ffaf5ad97cc06705a539d250d92c3638c5"
+      },
+      {
+        "path": "/srv/compartido/inbox/datos_modelos_MERLIN_EDM_prot_3/data/raw/capa_regional.gpkg",
+        "sha256": "3ed9ddc723ad92b819496ab1ef2b5624ba3bb7ac05a25304c0d6448d38471cdf"
+      }
+    ]
+  },
+  "limitations": [
+    "Hourly records are stored as non-spatial GeoPackage attribute tables; geometry is not duplicated per hour.",
+    "A GIS user can join the hourly tables to the territorial layers using the documented keys.",
+    "Berlin district and district-sector values remain conditional proxy allocations."
+  ]
+}
