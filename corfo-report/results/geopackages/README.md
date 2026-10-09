@@ -20,6 +20,8 @@ Las capas distrito y distrito-sector son asignaciones condicionadas mediante pes
 
 El detalle de rutas, conteos, hashes y limitaciones está en [`berlin_demanda_arcgis_manifest.json`](berlin_demanda_arcgis_manifest.json).
 
+La definición completa de campos, tipos, unidades y claves de unión está en [`diccionario_campos_geopackages.md`](diccionario_campos_geopackages.md).
+
 ## Exportación chilena
 
 La copia combinada chilena se encuentra fuera del repositorio Chile para mantenerlo intacto:
